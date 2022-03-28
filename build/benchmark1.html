@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.title {
+    text-align: center;
+}
+</style>
+</head>
+
+<body>
+<h1 class="title">SPaR! (Scissors Paper and Rock)</h1>
+<h2 class="title"> Game Design Document </h2>
+<p class="title">by Xiaotian Ma, Kurtis Chan, and Nicholas Aloi </p>
+
+<h2>INTRODUCTION</h2>
+<p>This document describes a game called "SPaR!", which is designed to be a 2D fighting game.
+    The game will employ sprite-based animation, tiled backgrounds, collision detection, physics, 
+    AI, efficient memory management, render threading, and more basic 2D game techniques.
+</p>
+
+<h2>TECHNOLOGY</h2>
+<p>SPaR will be developed for the Windows Platform using the McKilla's Gorilla game engine, which is a bare-bones engine developed by 
+    Richard McKenna for rapid prototyping 2D games. DirectX will be used as the underlying rendering technology. XACT will be used for 
+    all music and sound effects management.
+</p>
+
+<h2>BACK STORY</h2>
+<p>Every year, the prestigious SPaR is held, a rock paper scissors tournament that only the masters of the art attend. This year, 
+    there are six contestants fighting for the glory of being crowned the rock paper scissors world champion. Each one has unique 
+    abilities and tools that will help them take on the competition. Who will come out on top and be crowned the victor?
+</p>
+
+<h2>OBJECTIVE</h2>
+<p>Pick one of the six characters and fight your way through the tournament! You will face off against all of the other contestants 
+    in one on one battles.
+</p>
+
+<h2>GAMEPLAY</h2>
+<p>Players will be able to choose a fighter and fight a gauntlet of opposing fighters to become the best. Players will then use moves 
+    based on an assigned type that counter each other. Whoever can get the other to 0 HP or has the highest life at the end of the timer 
+    wins.
+</p>
+<p>- Explain combo scaling</p>
+<p>- Explain archetype of each character / character moves in general</p>
+<p>- Explain what happens when certain types of moves hit each other (including moves of the same type)</p>
+
+<h2>CONTROLS</h2>
+<p>This game will be played using a keyboard. Menus will be navigated using a mouse. Once started, use the following:</p>
+
+<h3>Player 1</h3>
+<ul>
+    <li>A - Move Left</li>
+    <li>D - Move Right</li>
+    <li>S - Jump straight up</li>
+    <li>S + A - Jump left</li>
+    <li>S + D - Jump right</li>
+    <li>J - Basic Attack (Scissors)</li>
+    <li>K - Grab (Paper)</li>
+    <li>L - Block / Parry (Rock)</li>
+    <li>U - Special Attack 1</li>
+    <li>I - Special Attack 2</li>
+    <li>P - Special Attack 3</li>
+</ul>
+
+<h3>Player 2 (For multiplayer play)</h3>
+<ul>
+    <li>LEFT-ARROW - Move Left</li>
+    <li>RIGHT-ARROW - Move Right</li>
+    <li>UP-ARROW - Jump straight up</li>
+    <li>UP-ARROW + LEFT-ARROW - Jump left</li>
+    <li>UP-ARROW + RIGHT-ARROW - Jump right</li>
+    <li>NUM-1 - Basic Attack (Scissors)</li>
+    <li>NUM-2 - Grab (Paper)</li>
+    <li>NUM-3 - Block / Parry (Rock)</li>
+    <li>NUM-4 - Special Attack 1</li>
+    <li>NUM-5 - Special Attack 2</li>
+    <li>NUM-6 - Special Attack 3</li>
+</ul>
+<p>
+    ESC - This pauses the game and presents a pop-up window to the player asking them to continue when they are ready. 
+    If a game is not in progress, ESC does nothing.
+</p>
+
+<h2>GRAPHICAL USER INTERFACE</h2>
+<p>
+    Splash Screen - The splash screen GUI presents a game logo and a background of 2 characters in a level. There will be a button for 
+    starting the game. Once the “start game” is pressed, a text of our story background will appear. A “ESC to skip” text will appear 
+    on the upper right corner of the screen. Once pressed, we skip the text and jump into the Main Menu.
+</p>
+<img src="./graphs/SplashScreen.jpg">
+<br>
+<p>Main Game Menu - We need a menu for the players to choose characters from.</p>
+<ul>
+    <li>Story Mode - Select a character. Then players need to beat other characters in a certain sequence.</li>
+    <li>Free Mode - This is where you can play multiplayer with another person locally. You can also fight AI and change their characters 
+        in this mode too. Players can choose characters and stages freely and then fight.
+    </li>
+    <li>Training Mode - Select your character, stage, and enemy character. The enemy will not move or die, allowing you to practice or 
+        experiment with your character's moveset. There will be a button to reset the enemy and player to the center of the stage, a button 
+        to show hitboxes, and a button to go back to the main menu.
+    </li>
+</ul>
+<img src="./graphs/MainMenu.jpg">
+<br>
+<p>Story Mode Selection</p>
+<ul>
+    <li>Levels - Player can choose which level to play on</li>
+    <li>1 Selection Box - Single player mode. The player can choose a character. Then the player needs to beat other characters in turns on 
+        each map.
+    </li>
+    <li>Character Avatars - Avatar for each character is shown. Clicking on each avatar enables the player to choose the corresponding character.</li>
+</ul>
+<img src="./graphs/Selection.jpg">
+<br>
+<p>Free & Training Mode Selection</p>
+<ul>
+    <li>Levels - Player can choose which level to play on</li>
+    <li>2 Selection Box(for 1P and 2P) - When left clicking 1P or 2P, the player can choose a character from character avatars. Right clicking 
+        1P or 2P will switch 1P or 2P between human player or AI.
+    </li>
+    <li>Character Avatars - Avatar for each character is shown. Clicking on each avatar enables the player to choose the corresponding character.
+    </li>
+</ul>
+<img src="./graphs/Selection.jpg">
+<br>
+<p>In-Game Menu - While the game is in progress, we'll always have a game menu that allows the player to select from the following options. The game menu pops up only when “ESC” is pressed.</p>
+<ul>
+    <li>Levels - Player can choose which level to play on</li>
+    <li>Pause The Game - Once the in-game menu is popped up(pressed ESC). Game will be paused, and the input will be deactivated.</li>
+    <li>Display Controls - If pressed, the game will display an info screen that includes a description of all game controls.</li>
+    <li>About - If pressed, the game will display an credit screen</li>
+    <li>Exit - If pressed, the game program will exit.</li>
+</ul>
+<img src="./graphs/InGameMenu.jpg">
+<br>
+<p>In-Game GUI - Once a game starts, a 3-2-1-Begin sequence is counted down and displayed for the player to see. Once begun, two players 
+    can move and attack each other. There will be a timer to limit one game.
+</p>
+<ul>
+    <li>Timer (first 3s countdown, and then count down from 90s) for each round</li>
+    <li>2 Hit combo texts on both sides.</li>
+    <li>HP for each player</li>
+    <li>Avatar For each character (next to their hp)</li>
+    <li>Round Counter</li>
+</ul>
+<img src="./graphs/InGame.jpg">
+
+<h2>ARTWORK</h2>
+<p>All artwork in the game will be original. The following needs to be created:</p>
+<br>
+<p>Fighters - There will be 6 unique fighters in the game, each with 6 different attacks. Each will require animations for:</p>
+<ul>
+    <li>Walking Forward</li>
+    <li>Walking Backwards</li>
+    <li>Jumping</li>
+    <li>Animations for each of the 6 attacks</li>
+    <li>Taking Damage</li>
+    <li>Dying</li>
+    <li>Winning / Dance / Celebration</li>
+</ul>
+<br>
+<p>Levels/Stages - We will need to decorate the background of the game to match each fighter.</p>
+<br>
+<p>UIs - Each gui mentioned before needs corresponding UI artwork.</p>
+
+
+<h2>SOUND EFFECTS</h2>
+<p>All sound effects will be original. Sounds must be made to coincide with each of the following events:</p>
+<ul>
+    <li>Walking</li>
+    <li>Punch</li>
+    <li>Block</li>
+    <li>Grab</li>
+    <li>Jump</li>
+    <li>Round Start (3, 2, 1, Fight!)</li>
+</ul>
+
+<h2>Music</h2>
+<ul>
+    <li>There will be different music for:</li>
+    <li>Each of the 6 stages (probably different music on each stage)</li>
+    <li>Menu Music</li>
+    <li>Victory theme</li>
+</ul>
+
+</body>
+</html> 
