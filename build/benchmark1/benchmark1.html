@@ -37,17 +37,103 @@ img {
 
 <h2>OBJECTIVE</h2>
 <p>Pick one of the six characters and fight your way through the tournament! You will face off against all of the other contestants 
-    in one on one battles.
+    in one on one battles. Win two out of three rounds against each opponent to win each match until you become the champion!
 </p>
 
 <h2>GAMEPLAY</h2>
-<p>Players will be able to choose a fighter and fight a gauntlet of opposing fighters to become the best. Players will then use moves 
-    based on an assigned type that counter each other. Whoever can get the other to 0 HP or has the highest life at the end of the timer 
-    wins.
+<p>Players will be able to choose a fighter and fight a gauntlet of opposing fighters to become the best. This will be accomplished 
+	by using moves based on rock, paper, or scissors that will counter each other. Whoever can get the other to 0 HP or has the highest life at the end of the timer wins.
 </p>
-<p>- Explain combo scaling</p>
-<p>- Explain archetype of each character / character moves in general</p>
-<p>- Explain what happens when certain types of moves hit each other (including moves of the same type)</p>
+
+<h3>Movement:</h3>
+<p> Being a 2d fighter game, each player’s movement will be fairly limited. 
+	You can walk forwards (towards your opponent), walk backwards (at a slower speed 
+	than walking forwards), jump forwards at a 45 degree angle, jump straight up, and 
+	jump backwards at a 45 degree angle. The stage is limited by walls on either side. 
+	These walls stop players and the viewport from progressing past them. This is 
+	called “the corner” of the stage, and during gameplay can be used to get high damage combos off of the wall.
+</p>
+
+<h3>Attack Types:</h3>
+<p>Every character in the game will have 3 basic attacks and 3 special attacks. 
+The basic attacks are shared across each character and they are as follows: a close range attack, a grab, and a block. The main mechanic of this game is that 
+every move will be assigned a type: rock, paper, or scissors, and moves will “win” against moves of different types. “Winning” means that your attack connects while 
+the other person’s attack is interrupted, leaving them vulnerable. The basic attacks are assigned as: the attack is scissors, the grab is paper, and the block is rock. 
+</p>The final basic attack that every character will share is a jumping (scissors) attack. 
+While in the air, the only options will be to do nothing or to do this attack, 
+but if you attack you will have to wait a short moment after landing before being able to act. 
+<p>
+</p>
+<p>In addition to these, every character will have 3 special moves that differentiate them from one another. These moves can be of any of the three types, 
+so for example a character can have their 3 basic attacks and then 2 scissors special attacks and 1 rock special attack. 
+Every character will also have slightly different health and walk speed stats.
+</p>
+
+<h3>Combos and Combo Scaling:</h3>
+<p> The main objective of a 2d fighting game like SPaR is to 
+	take advantage of your opponent’s mistakes to find an opening where you can deal massive damage through a 
+	combination of different moves. This is possible since most attacks send the opponent upwards or away from them. 
+	An issue that this can lead to is infinite combos, 
+	where once the combo has started the attacker does consecutive attacks and the other player cannot do anything to stop their death 
+	(this usually happens in the corner of a stage). 
+</p>
+	<p>To prevent this, there will be a system called combo scaling. 
+	Every attack that you can do will have a set amount of damage and a 
+	knockback angle attached to it. The more hits that you do in a combo, the less damage 
+	and less knockback each consecutive hit will do. This number will be arrived at by testing, 
+	but a good scaling number would be around 0.8 (so 0.8 times less knockback and damage), since it allows for short combos to work and still do high damage but stops the potential for infinite combos.
+
+</p>
+
+<h3>Characters (Subject to Change):</h3>
+<p>Right now we have no clear idea of how our characters will look or play, but we are basing them off of these general ideas:
+</p>
+<ul>
+    <li>1) The “basic character” - His special moves will be as general use as possible. He will have a fireball projectile (scissors), 
+	a close range kick (scissors) that he can use to extend combos, and an uppercut (rock) that he can use to stop aerial attacks and 
+	deal large damage with the downside of massive ending lag. </li>
+    <li>2) The ranger - Their game plan is all about keeping the opponent as far away as possible at all times. 
+	This is incentivised by their ranged specials. They will not have a rock special, meaning they have lower defense. 
+	One special will be a net gun (paper) that throws the enemy closer to the ranger through the air. 
+	Their other two specials will probably be ranged (scissors) projectiles that have different properties from one another (for example, one may explode but have less range).</li>
+    <li>3) The grappler - This character will be mainly based around high damage grabs (paper) that have the downside of 
+	low startup time and long ending lag. They rely less on combos and more on these devastating high damage attacks. </li>
+    <li>4) The tank - Low speed and high health, the tank will use their mainly
+	rock based specials to stop any careless enemy approach. However, their combos and overall damage output will be relatively low due to this. </li>
+    <li>5) The rushdown character - Low health, high movement speed, high damage. One of their special moves is typeless and does no damage, but it 
+	allows them to do a quick grounded dash that they can attack out of. This allows them to constantly keep their opponent guessing while staying 
+	right in front of them. However, due to their low health, a few mistakes can lead to their death.</li>
+    <li>6) The trickster - They also have a typeless attack that lets them teleport either to the other side of their opponent or up into the air. 
+	This will let them do tricky setups with their slow moving projectile attack, leading to hard to execute but high damage combos. </li>
+</ul>
+<h3>Stages:</h3>
+<p>Each stage will have a different background and different stage hazards (like traps) to differentiate them. Each stage will (probably) 
+be themed around one of the characters in the game. This is also subject to change, but the current stage list is:
+</p>
+<ul>
+    <li>Dojo - Will have nothing interesting</li>
+    <li>Forest - apples fall randomly that can be picked up to regain a small amount of health.</li>
+    <li>City - the corners of the stage will randomly be passed through by cars (warning will be given) that deal massive damage.
+</li>
+    <li>Beach - coconuts will fall periodically from trees that must be dodged.</li>
+    <li>Space station - there will be low gravity which will lead to massive combos becoming possible.
+</li>
+    <li>Volcano - Instead of walls at both sides of the stage, there will be a pit of lava that leads to instant death if fallen into.</li>
+</ul>
+
+<h3>Modes:</h3>
+<p>In all modes besides for training, two characters will face off against each other until one of them wins 2 rounds.
+</p>
+<ul>
+    <li>Story Mode - In this mode, you will choose a character and then battle through all 6 characters 
+	(including your chosen character) and all 6 stages in a predetermined order. You will need to beat the first stage to access the next, and so on. 
+	There may be cutscenes between the stages in order to tell a story, but this may not happen due to time constraints.</li>
+    <li>Free Play Mode - In this mode you can play against other players locally or play against AI. 
+	You will be able to choose both characters that are in the match as well as what stage you play on.</li>
+    <li>Training Mode - This is similar to Free Play Mode, but it is only for one player. There will be an enemy whose character is chosen by you. After you deal damage to the enemy, 
+	they will heal when the combo ends. This lets you test how much damage certain combos do. 
+	There will also be buttons to show hitboxes and to reset the player and AI positions to the center of the stage. The AI can be controlled with player 2’s control buttons for more in depth tests.</li>
+</ul>
 
 <h2>CONTROLS</h2>
 <p>This game will be played using a keyboard. Menus will be navigated using a mouse. Once started, use the following:</p>
