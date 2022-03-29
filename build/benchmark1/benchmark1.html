@@ -5,6 +5,10 @@
 .title {
     text-align: center;
 }
+img {
+    width: 100%;
+    height: fit-content;
+}
 </style>
 </head>
 
@@ -83,25 +87,43 @@
 </p>
 
 <h2>GRAPHICAL USER INTERFACE</h2>
+<img src="./wireframe.png">
 <p>
     Splash Screen - The splash screen GUI presents a game logo and a background of 2 characters in a level. There will be a button for 
     starting the game. Once the “start game” is pressed, a text of our story background will appear. A “ESC to skip” text will appear 
     on the upper right corner of the screen. Once pressed, we skip the text and jump into the Main Menu.
 </p>
-<img src="./graphs/SplashScreen.jpg">
+<img src="./GUI Images/Splash Screen.png">
 <br>
-<p>Main Game Menu - We need a menu for the players to choose characters from.</p>
+<p>Main Game Menu</p>
+<ul>
+    <li>Play Game - lets players select their game mode</li>
+    <li>Controls - Leads the player to a screen where they can see the control scheme for both player 1 and 2</li>
+    <li>Tutorial - the player is put into a short tutorial playing as the “basic character” against an unmoving AI that teaches them the 
+        controls and a basic combo.
+    </li>
+    <li>Help - Displays text saying who developed the game.You can also activate cheats here. On this page, there is a “view character 
+        profiles” button that takes you to a new screen.
+    </li>
+    <li> Character profiles - a screen that displays a character’s name, avatar, moveset, and general strengths and weaknesses. Used to 
+        learn about the basics of each character.
+    </li>
+</ul>
+<img src="./GUI Images/Main Menu.png">
+<img src="./GUI Images/Play Game.png">
+<br>
+<p>Game Modes</p>
 <ul>
     <li>Story Mode - Select a character. Then players need to beat other characters in a certain sequence.</li>
     <li>Free Mode - This is where you can play multiplayer with another person locally. You can also fight AI and change their characters 
         in this mode too. Players can choose characters and stages freely and then fight.
     </li>
     <li>Training Mode - Select your character, stage, and enemy character. The enemy will not move or die, allowing you to practice or 
-        experiment with your character's moveset. There will be a button to reset the enemy and player to the center of the stage, a button 
+        experiment with your character’s moveset. There will be a button to reset the enemy and player to the center of the stage, a button 
         to show hitboxes, and a button to go back to the main menu.
     </li>
 </ul>
-<img src="./graphs/MainMenu.jpg">
+
 <br>
 <p>Story Mode Selection</p>
 <ul>
@@ -109,9 +131,10 @@
     <li>1 Selection Box - Single player mode. The player can choose a character. Then the player needs to beat other characters in turns on 
         each map.
     </li>
-    <li>Character Avatars - Avatar for each character is shown. Clicking on each avatar enables the player to choose the corresponding character.</li>
+    <li>Character Avatars - Avatar for each character is shown. Clicking on each avatar enables the player to choose the corresponding character.
+    </li>
 </ul>
-<img src="./graphs/Selection.jpg">
+
 <br>
 <p>Free & Training Mode Selection</p>
 <ul>
@@ -122,7 +145,8 @@
     <li>Character Avatars - Avatar for each character is shown. Clicking on each avatar enables the player to choose the corresponding character.
     </li>
 </ul>
-<img src="./graphs/Selection.jpg">
+<img src="./GUI Images/Stage Select.png">
+<img src="./GUI Images/Character Select.png">
 <br>
 <p>In-Game Menu - While the game is in progress, we'll always have a game menu that allows the player to select from the following options. The game menu pops up only when “ESC” is pressed.</p>
 <ul>
@@ -132,7 +156,7 @@
     <li>About - If pressed, the game will display an credit screen</li>
     <li>Exit - If pressed, the game program will exit.</li>
 </ul>
-<img src="./graphs/InGameMenu.jpg">
+<img src="./GUI Images/In Game Pause Screen.png">
 <br>
 <p>In-Game GUI - Once a game starts, a 3-2-1-Begin sequence is counted down and displayed for the player to see. Once begun, two players 
     can move and attack each other. There will be a timer to limit one game.
@@ -144,7 +168,7 @@
     <li>Avatar For each character (next to their hp)</li>
     <li>Round Counter</li>
 </ul>
-<img src="./graphs/InGame.jpg">
+<img src="./GUI Images/In Game.png">
 
 <h2>ARTWORK</h2>
 <p>All artwork in the game will be original. The following needs to be created:</p>
