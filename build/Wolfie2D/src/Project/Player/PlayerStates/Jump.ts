@@ -12,7 +12,7 @@ export default class Jump extends InAir {
 		this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "jump", loop: false, holdReference: false});
 	}
 
-	updateSuit() {
+	updateAnim() {
 		this.owner.animation.play("JUMP", true);
 	}
 

@@ -6,6 +6,8 @@ import GameLevel from "./GameLevel";
 import Level2 from "./Level2";
 
 export default class Level1 extends GameLevel {
+    
+
     loadScene(): void {
         // Load resources
         this.load.tilemap("level1", "project_assets/tilemaps/level1.json");
@@ -20,8 +22,8 @@ export default class Level1 extends GameLevel {
     }
 
     unloadScene(){
-        this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "level_music"});
-        // Keep resources - this is up to you
+        //this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "level_music"});
+        //Do not keep anything related to player. These will be loaded differently each timme dependent on player choice
         this.resourceManager.keepSpritesheet("player");
         this.resourceManager.keepSpritesheet("red");
         this.resourceManager.keepSpritesheet("blue");
@@ -45,7 +47,7 @@ export default class Level1 extends GameLevel {
         // Do generic setup for a GameLevel
         super.startScene();
         
-        this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "level_music", loop: true, holdReference: true});
+        //this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "level_music", loop: true, holdReference: true});
     }
 
     updateScene(deltaT: number): void {

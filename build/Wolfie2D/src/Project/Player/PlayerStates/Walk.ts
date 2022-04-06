@@ -10,16 +10,16 @@ export default class Walk extends OnGround {
 		this.parent.speed = this.parent.MIN_SPEED;
 	}
 
+	updateAnim() {
+		this.owner.animation.playIfNotAlready("WALK", true);
+	}
+
 	update(deltaT: number): void {
 		super.update(deltaT);
 		let dir = this.getInputDirection();
 
 		if(dir.isZero()){
 			this.finished(PlayerStates.IDLE);
-		} else {
-			if(Input.isPressed("run")){
-				this.finished(PlayerStates.RUN);
-			}
 		}
 
 		this.parent.velocity.x = dir.x * this.parent.speed

@@ -7,8 +7,8 @@ import GameLevel from "./GameLevel";
 export default class Level2 extends GameLevel {
     loadScene(): void {
         // Load resources
-        this.load.tilemap("level2", "hw5_assets/tilemaps/level2.json");
-        this.load.spritesheet("green", "hw5_assets/spritesheets/greenBalloon.json");
+        this.load.tilemap("level2", "project_assets/tilemaps/level2.json");
+        this.load.spritesheet("green", "project_assets/spritesheets/greenBalloon.json");
     }
 
     startScene(): void {

@@ -3,6 +3,7 @@ export enum Project_Events {
     PLAYER_JUMP = "PlayerJump",
 
     PLAYER_ATTACK = "PlayerAttack",
+    FIRE_PROJECTILE = "FireProjectile",
 
     LEVEL_START = "LevelStart",
     LEVEL_END = "LevelEnd",
