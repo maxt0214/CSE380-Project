@@ -34,13 +34,16 @@ export default class GameLevel extends Scene {
     protected player2Spawn: Vec2;
     protected player2: AnimatedSprite;
     protected static hp2: number = 3;
+    protected isAI: boolean;
     //UI
     protected hp2label: Label;
     protected round2label: Label;
     protected combo2label: Label;
     //round timer and round count
     protected rounds: number = 3;
-    protected roundTimer: Timer;
+    protected roundTimer: number;
+    protected countdownTimer : number;
+
     protected timerLabel: Label;
     protected roundOverLabel: Label;
     protected gameOverLabel: Label;
@@ -55,10 +58,25 @@ export default class GameLevel extends Scene {
     // Custom particle sysyem
     protected system: Project_ParticleSystem;
 
+    protected initOptions: Record<string, any>;
+
     initScene(init: Record<string, any>): void {
-        //load player base on selection
-        this.load.object("skillset1","project_assets/skills/ranger.json");
-        this.load.object("skillset2","project_assets/skills/ranger.json");
+        this.initOptions = init;
+    }
+
+    //Initialize player and map base on selection
+    loadScene(): void {
+        this.load.tilemap("level", this.initOptions.map);
+
+        this.load.spritesheet("player1", this.initOptions.p1);
+        this.load.spritesheet("player2", this.initOptions.p2);
+
+        this.load.audio("level_music", "project_assets/music/levelmusic.wav");
+
+        this.load.object("skillset1",this.initOptions.p1Skillset);
+        this.load.object("skillset2",this.initOptions.p2Skillset);
+
+        this.isAI = this.initOptions.isP2AI;
     }
 
     startScene(): void {
@@ -70,10 +88,8 @@ export default class GameLevel extends Scene {
         this.addUI();
         
         // Initialize the round timer of 90 seconds
-        this.roundTimer = new Timer(90000, () => {
-            //TODO: Round over, call round over
-            this.levelTransitionScreen.tweens.play("fadeIn");
-        });
+        this.countdownTimer = 3000;
+        this.roundTimer = 90000;
         this.levelTransitionTimer = new Timer(500);
         // Start the black screen fade out to the current screen
         this.levelTransitionScreen.tweens.play("fadeOut");
@@ -87,16 +103,12 @@ export default class GameLevel extends Scene {
         while (this.receiver.hasNextEvent()) {
             let event = this.receiver.getNextEvent();
             switch (event.type) {
-                case Project_Events.LEVEL_START:
-                    // Re-enable controls
-                    Input.enableInput();
-                    break;
                 case Project_Events.LEVEL_END:
                     // On level end, go back to main menu
                     this.sceneManager.changeToScene(MainMenu, {});
                     break;
                 case Project_Events.PLAYER_KILLED:
-                    this.respawnPlayer();
+                    this.roundOver();
                     break;
                 case Project_Events.PLAYER_ATTACK:
                     let dmgInfo = event.data as Record<string,any>;
@@ -112,11 +124,19 @@ export default class GameLevel extends Scene {
                     }
                     break;
                 case Project_Events.FIRE_PROJECTILE:
-                    //Fire a project tile
+                    //TODO: Fire a project tile
                     
                     break;
             }
         }
+        //handle timers
+        if(this.countdownTimer <= 0) {
+            if(this.roundTimer <= 0) {
+                this.roundOver();
+            }
+            this.roundTimer -= deltaT;
+        }
+        this.countdownTimer -= deltaT;
     }
 
     /**
@@ -216,14 +236,12 @@ export default class GameLevel extends Scene {
                     end: 0,
                     ease: EaseFunctionType.IN_OUT_QUAD
                 }
-            ],
-            onEnd: Project_Events.LEVEL_START
+            ]
         });
     }
 
     /**
-     * Initializes the player 
-     * TODO: change start positions. Add AI based on  game mode
+     * Initializes the player
      */
     protected initPlayer(): void {
         // Add the player 1
@@ -255,7 +273,7 @@ export default class GameLevel extends Scene {
         this.player2.addPhysics(new AABB(Vec2.ZERO, new Vec2(14, 14)));
         this.player2.colliderOffset.set(0, 2);
         this.player2.addAI(PlayerController, { 
-            playerType: "platformer", 
+            playerType: this.isAI ? "AI" : "platformer", 
             tilemap: "Main", 
             color: Project_Color.BLUE,
             skills:this.load.getObject("skillset2")
@@ -289,14 +307,35 @@ export default class GameLevel extends Scene {
         }
     }
 
-    /**
-     * Returns the player to spawn
-     */
-    protected respawnPlayer(): void {
-
-        this.emitter.fireEvent(GameEventType.STOP_SOUND, { key: "level_music" });
-        this.sceneManager.changeToScene(MainMenu, {});
-        Input.enableInput();
+    protected roundOver(): void {
+        Input.disableInput();
         this.system.stopSystem();
+        //all rounds over, back to main menu
+        if(this.rounds <= 0) {
+            this.sceneManager.changeToScene(MainMenu, {});
+
+            return;
+        }
+
+        //TODO: show player wining UI
+        if(GameLevel.hp1 <= 0) {
+            
+        } else if(GameLevel.hp2 <= 0) {
+
+        } else {
+
+        }
+
+        //reset player stat
+        GameLevel.hp1 = 10;
+        GameLevel.hp2 = 10;
+        this.player1.position = this.player1Spawn.clone();
+        this.player2.position = this.player2Spawn.clone();
+        this.rounds--;
+        
+        this.countdownTimer = 3000;
+        this.roundTimer = 90000;
+        
+        this.levelTransitionScreen.tweens.play("fadeIn");
     }
 }

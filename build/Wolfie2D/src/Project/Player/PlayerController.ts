@@ -24,7 +24,7 @@ import Walk from "./PlayerStates/Walk";
 
 export enum PlayerType {
     PLATFORMER = "platformer",
-    TOPDOWN = "topdown"
+    AI = "AI"
 }
 
 export enum PlayerStates {

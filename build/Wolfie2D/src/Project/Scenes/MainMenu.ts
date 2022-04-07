@@ -45,7 +45,15 @@ export default class MainMenu extends Scene {
                     ]
                 }
             }
-            this.sceneManager.changeToScene(Level1, {}, sceneOptions);
+            this.sceneManager.changeToScene(Level1, { 
+                map: "project_assets/tilemaps/level1.json",
+                p1: "project_assets/spritesheets/spike.json",
+                p2: "project_assets/spritesheets/spike.json",
+                
+                p1Skillset: "project_assets/skills/ranger.json", 
+                p2Skillset: "project_assets/skills/ranger.json", 
+                isP2AI: false 
+            }, sceneOptions);
         }
 
         // Scene has started, so start playing music
