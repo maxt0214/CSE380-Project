@@ -11,22 +11,26 @@ import PlayerState from "./PlayerState";
 
 export default class HURT extends PlayerState {
 	owner: AnimatedSprite;
-	freeTimer: Timer;
+	freeTimer: number;
 
 	onEnter(options: Record<string, any>): void {
 		//this.owner.animation.play("HURT", false);
-		this.freeTimer = new Timer(5000/this.parent.combo,() => 
-		{
-			this.owner.animation.stop();
+		this.freeTimer = 5/ (this.parent.combo < 1 ? 1 : this.parent.combo);
+		console.log(`Hurting after ${this.freeTimer} seconds`);
+	}
+
+	update(deltaT: number): void {
+		super.update(deltaT);
+		this.freeTimer -= deltaT;
+		if(this.freeTimer <= 0) {
 			this.parent.invincible = true;
-			this.parent.protectTimer = new Timer(1000,() => { this.parent.invincible = false; })
+			this.parent.protectTimer = new Timer(10,() => { this.parent.invincible = false; })
 			this.finished(PlayerStates.IDLE); 
-		});
+		}
 	}
 
 	onExit(): Record<string, any> {
 		//this.owner.animation.stop();
-		this.freeTimer.pause();
 		return {};
 	}
 }
