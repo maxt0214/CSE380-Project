@@ -2,12 +2,12 @@
     "attack": {
         "dmg": -1,
         "range": {
-            "x": 2,
-            "y": 1
+            "x": 30,
+            "y": 25
         },
         "state": "HURT",
         "timer": 1,
-        "projectile": "fireball"
+        "projectile": ""
     },
     "grab": {
         "dmg": 0,

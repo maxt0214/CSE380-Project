@@ -23,7 +23,7 @@ export default class AttackBase extends PlayerState {
 		this.range = new Vec2(skill.range.x, skill.range.y);
 		this.buffState = skill.state;
 		this.projectile = skill.projectile;
-		this.timer = skill.timer * 1000;
+		this.timer = skill.timer * 1;
 	}
 
 	onEnter(options: Record<string, any>): void {
@@ -34,6 +34,7 @@ export default class AttackBase extends PlayerState {
 	}
 
 	update(deltaT: number): void {
+		super.update(deltaT);
 		this.timer -= deltaT;
 		if(this.timer < 0)
 			this.finished(PlayerStates.IDLE);

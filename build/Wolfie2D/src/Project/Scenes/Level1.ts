@@ -32,7 +32,7 @@ export default class Level1 extends GameLevel {
         // Do generic setup for a GameLevel
         super.startScene();
         
-        this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "level_music", loop: true, holdReference: true});
+        //this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "level_music", loop: true, holdReference: true});
     }
 
     updateScene(deltaT: number): void {

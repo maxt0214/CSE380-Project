@@ -20,9 +20,6 @@ export default class Block extends AttackBase {
 		super.onEnter(options);
 	}
 
-	update(deltaT: number): void {
-	}
-
 	onExit(): Record<string, any> {
 		this.owner.animation.stop();
 		return {};

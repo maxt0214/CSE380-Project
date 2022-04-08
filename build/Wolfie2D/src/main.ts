@@ -13,7 +13,7 @@ import MainMenu from "./Project/Scenes/MainMenu";
         inputs: [
             {name: "left1", keys: ["a"]},
             {name: "right1", keys: ["d"]},
-            {name: "jump1", keys: ["s"]},
+            {name: "jump1", keys: ["w"]},
             {name: "attack1", keys: ["j"]},
             {name: "grab1", keys: ["k"]},
             {name: "block1", keys: ["l"]},

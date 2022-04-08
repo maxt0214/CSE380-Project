@@ -33,7 +33,7 @@ export default abstract class PlayerState extends State {
 		let direction = Vec2.ZERO;
 		if(this.parent.party === Project_Color.RED) {
 			direction.x = (Input.isPressed("left1") ? -1 : 0) + (Input.isPressed("right1") ? 1 : 0);
-			direction.y = (Input.isJustPressed("jump2") ? -1 : 0);
+			direction.y = (Input.isJustPressed("jump1") ? -1 : 0);
 		} else {
 			direction.x = (Input.isPressed("left2") ? -1 : 0) + (Input.isPressed("right2") ? 1 : 0);
 			direction.y = (Input.isJustPressed("jump2") ? -1 : 0);

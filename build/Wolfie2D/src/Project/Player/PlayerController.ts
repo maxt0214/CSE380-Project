@@ -28,21 +28,24 @@ export enum PlayerType {
 }
 
 export enum PlayerStates {
+    //movement
     IDLE = "idle",
     WALK = "walk",
 	JUMP = "jump",
     FALL = "fall",
-
+    //attack
     ATK = "attack",
     GRAB = "grab",
     BLOCK = "block",
     SKILL1 = "skill1",
     SKILL2 = "skill2",
     SKILL3 = "skill3",
-
+    
     HURT = "HURT",
-
+    //Special status. (buff)
     STUN = "STUN",
+
+    //AI states
 
 	PREVIOUS = "previous"
 }
@@ -114,7 +117,11 @@ export default class PlayerController extends StateMachineAI {
 
     update(deltaT: number): void {
 		super.update(deltaT);
-        console.log(`Current State: ${this.currentState}`);
+        if(this.currentState instanceof Attack) {
+            console.log(`${this.party} is attacking!`);
+        } else if(this.currentState instanceof HURT) {
+            console.log(`${this.party} is being hurt!`);
+        }
 	}
 
     inRange(center: Vec2, range: Vec2, state: string) {

@@ -14,7 +14,7 @@ export default class HURT extends PlayerState {
 	freeTimer: Timer;
 
 	onEnter(options: Record<string, any>): void {
-		this.owner.animation.play("HURT", false);
+		//this.owner.animation.play("HURT", false);
 		this.freeTimer = new Timer(5000/this.parent.combo,() => 
 		{
 			this.owner.animation.stop();
@@ -24,12 +24,8 @@ export default class HURT extends PlayerState {
 		});
 	}
 
-	update(deltaT: number): void {
-
-	}
-
 	onExit(): Record<string, any> {
-		this.owner.animation.stop();
+		//this.owner.animation.stop();
 		this.freeTimer.pause();
 		return {};
 	}

@@ -95,7 +95,7 @@ export default class GameLevel extends Scene {
         this.levelTransitionScreen.tweens.play("fadeOut");
 
         // Initially disable player movement
-        Input.disableInput();
+        //Input.disableInput();
     }
 
     updateScene(deltaT: number) {
@@ -115,7 +115,7 @@ export default class GameLevel extends Scene {
                     let p1 = this.player1._ai as PlayerController;
                     let p2 = this.player2._ai as PlayerController;
                     console.log(`Player[${dmgInfo.get("party")}] attacks center[${dmgInfo.get("center")}] Range[${dmgInfo.get("range")}]`);
-                    if(dmgInfo.party === Project_Color.RED) {
+                    if(dmgInfo.get("party") === Project_Color.RED) {
                         if(p2.inRange(dmgInfo.get("center"),dmgInfo.get("range"),dmgInfo.get("state")))
                             this.incPlayerLife(Project_Color.BLUE,dmgInfo.get("dmg"));
                     } else {
@@ -245,7 +245,7 @@ export default class GameLevel extends Scene {
      */
     protected initPlayer(): void {
         // Add the player 1
-        this.player1 = this.add.animatedSprite("player", "primary");
+        this.player1 = this.add.animatedSprite("player1", "primary");
         this.player1.scale.set(2, 2);
         if (!this.player1Spawn) {
             console.warn("Player 1 spawn was never set - setting spawn to (0, 0)");
@@ -263,13 +263,13 @@ export default class GameLevel extends Scene {
         this.player1.setGroup("player");
         this.viewport.follow(this.player1);
         // Add the player 2
-        this.player2 = this.add.animatedSprite("player", "primary");
+        this.player2 = this.add.animatedSprite("player2", "primary");
         this.player2.scale.set(2, 2);
         if (!this.player2Spawn) {
             console.warn("Player 2 spawn was never set - setting spawn to (0, 0)");
             this.player2Spawn = Vec2.ZERO;
         }
-        this.player2.position.copy(this.player1Spawn);
+        this.player2.position.copy(this.player2Spawn);
         this.player2.addPhysics(new AABB(Vec2.ZERO, new Vec2(14, 14)));
         this.player2.colliderOffset.set(0, 2);
         this.player2.addAI(PlayerController, { 
@@ -317,7 +317,7 @@ export default class GameLevel extends Scene {
             return;
         }
 
-        //TODO: show player wining UI
+        //TODO: show player winning UI
         if(GameLevel.hp1 <= 0) {
             
         } else if(GameLevel.hp2 <= 0) {
