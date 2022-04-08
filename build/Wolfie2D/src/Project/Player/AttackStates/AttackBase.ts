@@ -14,6 +14,7 @@ export default class AttackBase extends PlayerState {
 	damage: number;
 	range: Vec2;
 	buffState: string;
+	cdTime: number;
 	timer: number;
 	projectile: string;
 
@@ -23,10 +24,11 @@ export default class AttackBase extends PlayerState {
 		this.range = new Vec2(skill.range.x, skill.range.y);
 		this.buffState = skill.state;
 		this.projectile = skill.projectile;
-		this.timer = skill.timer * 1;
+		this.cdTime = skill.timer * 1;
 	}
 
 	onEnter(options: Record<string, any>): void {
+		this.timer = this.cdTime;
 		if(this.projectile === "")
 			this.close_range();
 		else

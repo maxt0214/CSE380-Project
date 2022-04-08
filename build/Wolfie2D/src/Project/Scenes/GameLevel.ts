@@ -174,11 +174,11 @@ export default class GameLevel extends Scene {
      */
     protected addUI() {
         // In-game labels
-        this.hp1label = <Label>this.add.uiElement(UIElementType.LABEL, "UI", { position: new Vec2(500, 30), text: "Lives: " + GameLevel.hp1 });
+        this.hp1label = <Label>this.add.uiElement(UIElementType.LABEL, "UI", { position: new Vec2(100, 30), text: "Lives: " + GameLevel.hp1 });
         this.hp1label.textColor = Color.BLACK;
         this.hp1label.font = "PixelSimple";
         
-        this.hp2label = <Label>this.add.uiElement(UIElementType.LABEL, "UI", { position: new Vec2(100, 30), text: "Lives: " + GameLevel.hp2 });
+        this.hp2label = <Label>this.add.uiElement(UIElementType.LABEL, "UI", { position: new Vec2(500, 30), text: "Lives: " + GameLevel.hp2 });
         this.hp2label.textColor = Color.BLACK;
         this.hp2label.font = "PixelSimple";
 

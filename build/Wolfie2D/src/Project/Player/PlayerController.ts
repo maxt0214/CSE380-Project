@@ -60,7 +60,7 @@ export default class PlayerController extends StateMachineAI {
     party: Project_Color;
     skills: Record<string,any>;
     //num hit this player receives. In other words, combo count for the other player
-    combo: number;
+    combo: number = 0;
     //invincible timer after being hit for high combo
     invincible: boolean = false;
     protectTimer: Timer;
@@ -122,6 +122,7 @@ export default class PlayerController extends StateMachineAI {
         } else if(this.currentState instanceof HURT) {
             console.log(`${this.party} is being hurt!`);
         }
+        //console.log(`Invincible ${this.invincible}`);
 	}
 
     inRange(center: Vec2, range: Vec2, state: string) {
