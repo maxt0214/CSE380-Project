@@ -7,7 +7,7 @@
         },
         "state": "HURT",
         "timer": 1,
-        "projectile": "fireball"
+        "projectile": ""
     },
     "grab": {
         "dmg": 0,
