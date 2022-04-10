@@ -27,6 +27,8 @@ export default class HURT extends PlayerState {
 			this.parent.protectTimer = new Timer(10,() => { this.parent.invincible = false; })
 			this.finished(PlayerStates.IDLE); 
 		}
+
+		//this.owner.move(new Vec2(this.parent.attDir * deltaT * this.parent.MIN_SPEED,0));
 	}
 
 	onExit(): Record<string, any> {

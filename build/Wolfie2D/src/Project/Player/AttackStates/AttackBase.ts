@@ -55,13 +55,14 @@ export default class AttackBase extends PlayerState {
 			dmg: this.damage, 
 			center: this.owner.position.clone().add(offset),
 			range: this.range.clone(),
-			state: this.buffState //state the enemy will enter after hit. This is essentially buff
+			state: this.buffState, //state the enemy will enter after hit. This is essentially buff
+			dir: offset.x
 		});
 	}
 
 	long_range():void {
 		//deal with projectile
-		let offset = new Vec2(this.owner.invertX ? -2 : 2, 0);
+		let offset = new Vec2(this.owner.invertX ? -1 : 1, 0);
 		this.emitter.fireEvent(Project_Events.FIRE_PROJECTILE, 
 		{
 			party: this.parent.party,

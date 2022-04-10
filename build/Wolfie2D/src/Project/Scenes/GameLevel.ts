@@ -3,7 +3,7 @@ import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
 import Debug from "../../Wolfie2D/Debug/Debug";
 import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 import Input from "../../Wolfie2D/Input/Input";
-import { TweenableProperties } from "../../Wolfie2D/Nodes/GameNode";
+import GameNode, { TweenableProperties } from "../../Wolfie2D/Nodes/GameNode";
 import { GraphicType } from "../../Wolfie2D/Nodes/Graphics/GraphicTypes";
 import Particle from "../../Wolfie2D/Nodes/Graphics/Particle";
 import Point from "../../Wolfie2D/Nodes/Graphics/Point";
@@ -20,6 +20,10 @@ import { Project_Events } from "../project_enums";
 import PlayerController from "../Player/PlayerController";
 import MainMenu from "./MainMenu";
 import Project_ParticleSystem from "../project_ParticleSystem";
+import Prop from "../Props/Prop";
+import List from "../../Wolfie2D/DataTypes/List";
+import Graphic from "../../Wolfie2D/Nodes/Graphic";
+import Map from "../../Wolfie2D/DataTypes/Map"
 
 export default class GameLevel extends Scene {
     //player 1
@@ -35,6 +39,8 @@ export default class GameLevel extends Scene {
     protected player2: AnimatedSprite;
     protected static hp2: number = 3;
     protected isAI: boolean;
+    //props
+    protected props: Array<AnimatedSprite> = new Array(50);
     //UI
     protected hp2label: Label;
     protected round2label: Label;
@@ -67,15 +73,18 @@ export default class GameLevel extends Scene {
     //Initialize player and map base on selection
     loadScene(): void {
         this.load.tilemap("level", this.initOptions.map);
-
+        //load p1 and p2
         this.load.spritesheet("player1", this.initOptions.p1);
         this.load.spritesheet("player2", this.initOptions.p2);
-
+        //load level music
         this.load.audio("level_music", "project_assets/music/levelmusic.wav");
-
+        //load skills for p1 and p2
         this.load.object("skillset1",this.initOptions.p1Skillset);
         this.load.object("skillset2",this.initOptions.p2Skillset);
-
+        //load props
+        this.load.spritesheet("fireball_sp", "project_assets/spritesheets/fireball.json");
+        this.load.object("fireball","project_assets/props/fireball.json");
+        
         this.isAI = this.initOptions.isP2AI;
     }
 
@@ -84,6 +93,7 @@ export default class GameLevel extends Scene {
         this.initLayers();
         this.initViewport();
         this.initPlayer();
+        this.initProps();
         this.subscribeToEvents();
         this.addUI();
         
@@ -99,6 +109,7 @@ export default class GameLevel extends Scene {
     }
 
     updateScene(deltaT: number) {
+        this.handleProps();
         // Handle events and update the UI if needed
         while (this.receiver.hasNextEvent()) {
             let event = this.receiver.getNextEvent();
@@ -111,21 +122,20 @@ export default class GameLevel extends Scene {
                     this.roundOver();
                     break;
                 case Project_Events.PLAYER_ATTACK:
-                    let dmgInfo = event.data as Record<string,any>;
+                    let dmgInfo = event.data;
                     let p1 = this.player1._ai as PlayerController;
                     let p2 = this.player2._ai as PlayerController;
                     console.log(`Player[${dmgInfo.get("party")}] attacks center[${dmgInfo.get("center")}] Range[${dmgInfo.get("range")}]`);
                     if(dmgInfo.get("party") === Project_Color.RED) {
-                        if(p2.inRange(dmgInfo.get("center"),dmgInfo.get("range"),dmgInfo.get("state")))
+                        if(p2.inRange(dmgInfo.get("center"),dmgInfo.get("range"),dmgInfo.get("state"),dmgInfo.get("dir")))
                             this.incPlayerLife(Project_Color.BLUE,dmgInfo.get("dmg"));
                     } else {
-                        if(p1.inRange(dmgInfo.get("center"),dmgInfo.get("range"),dmgInfo.get("state")))
+                        if(p1.inRange(dmgInfo.get("center"),dmgInfo.get("range"),dmgInfo.get("state"),dmgInfo.get("dir")))
                             this.incPlayerLife(Project_Color.RED,dmgInfo.get("dmg"));
                     }
                     break;
                 case Project_Events.FIRE_PROJECTILE:
-                    //TODO: Fire a project tile
-                    
+                    this.fireProjectile(event.data);
                     break;
             }
         }
@@ -164,7 +174,8 @@ export default class GameLevel extends Scene {
             Project_Events.LEVEL_START,
             Project_Events.LEVEL_END,
             Project_Events.PLAYER_KILLED,
-            Project_Events.PLAYER_ATTACK
+            Project_Events.PLAYER_ATTACK,
+            Project_Events.FIRE_PROJECTILE
         ]);
     }
 
@@ -291,7 +302,7 @@ export default class GameLevel extends Scene {
         }
 
         this.hp1label.text = "Lives: " + GameLevel.hp1;
-        if (GameLevel.hp1 == 0) {
+        if (GameLevel.hp1 <= 0) {
             Input.disableInput();
             this.player1.disablePhysics();
             this.emitter.fireEvent(GameEventType.PLAY_SOUND, { key: "player_death", loop: false, holdReference: false });
@@ -299,7 +310,7 @@ export default class GameLevel extends Scene {
         }
 
         this.hp2label.text = "Lives: " + GameLevel.hp2;
-        if (GameLevel.hp2 == 0) {
+        if (GameLevel.hp2 <= 0) {
             Input.disableInput();
             this.player2.disablePhysics();
             this.emitter.fireEvent(GameEventType.PLAY_SOUND, { key: "player_death", loop: false, holdReference: false });
@@ -338,4 +349,76 @@ export default class GameLevel extends Scene {
         
         this.levelTransitionScreen.tweens.play("fadeIn");
     }
+
+    //handl collision between props and players
+    protected handleProps() {
+        let viewPort = this.viewport.getCenter().clone();
+        let viewPortSize = this.viewport.getHalfSize().scaled(2);
+
+        let p1 = this.player1._ai as PlayerController;
+        let p2 = this.player2._ai as PlayerController;
+
+        for(let prop of this.props) {
+            if(!prop.visible) continue;
+
+            let propAI = prop.ai as Prop;
+            if(this.player1.collisionShape.overlaps(prop.collisionShape) && p1.party != propAI.party) {
+                p1.hitWithProp(propAI.buff);
+                this.incPlayerLife(p1.party,propAI.dmg);
+                prop.visible = false;
+            }
+            if(this.player2.collisionShape.overlaps(prop.collisionShape) && p2.party != propAI.party) {
+                p2.hitWithProp(propAI.buff);
+                this.incPlayerLife(p2.party,propAI.dmg);
+                prop.visible = false;
+            }
+
+            this.handleScreenDespawn(prop,viewPort,viewPortSize);
+        }
+    }
+
+    protected initProps() {
+        let data = new Map<any>();
+        data.add("party", "Red");
+        data.add("center", new Vec2(0,0));
+        data.add("dir", new Vec2(0,0));
+        data.add("projectile", "fireball");
+        for(let i = 0; i < 50; i++) {
+            this.respawnProp(i, data, false);
+        }
+    }
+
+    protected fireProjectile(options:Record<string, any>) {
+        for(let i = 0; i < 50; i++) {
+            if(!this.props[i].visible) {
+                this.props[i].destroy();
+                this.respawnProp(i, options, true);
+                break;
+            }
+        }
+    }
+
+    protected respawnProp(i: number, options: Record<string,any>, visible: boolean) {
+        this.props[i] = this.add.animatedSprite(options.get("projectile")+"_sp","primary");
+
+        let prop = this.props[i];
+        prop.scale.set(2, 2);
+        prop.position.copy(options.get("center"));
+
+        prop.addAI(Prop, {
+            name: options.get("projectile"),
+            party: options.get("party"),
+            dir: options.get("dir"),
+            propInfo: this.load.getObject(options.get("projectile")).def
+        });
+        prop.setGroup("props");
+        prop.visible = visible;
+    }
+    
+    protected handleScreenDespawn(node: AnimatedSprite, viewportCenter: Vec2, paddedViewportSize: Vec2): void {
+		// Your code goes here:
+		if(node.position.y > viewportCenter.y + paddedViewportSize.y/2 || node.position.y < viewportCenter.y - paddedViewportSize.y/2) {
+			node.visible = false;
+		}
+	}
 }
