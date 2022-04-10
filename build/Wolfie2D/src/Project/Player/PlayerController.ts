@@ -57,6 +57,7 @@ export default class PlayerController extends StateMachineAI {
 	MIN_SPEED: number = 200;
     MAX_SPEED: number = 300;
     tilemap: OrthogonalTilemap;
+
     party: Project_Color;
     skills: Record<string,any>;
     //num hit this player receives. In other words, combo count for the other player
@@ -64,6 +65,8 @@ export default class PlayerController extends StateMachineAI {
     //invincible timer after being hit for high combo
     invincible: boolean = false;
     protectTimer: Timer;
+
+    attDir: number;
 
     initializeAI(owner: GameNode, options: Record<string, any>){
         this.owner = owner;
@@ -125,16 +128,21 @@ export default class PlayerController extends StateMachineAI {
         //console.log(`Invincible ${this.invincible}`);
 	}
 
-    inRange(center: Vec2, range: Vec2, state: string) {
+    inRange(center: Vec2, range: Vec2, state: string, dir: number) {
         if(this.invincible) return false;
         let xDis = Math.abs(this.owner.position.x - center.x);
         let yDis = Math.abs(this.owner.position.y - center.y);
+        this.attDir = dir;
         console.log(`Opponent attemps to attack [${center}][${range}]. Currently at [${this.owner.position}] Distance:[${xDis},${yDis}]`);
         if(xDis <= range.x && yDis <= range.y) {
             this.changeState(state);
             return true;
         }
         return false;
+    }
+
+    hitWithProp(state: string) {
+        //this.changeState(state);
     }
 
     addTweens(owner: GameNode) : void {
