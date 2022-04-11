@@ -1,5 +1,6 @@
 import Game from "./Wolfie2D/Loop/Game";
 import MainMenu from "./Project/Scenes/MainMenu";
+import SplashScreen from "./Project/Scenes/SplashScreen";
 
 // The main function is your entrypoint into Wolfie2D. Specify your first scene and any options here.
 (function main(){
@@ -30,6 +31,8 @@ import MainMenu from "./Project/Scenes/MainMenu";
             {name: "skill12", keys: ["4"]},
             {name: "skill22", keys: ["5"]},
             {name: "skill32", keys: ["6"]},
+
+            {name: "escape", keys: ["escape"]},
         ],
         useWebGL: false,                        // Tell the game we want to use webgl
         showDebug: false                       // Whether to show debug messages. You can change this to true if you want
@@ -39,7 +42,7 @@ import MainMenu from "./Project/Scenes/MainMenu";
     const game = new Game(options);
 
     // Start our game
-    game.start(MainMenu, {});
+    game.start(SplashScreen, {});
 })();
 
 function runTests(){};
