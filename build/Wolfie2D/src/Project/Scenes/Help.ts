@@ -15,7 +15,7 @@ export default class HelpScreen extends Scene {
     private bg: Sprite;
 
     loadScene(): void {
-        this.load.image("help", "project_assets/backgrounds/Controlsbig.png");
+        this.load.image("help", "project_assets/backgrounds/Helpbig.png");
     }
 
     startScene(): void {
@@ -46,7 +46,7 @@ export default class HelpScreen extends Scene {
         }
 
         // Create a back button
-        let back1Btn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x, size.y), text: "Back"});
+        let back1Btn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x, size.y + 320), text: "Back"});
         back1Btn.backgroundColor = Color.TRANSPARENT;
         back1Btn.borderColor = Color.WHITE;
         back1Btn.borderRadius = 0;

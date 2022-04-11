@@ -20,12 +20,13 @@ import { Project_Events } from "../project_enums";
 import PlayerController from "../Player/PlayerController";
 import MainMenu from "./MainMenu";
 import Project_ParticleSystem from "../project_ParticleSystem";
+import Layer from "../../Wolfie2D/Scene/Layer";
 
 export default class GameLevel extends Scene {
     //player 1
     protected player1Spawn: Vec2;
     protected player1: AnimatedSprite;
-    protected static hp1: number = 3;
+    protected static hp1: number = 10;
     //UI
     protected hp1label: Label;
     protected round1label: Label;
@@ -33,7 +34,7 @@ export default class GameLevel extends Scene {
     //player 2
     protected player2Spawn: Vec2;
     protected player2: AnimatedSprite;
-    protected static hp2: number = 3;
+    protected static hp2: number = 10;
     protected isAI: boolean;
     //UI
     protected hp2label: Label;
@@ -47,6 +48,11 @@ export default class GameLevel extends Scene {
     protected timerLabel: Label;
     protected roundOverLabel: Label;
     protected gameOverLabel: Label;
+
+    // pause stuff
+    protected gamePaused: boolean = false;
+    protected pauseUI: Layer;
+
 
     // Stuff to end the level and go to the next level
     protected nextLevel: new (...args: any) => GameLevel;
@@ -137,6 +143,16 @@ export default class GameLevel extends Scene {
             this.roundTimer -= deltaT;
         }
         this.countdownTimer -= deltaT;
+        if(Input.isJustPressed("escape")){
+            if(this.gamePaused){
+                this.gamePaused = false;
+                Input.enableInput();
+            }
+            else{
+                this.gamePaused = true;
+                Input.disableInput();
+            }
+        }
     }
 
     /**
@@ -147,6 +163,8 @@ export default class GameLevel extends Scene {
         this.addUILayer("UI");
         // Add a layer for players and enemies
         this.addLayer("primary", 1);
+        this.pauseUI = this.addUILayer("pauseUI");
+        this.pauseUI.disable;
     }
 
     /**

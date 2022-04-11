@@ -31,6 +31,8 @@ import SplashScreen from "./Project/Scenes/SplashScreen";
             {name: "skill12", keys: ["4"]},
             {name: "skill22", keys: ["5"]},
             {name: "skill32", keys: ["6"]},
+
+            {name: "escape", keys: ["escape"]},
         ],
         useWebGL: false,                        // Tell the game we want to use webgl
         showDebug: false                       // Whether to show debug messages. You can change this to true if you want
