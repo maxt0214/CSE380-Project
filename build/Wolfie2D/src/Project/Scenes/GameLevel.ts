@@ -24,12 +24,13 @@ import Prop from "../Props/Prop";
 import List from "../../Wolfie2D/DataTypes/List";
 import Graphic from "../../Wolfie2D/Nodes/Graphic";
 import Map from "../../Wolfie2D/DataTypes/Map"
+import Layer from "../../Wolfie2D/Scene/Layer";
 
 export default class GameLevel extends Scene {
     //player 1
     protected player1Spawn: Vec2;
     protected player1: AnimatedSprite;
-    protected static hp1: number = 3;
+    protected static hp1: number = 10;
     //UI
     protected hp1label: Label;
     protected round1label: Label;
@@ -37,7 +38,7 @@ export default class GameLevel extends Scene {
     //player 2
     protected player2Spawn: Vec2;
     protected player2: AnimatedSprite;
-    protected static hp2: number = 3;
+    protected static hp2: number = 10;
     protected isAI: boolean;
     //props
     protected props: Array<AnimatedSprite> = new Array(50);
@@ -53,6 +54,11 @@ export default class GameLevel extends Scene {
     protected timerLabel: Label;
     protected roundOverLabel: Label;
     protected gameOverLabel: Label;
+
+    // pause stuff
+    protected gamePaused: boolean = false;
+    protected pauseUI: Layer;
+
 
     // Stuff to end the level and go to the next level
     protected nextLevel: new (...args: any) => GameLevel;
@@ -76,8 +82,8 @@ export default class GameLevel extends Scene {
         //load p1 and p2
         this.load.spritesheet("player1", this.initOptions.p1);
         this.load.spritesheet("player2", this.initOptions.p2);
-        //load level music
-        this.load.audio("level_music", "project_assets/music/levelmusic.wav");
+
+        this.load.audio("level_music", "project_assets/music/levelmusic.mp3");
         //load skills for p1 and p2
         this.load.object("skillset1",this.initOptions.p1Skillset);
         this.load.object("skillset2",this.initOptions.p2Skillset);
@@ -147,6 +153,16 @@ export default class GameLevel extends Scene {
             this.roundTimer -= deltaT;
         }
         this.countdownTimer -= deltaT;
+        if(Input.isJustPressed("escape")){
+            if(this.gamePaused){
+                this.gamePaused = false;
+                Input.enableInput();
+            }
+            else{
+                this.gamePaused = true;
+                Input.disableInput();
+            }
+        }
     }
 
     /**
@@ -157,6 +173,8 @@ export default class GameLevel extends Scene {
         this.addUILayer("UI");
         // Add a layer for players and enemies
         this.addLayer("primary", 1);
+        this.pauseUI = this.addUILayer("pauseUI");
+        this.pauseUI.disable;
     }
 
     /**
