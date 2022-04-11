@@ -50,8 +50,8 @@ export default class MainMenu extends Scene {
                 p1: "project_assets/spritesheets/fighter.json",
                 p2: "project_assets/spritesheets/fighter.json",
                 
-                p1Skillset: "project_assets/skills/ranger.json", 
-                p2Skillset: "project_assets/skills/ranger.json", 
+                p1Skillset: "project_assets/skills/fighter.json", 
+                p2Skillset: "project_assets/skills/fighter.json", 
                 isP2AI: false 
             }, sceneOptions);
         }

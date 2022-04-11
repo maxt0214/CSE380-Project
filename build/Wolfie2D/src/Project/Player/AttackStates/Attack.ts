@@ -23,7 +23,7 @@ export default class Attack extends AttackBase {
 	}
 
 	onExit(): Record<string, any> {
-		//this.owner.animation.stop();
+		this.owner.animation.stop();
 		return {};
 	}
 }
