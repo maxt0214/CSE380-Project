@@ -22,8 +22,8 @@ export default class HomeScreen extends Scene {
     startScene(): void {
         this.addUILayer("Main");
         this.addLayer("background", 0);
-
-
+        
+        this.viewport.setCenter(600,400);
         this.bg = this.add.sprite("home", "background");
         this.bg.scale.set(1, 1);
 		this.bg.position.copy(this.viewport.getCenter());
@@ -82,6 +82,7 @@ export default class HomeScreen extends Scene {
 
         //button click
         modesBtn.onClick = () => {
+            console.log("Hello.............................");
             this.sceneManager.changeToScene(GameModes, {}, {});
         }
     }

@@ -14,7 +14,7 @@ export default class HURT extends PlayerState {
 	freeTimer: number;
 
 	onEnter(options: Record<string, any>): void {
-		//this.owner.animation.play("HURT", false);
+		this.owner.animation.play("HURT", false);
 		this.freeTimer = 5/ (this.parent.combo < 1 ? 1 : this.parent.combo);
 		console.log(`Hurting after ${this.freeTimer} seconds`);
 	}
@@ -24,15 +24,12 @@ export default class HURT extends PlayerState {
 		this.freeTimer -= deltaT;
 		if(this.freeTimer <= 0) {
 			this.parent.invincible = true;
-			this.parent.protectTimer = new Timer(10,() => { this.parent.invincible = false; })
-			this.finished(PlayerStates.IDLE); 
+			this.finished(PlayerStates.IDLE);
 		}
-
-		//this.owner.move(new Vec2(this.parent.attDir * deltaT * this.parent.MIN_SPEED,0));
 	}
 
 	onExit(): Record<string, any> {
-		//this.owner.animation.stop();
+		this.owner.animation.stop();
 		return {};
 	}
 }

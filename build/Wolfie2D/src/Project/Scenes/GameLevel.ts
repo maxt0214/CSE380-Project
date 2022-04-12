@@ -28,8 +28,8 @@ import Layer from "../../Wolfie2D/Scene/Layer";
 import Button from "../../Wolfie2D/Nodes/UIElements/Button";
 import HomeScreen from "./HomeScreen";
 
-
 export default class GameLevel extends Scene {
+    protected origin_center: Vec2;
     //player 1
     protected player1Spawn: Vec2;
     protected player1: AnimatedSprite;
@@ -77,11 +77,13 @@ export default class GameLevel extends Scene {
     protected initOptions: Record<string, any>;
 
     initScene(init: Record<string, any>): void {
+        this.origin_center = this.viewport.getCenter().clone();
         this.initOptions = init;
     }
 
     //Initialize player and map base on selection
     loadScene(): void {
+
         this.load.tilemap("level", this.initOptions.map);
         //load p1 and p2
         this.load.spritesheet("player1", this.initOptions.p1);
@@ -116,9 +118,6 @@ export default class GameLevel extends Scene {
         this.levelTransitionTimer = new Timer(500);
         // Start the black screen fade out to the current screen
         this.levelTransitionScreen.tweens.play("fadeOut");
-
-        // Initially disable player movement
-        //Input.disableInput();
     }
 
     updateScene(deltaT: number) {
@@ -127,8 +126,15 @@ export default class GameLevel extends Scene {
         while (this.receiver.hasNextEvent()) {
             let event = this.receiver.getNextEvent();
             switch (event.type) {
+                case Project_Events.ROUND_END:
+                    this.levelTransitionScreen.tweens.play("fadeOut");
+                    Input.enableInput();
+                    break;
                 case Project_Events.LEVEL_END:
                     // On level end, go back to main menu
+                    Input.enableInput();
+                    this.viewport.follow(null);
+                    this.viewport.setCenter(this.origin_center);
                     this.sceneManager.changeToScene(HomeScreen, {});
                     break;
                 case Project_Events.PLAYER_KILLED:
@@ -200,7 +206,8 @@ export default class GameLevel extends Scene {
             Project_Events.LEVEL_END,
             Project_Events.PLAYER_KILLED,
             Project_Events.PLAYER_ATTACK,
-            Project_Events.FIRE_PROJECTILE
+            Project_Events.FIRE_PROJECTILE,
+            Project_Events.ROUND_END
         ]);
     }
 
@@ -262,7 +269,7 @@ export default class GameLevel extends Scene {
                     ease: EaseFunctionType.IN_OUT_QUAD
                 }
             ],
-            onEnd: Project_Events.LEVEL_END
+            onEnd: Project_Events.ROUND_END
         });
         this.levelTransitionScreen.tweens.add("fadeOut", {
             startDelay: 0,
@@ -310,7 +317,7 @@ export default class GameLevel extends Scene {
             this.player1Spawn = Vec2.ZERO;
         }
         this.player1.position.copy(this.player1Spawn);
-        this.player1.addPhysics(new AABB(Vec2.ZERO, new Vec2(14, 14)));
+        this.player1.addPhysics(new AABB(Vec2.ZERO, new Vec2(28, 28)));
         this.player1.colliderOffset.set(0, 2);
         this.player1.addAI(PlayerController, { 
             playerType: "platformer", 
@@ -323,12 +330,13 @@ export default class GameLevel extends Scene {
         // Add the player 2
         this.player2 = this.add.animatedSprite("player2", "primary");
         this.player2.scale.set(2, 2);
+        this.player2.invertX = true;
         if (!this.player2Spawn) {
             console.warn("Player 2 spawn was never set - setting spawn to (0, 0)");
             this.player2Spawn = Vec2.ZERO;
         }
         this.player2.position.copy(this.player2Spawn);
-        this.player2.addPhysics(new AABB(Vec2.ZERO, new Vec2(14, 14)));
+        this.player2.addPhysics(new AABB(Vec2.ZERO, new Vec2(28, 28)));
         this.player2.colliderOffset.set(0, 2);
         this.player2.addAI(PlayerController, { 
             playerType: this.isAI ? "AI" : "platformer", 
@@ -369,8 +377,7 @@ export default class GameLevel extends Scene {
         this.system.stopSystem();
         //all rounds over, back to main menu
         if(this.rounds <= 0) {
-            this.sceneManager.changeToScene(HomeScreen, {}, {});
-
+            this.emitter.fireEvent(Project_Events.LEVEL_END);
             return;
         }
 
@@ -388,6 +395,10 @@ export default class GameLevel extends Scene {
         GameLevel.hp2 = 10;
         this.player1.position = this.player1Spawn.clone();
         this.player2.position = this.player2Spawn.clone();
+        this.player1.alpha = 1;
+        this.player2.alpha = 1;
+        this.player1.enablePhysics();
+        this.player2.enablePhysics();
         this.rounds--;
         
         this.countdownTimer = 3000;
@@ -464,7 +475,9 @@ export default class GameLevel extends Scene {
     protected handleScreenDespawn(node: AnimatedSprite, viewportCenter: Vec2, paddedViewportSize: Vec2): void {
 		// Your code goes here:
 		if(node.position.y > viewportCenter.y + paddedViewportSize.y/2 || node.position.y < viewportCenter.y - paddedViewportSize.y/2) {
-			node.visible = false;
+            node.position = new Vec2(0,0);
+            node.visible = false;
+            node.isCollidable = false;
 		}
 	}
 }

@@ -62,8 +62,8 @@ export default class StageSelect extends Scene {
                     collisions:
                     [
                         [0, 1, 0],
-                        [1, 0, 1],
-                        [0, 1, 0]
+                        [1, 0, 0],
+                        [0, 0, 0]
                     ]
                 }
             }
