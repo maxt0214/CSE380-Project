@@ -25,6 +25,7 @@ import List from "../../Wolfie2D/DataTypes/List";
 import Graphic from "../../Wolfie2D/Nodes/Graphic";
 import Map from "../../Wolfie2D/DataTypes/Map"
 import Layer from "../../Wolfie2D/Scene/Layer";
+import HomeScreen from "./HomeScreen";
 
 export default class GameLevel extends Scene {
     //player 1
@@ -88,7 +89,7 @@ export default class GameLevel extends Scene {
         this.load.object("skillset1",this.initOptions.p1Skillset);
         this.load.object("skillset2",this.initOptions.p2Skillset);
         //load props
-        this.load.spritesheet("fireball_sp", "project_assets/spritesheets/fireball.json");
+        this.load.spritesheet("fireball_sp", "project_assets/spritesheets/projectile.json");
         this.load.object("fireball","project_assets/props/fireball.json");
         
         this.isAI = this.initOptions.isP2AI;
