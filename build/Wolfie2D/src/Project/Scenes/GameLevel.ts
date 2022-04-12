@@ -300,7 +300,7 @@ export default class GameLevel extends Scene {
         backBtn.font = "PixelSimple";
 
         // When the back button is clicked, go to the next scene
-        backBtn.onClick = () => {
+        backBtn.onEnter = () => {
             this.sceneManager.changeToScene(HomeScreen, {}, {});
         }
     }
