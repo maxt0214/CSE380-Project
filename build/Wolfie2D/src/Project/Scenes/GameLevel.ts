@@ -25,7 +25,6 @@ import List from "../../Wolfie2D/DataTypes/List";
 import Graphic from "../../Wolfie2D/Nodes/Graphic";
 import Map from "../../Wolfie2D/DataTypes/Map"
 import Layer from "../../Wolfie2D/Scene/Layer";
-import HomeScreen from "./HomeScreen";
 
 export default class GameLevel extends Scene {
     //player 1
