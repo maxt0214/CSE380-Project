@@ -64,7 +64,7 @@ export default class PlayerController extends StateMachineAI {
     combo: number = 0;
     //invincible timer after being hit for high combo
     invincible: boolean = false;
-    protectTimer: Timer;
+    protectTimer: number = 1;
 
     attDir: number;
 
@@ -126,6 +126,11 @@ export default class PlayerController extends StateMachineAI {
             console.log(`${this.party} is being hurt!`);
         }
         //console.log(`Invincible ${this.invincible}`);
+        if(this.protectTimer < 0) {
+            this.invincible = false;
+            this.protectTimer = 1;
+        }
+        if(this.invincible) this.protectTimer -= deltaT;
 	}
 
     inRange(center: Vec2, range: Vec2, state: string, dir: number) {
