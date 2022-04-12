@@ -24,9 +24,8 @@ export default class HURT extends PlayerState {
 		this.freeTimer -= deltaT;
 		this.parent.invincible = true
 		if(this.freeTimer <= 0) {
-			this.parent.invincible = false;
-			this.parent.protectTimer = new Timer(10,() => { this.parent.invincible = false; })
-			this.finished(PlayerStates.IDLE); 
+			this.parent.invincible = true;
+			this.finished(PlayerStates.IDLE);
 		}
 
 		//this.owner.move(new Vec2(this.parent.attDir * deltaT * this.parent.MIN_SPEED,0));
