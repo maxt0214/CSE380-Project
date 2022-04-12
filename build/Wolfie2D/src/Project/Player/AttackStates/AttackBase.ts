@@ -17,6 +17,7 @@ export default class AttackBase extends PlayerState {
 	cdTime: number;
 	timer: number;
 	projectile: string;
+	type: string;
 
 	constructor(parent: StateMachine, owner: GameNode, skill: Record<string,any>){
 		super(parent, owner);
@@ -25,6 +26,7 @@ export default class AttackBase extends PlayerState {
 		this.buffState = skill.state;
 		this.projectile = skill.projectile;
 		this.cdTime = skill.timer * 1;
+		this.type = skill.type;
 	}
 
 	onEnter(options: Record<string, any>): void {
@@ -38,8 +40,14 @@ export default class AttackBase extends PlayerState {
 	update(deltaT: number): void {
 		super.update(deltaT);
 		this.timer -= deltaT;
-		if(this.timer < 0)
+		if(this.timer < 0){
 			this.finished(PlayerStates.IDLE);
+			this.emitter.fireEvent(Project_Events.UPDATE_ACTION,
+				{
+					party: this.parent.party, 
+					type: "neutral"
+				});
+		}
 	}
 
 	onExit(): Record<string, any> {
@@ -49,6 +57,11 @@ export default class AttackBase extends PlayerState {
 	close_range():void {
 		//Send play attack evemt with damage info, center of attack will be offset to the front of player
 		let offset = new Vec2(this.owner.invertX ? -1 : 1, 0);
+		this.emitter.fireEvent(Project_Events.UPDATE_ACTION,
+		{
+			party: this.parent.party, 
+			type: this.type
+		});
 		this.emitter.fireEvent(Project_Events.PLAYER_ATTACK, 
 		{
 			party: this.parent.party, 
@@ -56,7 +69,8 @@ export default class AttackBase extends PlayerState {
 			center: this.owner.position.clone().add(offset),
 			range: this.range.clone(),
 			state: this.buffState, //state the enemy will enter after hit. This is essentially buff
-			dir: offset.x
+			dir: offset.x,
+			type: this.type
 		});
 	}
 

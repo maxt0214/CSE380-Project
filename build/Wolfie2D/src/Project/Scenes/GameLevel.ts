@@ -34,6 +34,7 @@ export default class GameLevel extends Scene {
     protected player1Spawn: Vec2;
     protected player1: AnimatedSprite;
     protected static hp1: number = 10;
+    protected p1action: String;      // neutral, attacking, grabbing, or blocking
     //UI
     protected hp1label: Label;
     protected round1label: Label;
@@ -42,6 +43,7 @@ export default class GameLevel extends Scene {
     protected player2Spawn: Vec2;
     protected player2: AnimatedSprite;
     protected static hp2: number = 10;
+    protected p2action: String;      // neutral, attacking, grabbing, or blocking
     protected isAI: boolean;
     //props
     protected props: Array<AnimatedSprite> = new Array(50);
@@ -140,17 +142,50 @@ export default class GameLevel extends Scene {
                 case Project_Events.PLAYER_KILLED:
                     this.roundOver();
                     break;
-                case Project_Events.PLAYER_ATTACK:
+                case Project_Events.UPDATE_ACTION:
+                    if(event.data.get("party") === Project_Color.RED){ //p1
+                        if(event.data.get("type") === "s")
+                            this.p1action = "attacking";
+                        if(event.data.get("type") === "p")
+                            this.p1action = "grabbing";    
+                        if(event.data.get("type") === "r")
+                            this.p1action = "blocking";  
+                        if(event.data.get("type") === "neutral")
+                            this.p1action = "neutral";     
+                        console.log(`Player[${event.data.get("party")} action is ${this.p1action}]`);
+                    }
+                    if(event.data.get("party") === Project_Color.BLUE){ //p2
+                        if(event.data.get("type") === "s")
+                            this.p2action = "attacking";
+                        if(event.data.get("type") === "p")
+                            this.p2action = "grabbing";    
+                        if(event.data.get("type") === "r")
+                            this.p2action = "blocking";
+                        if(event.data.get("type") === "neutral")
+                            this.p2action = "neutral";        
+                        console.log(`Player[${event.data.get("party")} action is ${this.p2action}]`);
+      
+                    }
+                    break;
+                case Project_Events.PLAYER_ATTACK:      // red = p1         blue = p2
                     let dmgInfo = event.data;
                     let p1 = this.player1._ai as PlayerController;
                     let p2 = this.player2._ai as PlayerController;
-                    console.log(`Player[${dmgInfo.get("party")}] attacks center[${dmgInfo.get("center")}] Range[${dmgInfo.get("range")}]`);
+                    //console.log(`Player[${dmgInfo.get("party")}] attacks center[${dmgInfo.get("center")}] Range[${dmgInfo.get("range")}]`);
                     if(dmgInfo.get("party") === Project_Color.RED) {
-                        if(p2.inRange(dmgInfo.get("center"),dmgInfo.get("range"),dmgInfo.get("state"),dmgInfo.get("dir")))
-                            this.incPlayerLife(Project_Color.BLUE,dmgInfo.get("dmg"));
+                        if(p2.inRange(dmgInfo.get("center"),dmgInfo.get("range"),dmgInfo.get("state"),dmgInfo.get("dir"))){
+                            if(dmgInfo.get("type") === "s" && !(this.p2action === "blocking"))
+                                this.incPlayerLife(Project_Color.BLUE,dmgInfo.get("dmg"));
+                            if(dmgInfo.get("type") === "s" && this.p2action === "blocking")
+                                this.incPlayerLife(Project_Color.RED,dmgInfo.get("dmg"));
+                        }
                     } else {
-                        if(p1.inRange(dmgInfo.get("center"),dmgInfo.get("range"),dmgInfo.get("state"),dmgInfo.get("dir")))
-                            this.incPlayerLife(Project_Color.RED,dmgInfo.get("dmg"));
+                        if(p1.inRange(dmgInfo.get("center"),dmgInfo.get("range"),dmgInfo.get("state"),dmgInfo.get("dir"))){
+                            if(dmgInfo.get("type") === "s" && !(this.p1action === "blocking"))
+                                this.incPlayerLife(Project_Color.RED,dmgInfo.get("dmg"));
+                            if(dmgInfo.get("type") === "s" && this.p1action === "blocking")
+                                this.incPlayerLife(Project_Color.BLUE,dmgInfo.get("dmg"));
+                        }
                     }
                     break;
                 case Project_Events.FIRE_PROJECTILE:
@@ -207,7 +242,8 @@ export default class GameLevel extends Scene {
             Project_Events.PLAYER_KILLED,
             Project_Events.PLAYER_ATTACK,
             Project_Events.FIRE_PROJECTILE,
-            Project_Events.ROUND_END
+            Project_Events.ROUND_END,
+            Project_Events.UPDATE_ACTION
         ]);
     }
 
@@ -326,6 +362,7 @@ export default class GameLevel extends Scene {
             skills:this.load.getObject("skillset1") 
         });
         this.player1.setGroup("player");
+        this.p1action = "neutral";
         this.viewport.follow(this.player1);
         // Add the player 2
         this.player2 = this.add.animatedSprite("player2", "primary");
@@ -345,6 +382,7 @@ export default class GameLevel extends Scene {
             skills:this.load.getObject("skillset2")
         });
         this.player2.setGroup("player");
+        this.p2action = "neutral";
     }
 
     //TODO: Change UI

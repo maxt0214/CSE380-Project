@@ -5,6 +5,8 @@ export enum Project_Events {
     PLAYER_ATTACK = "PlayerAttack",
     FIRE_PROJECTILE = "FireProjectile",
 
+    UPDATE_ACTION = "UpdateAction",
+
     LEVEL_START = "LevelStart",
     LEVEL_END = "LevelEnd",
 

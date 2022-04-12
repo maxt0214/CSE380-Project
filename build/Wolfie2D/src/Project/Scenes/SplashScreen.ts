@@ -8,6 +8,7 @@ import Scene from "../../Wolfie2D/Scene/Scene";
 import Color from "../../Wolfie2D/Utils/Color";
 import HomeScreen from "./HomeScreen";
 import MainMenu from "./MainMenu"; 
+import StageSelect from "./StageSelect"; 
 
 export default class SplashScreen extends Scene {
     animatedSprite: AnimatedSprite;
@@ -55,7 +56,7 @@ export default class SplashScreen extends Scene {
 
         // When the skip button is clicked, go to the next scene
         skipBtn.onClick = () => {
-            this.sceneManager.changeToScene(MainMenu, {}, {});
+            this.sceneManager.changeToScene(StageSelect, {}, {});
         }
     }
 
