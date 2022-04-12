@@ -445,7 +445,11 @@ export default class GameLevel extends Scene {
     protected roundOver(): void {
         this.system.stopSystem();
         //all rounds over, back to main menu
-        if(this.rounds <= 0) {
+        if(this.p1rounds >= 2) {
+            this.emitter.fireEvent(Project_Events.LEVEL_END);
+            return;
+        }
+        if(this.p2rounds >= 2) {
             this.emitter.fireEvent(Project_Events.LEVEL_END);
             return;
         }
