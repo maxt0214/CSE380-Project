@@ -22,6 +22,7 @@ export default class HURT extends PlayerState {
 	update(deltaT: number): void {
 		super.update(deltaT);
 		this.freeTimer -= deltaT;
+		this.parent.invincible = true
 		if(this.freeTimer <= 0) {
 			this.parent.invincible = true;
 			this.finished(PlayerStates.IDLE);
