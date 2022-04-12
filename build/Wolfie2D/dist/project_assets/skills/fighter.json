@@ -37,7 +37,7 @@
         },
         "state": "HURT",
         "timer": 1,
-        "projectile": ""
+        "projectile": "fireball"
     },
     "skill2": {
         "dmg": 1,
