@@ -380,6 +380,7 @@ export default class GameLevel extends Scene {
             this.player1Spawn = Vec2.ZERO;
         }
         this.player1.position.copy(this.player1Spawn);
+        GameLevel.hp1 = 10;
         this.player1.addPhysics(new AABB(Vec2.ZERO, new Vec2(28, 28)));
         this.player1.colliderOffset.set(0, 2);
         this.player1.addAI(PlayerController, { 
@@ -400,6 +401,7 @@ export default class GameLevel extends Scene {
             this.player2Spawn = Vec2.ZERO;
         }
         this.player2.position.copy(this.player2Spawn);
+        GameLevel.hp2 = 10;
         this.player2.addPhysics(new AABB(Vec2.ZERO, new Vec2(28, 28)));
         this.player2.colliderOffset.set(0, 2);
         this.player2.addAI(PlayerController, { 
@@ -494,12 +496,12 @@ export default class GameLevel extends Scene {
             if(!prop.visible) continue;
 
             let propAI = prop.ai as Prop;
-            if(this.player1.collisionShape.overlaps(prop.collisionShape) && p1.party != propAI.party) {
-                p1.hitWithProp(propAI.buff);
+            if(this.player1.collisionShape.overlaps(prop.collisionShape) && p1.party != propAI.party && !(this.p1action === "blocking")) { // this assumes projectile type is s, change later
+                p1.hitWithProp(propAI.buff);                                                                                                // todo: make projectiles put hit player in hurt stun
                 this.incPlayerLife(p1.party,propAI.dmg);
                 prop.visible = false;
             }
-            if(this.player2.collisionShape.overlaps(prop.collisionShape) && p2.party != propAI.party) {
+            if(this.player2.collisionShape.overlaps(prop.collisionShape) && p2.party != propAI.party && !(this.p2action === "blocking")) {
                 p2.hitWithProp(propAI.buff);
                 this.incPlayerLife(p2.party,propAI.dmg);
                 prop.visible = false;
