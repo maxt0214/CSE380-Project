@@ -25,6 +25,9 @@ import List from "../../Wolfie2D/DataTypes/List";
 import Graphic from "../../Wolfie2D/Nodes/Graphic";
 import Map from "../../Wolfie2D/DataTypes/Map"
 import Layer from "../../Wolfie2D/Scene/Layer";
+import Button from "../../Wolfie2D/Nodes/UIElements/Button";
+import HomeScreen from "./HomeScreen";
+
 
 export default class GameLevel extends Scene {
     //player 1
@@ -56,6 +59,7 @@ export default class GameLevel extends Scene {
     protected gameOverLabel: Label;
 
     // pause stuff
+    protected size: Vec2;
     protected gamePaused: boolean = false;
     protected pauseUI: Layer;
 
@@ -92,6 +96,8 @@ export default class GameLevel extends Scene {
         this.load.object("fireball","project_assets/props/fireball.json");
         
         this.isAI = this.initOptions.isP2AI;
+
+        this.load.image("pausescreen", "project_assets/backgrounds/pausescreen.png");
     }
 
     startScene(): void {
@@ -102,7 +108,8 @@ export default class GameLevel extends Scene {
         this.initProps();
         this.subscribeToEvents();
         this.addUI();
-        
+        this.addPauseScreen();
+
         // Initialize the round timer of 90 seconds
         this.countdownTimer = 3000;
         this.roundTimer = 90000;
@@ -122,7 +129,7 @@ export default class GameLevel extends Scene {
             switch (event.type) {
                 case Project_Events.LEVEL_END:
                     // On level end, go back to main menu
-                    this.sceneManager.changeToScene(MainMenu, {});
+                    this.sceneManager.changeToScene(HomeScreen, {});
                     break;
                 case Project_Events.PLAYER_KILLED:
                     this.roundOver();
@@ -154,13 +161,11 @@ export default class GameLevel extends Scene {
         }
         this.countdownTimer -= deltaT;
         if(Input.isJustPressed("escape")){
+            this.gamePaused = !this.gamePaused;
             if(this.gamePaused){
-                this.gamePaused = false;
-                Input.enableInput();
-            }
-            else{
-                this.gamePaused = true;
-                Input.disableInput();
+                this.pauseUI.enable();
+            } else{
+                this.pauseUI.disable();
             }
         }
     }
@@ -174,13 +179,15 @@ export default class GameLevel extends Scene {
         // Add a layer for players and enemies
         this.addLayer("primary", 1);
         this.pauseUI = this.addUILayer("pauseUI");
-        this.pauseUI.disable;
+        this.pauseUI.setDepth(2);
+        this.pauseUI.disable();
     }
 
     /**
      * Initializes the viewport
      */
     protected initViewport(): void {
+        this.size = this.viewport.getHalfSize();
         this.viewport.setZoomLevel(2);
     }
 
@@ -234,6 +241,8 @@ export default class GameLevel extends Scene {
             ]
         });
 
+        
+
         // Create our particle system and initialize the pool
         this.system = new Project_ParticleSystem(100, new Vec2((5 * 32), (10 * 32)), 2000, 3, 1, 100);
         this.system.initializePool(this, "primary");
@@ -267,6 +276,26 @@ export default class GameLevel extends Scene {
                 }
             ]
         });
+    }
+
+
+    protected addPauseScreen(){
+        let bg = this.add.sprite("pausescreen", "pauseUI");
+        bg.scale.set(0.5, 0.5);
+        bg.position.copy(this.size);
+
+        // Create a back button
+        let backBtn = <Button>this.add.uiElement(UIElementType.BUTTON, "pauseUI", {position: new Vec2(this.size.x, this.size.y +100), text: "Back to Menu"});
+        backBtn.backgroundColor = Color.TRANSPARENT;
+        backBtn.borderColor = Color.WHITE;
+        backBtn.borderRadius = 0;
+        backBtn.setPadding(new Vec2(80, 30));
+        backBtn.font = "PixelSimple";
+
+        // When the back button is clicked, go to the next scene
+        backBtn.onClick = () => {
+            this.sceneManager.changeToScene(HomeScreen, {}, {});
+        }
     }
 
     /**
@@ -321,7 +350,7 @@ export default class GameLevel extends Scene {
 
         this.hp1label.text = "Lives: " + GameLevel.hp1;
         if (GameLevel.hp1 <= 0) {
-            Input.disableInput();
+            //Input.disableInput();
             this.player1.disablePhysics();
             this.emitter.fireEvent(GameEventType.PLAY_SOUND, { key: "player_death", loop: false, holdReference: false });
             this.player1.tweens.play("death");
@@ -329,7 +358,7 @@ export default class GameLevel extends Scene {
 
         this.hp2label.text = "Lives: " + GameLevel.hp2;
         if (GameLevel.hp2 <= 0) {
-            Input.disableInput();
+            //Input.disableInput();
             this.player2.disablePhysics();
             this.emitter.fireEvent(GameEventType.PLAY_SOUND, { key: "player_death", loop: false, holdReference: false });
             this.player2.tweens.play("death");
@@ -337,11 +366,10 @@ export default class GameLevel extends Scene {
     }
 
     protected roundOver(): void {
-        Input.disableInput();
         this.system.stopSystem();
         //all rounds over, back to main menu
         if(this.rounds <= 0) {
-            this.sceneManager.changeToScene(MainMenu, {});
+            this.sceneManager.changeToScene(HomeScreen, {}, {});
 
             return;
         }
