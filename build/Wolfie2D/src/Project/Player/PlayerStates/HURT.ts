@@ -15,7 +15,7 @@ export default class HURT extends PlayerState {
 
 	onEnter(options: Record<string, any>): void {
 		this.owner.animation.play("HURT", false);
-		this.freeTimer = 5/ (this.parent.combo < 1 ? 1 : this.parent.combo);
+		this.freeTimer = 2/ (this.parent.combo < 1 ? 1 : this.parent.combo);
 		console.log(`Hurting after ${this.freeTimer} seconds`);
 	}
 

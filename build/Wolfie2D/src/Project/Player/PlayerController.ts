@@ -121,9 +121,9 @@ export default class PlayerController extends StateMachineAI {
     update(deltaT: number): void {
 		super.update(deltaT);
         if(this.currentState instanceof Attack) {
-            console.log(`${this.party} is attacking!`);
+            //console.log(`${this.party} is attacking!`);
         } else if(this.currentState instanceof HURT) {
-            console.log(`${this.party} is being hurt!`);
+            //console.log(`${this.party} is being hurt!`);
         }
         //console.log(`Invincible ${this.invincible}`);
         if(this.protectTimer < 0) {
@@ -140,7 +140,7 @@ export default class PlayerController extends StateMachineAI {
         this.attDir = dir;
         console.log(`Opponent attemps to attack [${center}][${range}]. Currently at [${this.owner.position}] Distance:[${xDis},${yDis}]`);
         if(xDis <= range.x && yDis <= range.y) {
-            this.changeState(state);
+            //this.changeState(state);
             return true;
         }
         return false;

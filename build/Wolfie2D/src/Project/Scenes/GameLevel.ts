@@ -35,6 +35,7 @@ export default class GameLevel extends Scene {
     protected player1: AnimatedSprite;
     protected static hp1: number = 10;
     protected p1action: String;      // neutral, attacking, grabbing, or blocking
+    protected p1rounds: number = 0;
     //UI
     protected hp1label: Label;
     protected round1label: Label;
@@ -44,6 +45,7 @@ export default class GameLevel extends Scene {
     protected player2: AnimatedSprite;
     protected static hp2: number = 10;
     protected p2action: String;      // neutral, attacking, grabbing, or blocking
+    protected p2rounds: number = 0;
     protected isAI: boolean;
     //props
     protected props: Array<AnimatedSprite> = new Array(50);
@@ -171,20 +173,37 @@ export default class GameLevel extends Scene {
                     let dmgInfo = event.data;
                     let p1 = this.player1._ai as PlayerController;
                     let p2 = this.player2._ai as PlayerController;
-                    //console.log(`Player[${dmgInfo.get("party")}] attacks center[${dmgInfo.get("center")}] Range[${dmgInfo.get("range")}]`);
-                    if(dmgInfo.get("party") === Project_Color.RED) {
-                        if(p2.inRange(dmgInfo.get("center"),dmgInfo.get("range"),dmgInfo.get("state"),dmgInfo.get("dir"))){
-                            if(dmgInfo.get("type") === "s" && !(this.p2action === "blocking"))
+                    console.log(`Player[${dmgInfo.get("party")}] attacks center[${dmgInfo.get("center")}] Range[${dmgInfo.get("range")}]`);
+                    if(dmgInfo.get("party") === Project_Color.RED) {    //p1 attacking
+                        if(p2.inRange(dmgInfo.get("center"),dmgInfo.get("range"),dmgInfo.get("state"),dmgInfo.get("dir"))){ //if p2 is in range of attack, 
+                            if(dmgInfo.get("type") === "s" && !(this.p2action === "blocking")){ // p2 not blocking (p2 attacked)
                                 this.incPlayerLife(Project_Color.BLUE,dmgInfo.get("dmg"));
-                            if(dmgInfo.get("type") === "s" && this.p2action === "blocking")
+                                p2.changeState(dmgInfo.get("state"));
+                                }
+                            if(dmgInfo.get("type") === "s" && this.p2action === "blocking"){ // p2 blocking (p1 attacked)
                                 this.incPlayerLife(Project_Color.RED,dmgInfo.get("dmg"));
+                                p1.changeState(dmgInfo.get("state"));
+                            }
+                            if(dmgInfo.get("type") === "p" && !(this.p2action === "attacking")){ // p1 grabs, p2 not attacking, p2 takes damage
+                                this.incPlayerLife(Project_Color.BLUE,dmgInfo.get("dmg"));
+                                p2.changeState(dmgInfo.get("state"));
+                            }
                         }
-                    } else {
+                        
+                    } else {    //p2 attacking
                         if(p1.inRange(dmgInfo.get("center"),dmgInfo.get("range"),dmgInfo.get("state"),dmgInfo.get("dir"))){
-                            if(dmgInfo.get("type") === "s" && !(this.p1action === "blocking"))
+                            if(dmgInfo.get("type") === "s" && !(this.p1action === "blocking")){ //p1 not blocking (p1 attacked)
                                 this.incPlayerLife(Project_Color.RED,dmgInfo.get("dmg"));
-                            if(dmgInfo.get("type") === "s" && this.p1action === "blocking")
+                                p1.changeState(dmgInfo.get("state"));
+                            }
+                            if(dmgInfo.get("type") === "s" && this.p1action === "blocking"){    //p1 blocking (p2 attacked)
                                 this.incPlayerLife(Project_Color.BLUE,dmgInfo.get("dmg"));
+                                p2.changeState(dmgInfo.get("state"));
+                            }
+                            if(dmgInfo.get("type") === "p" && !(this.p1action === "attacking")){ // p2 grabs, p1 not attacking, p1 takes damage
+                                this.incPlayerLife(Project_Color.RED,dmgInfo.get("dmg"));
+                                p1.changeState(dmgInfo.get("state"));
+                            }
                         }
                     }
                     break;
@@ -253,13 +272,21 @@ export default class GameLevel extends Scene {
      */
     protected addUI() {
         // In-game labels
-        this.hp1label = <Label>this.add.uiElement(UIElementType.LABEL, "UI", { position: new Vec2(100, 30), text: "Lives: " + GameLevel.hp1 });
+        this.hp1label = <Label>this.add.uiElement(UIElementType.LABEL, "UI", { position: new Vec2(100, 30), text: "Health: " + GameLevel.hp1 });
         this.hp1label.textColor = Color.BLACK;
         this.hp1label.font = "PixelSimple";
         
-        this.hp2label = <Label>this.add.uiElement(UIElementType.LABEL, "UI", { position: new Vec2(500, 30), text: "Lives: " + GameLevel.hp2 });
+        this.hp2label = <Label>this.add.uiElement(UIElementType.LABEL, "UI", { position: new Vec2(500, 30), text: "Health: " + GameLevel.hp2 });
         this.hp2label.textColor = Color.BLACK;
         this.hp2label.font = "PixelSimple";
+
+        this.round1label = <Label>this.add.uiElement(UIElementType.LABEL, "UI", { position: new Vec2(100, 60), text: "Rounds: " + this.p1rounds });
+        this.round1label.textColor = Color.BLACK;
+        this.round1label.font = "PixelSimple";
+        
+        this.round2label = <Label>this.add.uiElement(UIElementType.LABEL, "UI", { position: new Vec2(500, 60), text: "Rounds: " + this.p2rounds });
+        this.round2label.textColor = Color.BLACK;
+        this.round2label.font = "PixelSimple";
 
         // round over label (start off screen)
         this.roundOverLabel = <Label>this.add.uiElement(UIElementType.LABEL, "UI", { position: new Vec2(-300, 200), text: "Round Over!" });
@@ -396,6 +423,8 @@ export default class GameLevel extends Scene {
 
         this.hp1label.text = "Lives: " + GameLevel.hp1;
         if (GameLevel.hp1 <= 0) {
+            this.p2rounds +=1;
+            this.round2label.text = "Rounds: " + this.p2rounds;
             //Input.disableInput();
             this.player1.disablePhysics();
             this.emitter.fireEvent(GameEventType.PLAY_SOUND, { key: "player_death", loop: false, holdReference: false });
@@ -405,6 +434,8 @@ export default class GameLevel extends Scene {
         this.hp2label.text = "Lives: " + GameLevel.hp2;
         if (GameLevel.hp2 <= 0) {
             //Input.disableInput();
+            this.p1rounds +=1;
+            this.round1label.text = "Rounds: " + this.p1rounds;
             this.player2.disablePhysics();
             this.emitter.fireEvent(GameEventType.PLAY_SOUND, { key: "player_death", loop: false, holdReference: false });
             this.player2.tweens.play("death");
@@ -431,6 +462,8 @@ export default class GameLevel extends Scene {
         //reset player stat
         GameLevel.hp1 = 10;
         GameLevel.hp2 = 10;
+        this.hp1label.text = "Lives: " + GameLevel.hp1;
+        this.hp2label.text = "Lives: " + GameLevel.hp2;
         this.player1.position = this.player1Spawn.clone();
         this.player2.position = this.player2Spawn.clone();
         this.player1.alpha = 1;
