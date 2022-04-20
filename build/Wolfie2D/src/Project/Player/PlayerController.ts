@@ -68,6 +68,8 @@ export default class PlayerController extends StateMachineAI {
 
     attDir: number;
 
+    fadeSign: number;
+
     initializeAI(owner: GameNode, options: Record<string, any>){
         this.owner = owner;
         this.tilemap = this.owner.getScene().getTilemap(options.tilemap) as OrthogonalTilemap;
@@ -125,13 +127,31 @@ export default class PlayerController extends StateMachineAI {
         } else if(this.currentState instanceof HURT) {
             //console.log(`${this.party} is being hurt!`);
         }
-        //console.log(`Invincible ${this.invincible}`);
+        this.updateInvincible(deltaT);
+	}
+
+    updateInvincible(deltaT: number): void {
         if(this.protectTimer < 0) {
             this.invincible = false;
             this.protectTimer = 1;
         }
-        if(this.invincible) this.protectTimer -= deltaT;
-	}
+
+        if(this.invincible) {
+            this.protectTimer -= deltaT;   
+        }
+        this.update_hurt_fading(deltaT);
+    }
+
+    update_hurt_fading(deltaT: number): void {
+        if(this.invincible) {
+            this.owner.alpha += this.fadeSign * deltaT;
+            if(this.owner.alpha > 1 || this.owner.alpha < 0)
+                this.fadeSign = -this.fadeSign;
+        } else {
+            this.owner.alpha = 1;
+            this.fadeSign = -2;
+        }
+    }
 
     inRange(center: Vec2, range: Vec2, state: string, dir: number) {
         if(this.invincible) return false;
@@ -140,7 +160,6 @@ export default class PlayerController extends StateMachineAI {
         this.attDir = dir;
         console.log(`Opponent attemps to attack [${center}][${range}]. Currently at [${this.owner.position}] Distance:[${xDis},${yDis}]`);
         if(xDis <= range.x && yDis <= range.y) {
-            //this.changeState(state);
             return true;
         }
         return false;

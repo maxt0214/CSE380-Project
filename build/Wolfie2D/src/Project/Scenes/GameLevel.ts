@@ -169,7 +169,7 @@ export default class GameLevel extends Scene {
       
                     }
                     break;
-                case Project_Events.PLAYER_ATTACK:      // red = p1         blue = p2
+                case Project_Events.PLAYER_ATTACK: // red = p1         blue = p2
                     let dmgInfo = event.data;
                     let p1 = this.player1._ai as PlayerController;
                     let p2 = this.player2._ai as PlayerController;
@@ -179,7 +179,7 @@ export default class GameLevel extends Scene {
                             if(dmgInfo.get("type") === "s" && !(this.p2action === "blocking")){ // p2 not blocking (p2 attacked)
                                 this.incPlayerLife(Project_Color.BLUE,dmgInfo.get("dmg"));
                                 p2.changeState(dmgInfo.get("state"));
-                                }
+                            }
                             if(dmgInfo.get("type") === "s" && this.p2action === "blocking"){ // p2 blocking (p1 attacked)
                                 this.incPlayerLife(Project_Color.RED,dmgInfo.get("dmg"));
                                 p1.changeState(dmgInfo.get("state"));
