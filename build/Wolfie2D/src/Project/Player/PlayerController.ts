@@ -94,6 +94,9 @@ export default class PlayerController extends StateMachineAI {
         let aiidle = new AIIDLE(this, this.owner,this.generate_moveset());
         this.addState(PlayerStates.AIIDLE, aiidle);
         
+        let fall = new Fall(this, this.owner);
+        this.addState(PlayerStates.FALL, fall);
+        
         let attack = new Attack(this, this.owner, this.skills);
         this.addState(PlayerStates.ATK, attack);
         let grab = new Grab(this, this.owner, this.skills);
@@ -163,6 +166,7 @@ export default class PlayerController extends StateMachineAI {
         // If we jump or fall, push the state so we can go back to our current state later
         // unless we're going from jump to fall or something
         if((stateName === PlayerStates.JUMP || stateName === PlayerStates.FALL) && !(this.stack.peek() instanceof InAir)){
+            console.log(`Stroing ${stateName} before FALL`);
             this.stack.push(this.stateMap.get(stateName));
         }
         super.changeState(stateName);

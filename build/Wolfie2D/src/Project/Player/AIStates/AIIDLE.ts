@@ -1,3 +1,4 @@
+import { PlayerStates } from "../PlayerController";
 import AIOnGround from "./AIOnGround";
 
 //This is a basic AI State that moves 
@@ -7,6 +8,10 @@ export default class AIIDLE extends AIOnGround {
 	}
 
 	update(deltaT: number): void {
+		if(this.parent.velocity.y > 0 && !this.owner.onGround) {
+			this.finished(PlayerStates.FALL);
+		}
+
 		super.update(deltaT);
 
 		this.parent.velocity.x = 0;
