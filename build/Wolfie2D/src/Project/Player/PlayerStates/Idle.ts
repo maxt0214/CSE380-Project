@@ -24,7 +24,6 @@ export default class Idle extends OnGround {
 		}
 		
 		this.parent.velocity.x = 0;
-
 		this.owner.move(this.parent.velocity.scaled(deltaT));
 	}
 

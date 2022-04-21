@@ -29,8 +29,6 @@ export default class AIOnGround extends PlayerState {
 	}
 
 	update(deltaT: number): void {
-		super.update(deltaT);
-		
 		if(this.parent.velocity.y > 0){
 			this.parent.velocity.y = 0;
 		}
