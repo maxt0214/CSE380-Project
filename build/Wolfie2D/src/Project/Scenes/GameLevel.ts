@@ -406,6 +406,7 @@ export default class GameLevel extends Scene {
         this.player2.colliderOffset.set(0, 2);
         this.player2.addAI(PlayerController, { 
             playerType: this.isAI ? "AI" : "platformer", 
+            player: this.player1,
             tilemap: "Main", 
             color: Project_Color.BLUE,
             skills:this.load.getObject("skillset2")

@@ -19,6 +19,7 @@ import Skill3 from "./AttackStates/Skill3";
 import Walk from "./PlayerStates/Walk";
 import STUN from "./BuffStates/STUN";
 import AIIDLE from "./AIStates/AIIDLE";
+import AnimatedSprite from "../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 
 export enum PlayerType {
     PLATFORMER = "platformer",
@@ -60,6 +61,7 @@ export default class PlayerController extends StateMachineAI {
 
     party: Project_Color;
     skills: Record<string,any>;
+    other_player: AnimatedSprite;
     //num hit this player receives. In other words, combo count for the other player
     combo: number = 0;
     //invincible timer after being hit for high combo
@@ -78,6 +80,7 @@ export default class PlayerController extends StateMachineAI {
         this.party = options.color;
         this.skills = options.skills;
         this.is_bot = options.playerType === "AI";
+        if(this.is_bot) this.other_player = options.player;
 
         if(this.is_bot) {
             this.initializeAsAI();
@@ -88,14 +91,16 @@ export default class PlayerController extends StateMachineAI {
     }
 
     initializeAsAI(): void {
-        this.speed = 400;
-
+        this.speed = this.MAX_SPEED;
+        
         //TODO: Add AI States
         let aiidle = new AIIDLE(this, this.owner,this.generate_moveset());
         this.addState(PlayerStates.AIIDLE, aiidle);
         
         let fall = new Fall(this, this.owner);
         this.addState(PlayerStates.FALL, fall);
+		let jump = new Jump(this, this.owner);
+        this.addState(PlayerStates.JUMP, jump);
         
         let attack = new Attack(this, this.owner, this.skills);
         this.addState(PlayerStates.ATK, attack);
@@ -130,7 +135,7 @@ export default class PlayerController extends StateMachineAI {
     }
 
     initializePlatformer(): void {
-        this.speed = 400;
+        this.speed = this.MAX_SPEED;
 
         let idle = new Idle(this, this.owner);
 		this.addState(PlayerStates.IDLE, idle);

@@ -1,0 +1,42 @@
+{
+    "name": "fighter",
+    "spriteSheetImage": "fighter.png",
+    "spriteWidth": 24,
+    "spriteHeight": 32,
+    "columns": 6,
+    "rows": 7,
+    "animations": [
+        { 
+            "name": "IDLE",
+            "frames": [ {"index": 0, "duration": 16}, {"index": 1, "duration": 16}, {"index": 2, "duration": 16}, {"index": 3, "duration": 16} ]
+        },
+        { 
+            "name": "FALL",
+            "frames": [ {"index": 0, "duration": 16}, {"index": 1, "duration": 16}, {"index": 2, "duration": 16}, {"index": 3, "duration": 16} ]
+        },
+        {
+            "name": "ATTACK",
+            "frames": [ {"index": 6, "duration": 8}, {"index": 7, "duration": 8}, {"index": 8, "duration": 8}, {"index": 9, "duration": 6}, {"index": 10, "duration": 6}, {"index": 11, "duration": 1}]
+        },
+        {
+            "name": "JUMP",
+            "frames": [ {"index": 12, "duration": 16}, {"index": 13, "duration": 16}, {"index": 14, "duration": 16}, {"index": 15, "duration": 16}, {"index": 16, "duration": 16}]
+        },
+        {
+            "name": "WALK",
+            "frames": [ {"index": 18, "duration": 16}, {"index": 19, "duration": 16}, {"index": 20, "duration": 16}, {"index": 21, "duration": 16}]
+        },
+        {
+            "name": "GRAB",
+            "frames": [ {"index": 24, "duration": 8}, {"index": 25, "duration": 8}, {"index": 26, "duration": 12}, {"index": 27, "duration": 12}, {"index": 28, "duration": 12}]
+        },
+        {
+            "name": "BLOCK",
+            "frames": [ {"index": 30, "duration": 8}, {"index": 31, "duration": 8}, {"index": 32, "duration": 10}, {"index": 33, "duration": 10}, {"index": 32, "duration": 10}]
+        },
+        {
+            "name": "HURT",
+            "frames": [ {"index": 36, "duration": 16}, {"index": 37, "duration": 16}, {"index": 38, "duration": 16}, {"index": 39, "duration": 16}, {"index": 40, "duration": 16}, {"index": 41, "duration": 16}]
+        }
+    ]
+}

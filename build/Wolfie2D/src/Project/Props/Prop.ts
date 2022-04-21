@@ -48,12 +48,12 @@ export default class Prop implements AI {
         this.speed = options.propInfo.speed;
         this.buff = options.propInfo.buff;
 
-        this.owner.animation.play("MOVE",true);
+        //this.owner.animation.play("MOVE",true);
         console.log(`Spawning Prop: ${this.name} at ${this.owner.position} Party[${this.party}] buff[${this.buff}] spd[${this.speed}]`);
     }
 
     destroy(): void {
-        this.owner.animation.stop();
+        //this.owner.animation.stop();
         console.log(`Deactivating Prop: ${this.name} at ${this.owner.position}`);
     }
 
