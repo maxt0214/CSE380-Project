@@ -25,6 +25,7 @@ import List from "../../Wolfie2D/DataTypes/List";
 import Graphic from "../../Wolfie2D/Nodes/Graphic";
 import Map from "../../Wolfie2D/DataTypes/Map"
 import Layer from "../../Wolfie2D/Scene/Layer";
+import Button from "../../Wolfie2D/Nodes/UIElements/Button";
 import HomeScreen from "./HomeScreen";
 
 export default class GameLevel extends Scene {
@@ -33,6 +34,8 @@ export default class GameLevel extends Scene {
     protected player1Spawn: Vec2;
     protected player1: AnimatedSprite;
     protected static hp1: number = 10;
+    protected p1action: String;      // neutral, attacking, grabbing, or blocking
+    protected p1rounds: number = 0;
     //UI
     protected hp1label: Label;
     protected round1label: Label;
@@ -41,6 +44,8 @@ export default class GameLevel extends Scene {
     protected player2Spawn: Vec2;
     protected player2: AnimatedSprite;
     protected static hp2: number = 10;
+    protected p2action: String;      // neutral, attacking, grabbing, or blocking
+    protected p2rounds: number = 0;
     protected isAI: boolean;
     //props
     protected props: Array<AnimatedSprite> = new Array(50);
@@ -58,6 +63,7 @@ export default class GameLevel extends Scene {
     protected gameOverLabel: Label;
 
     // pause stuff
+    protected size: Vec2;
     protected gamePaused: boolean = false;
     protected pauseUI: Layer;
 
@@ -92,10 +98,12 @@ export default class GameLevel extends Scene {
         this.load.object("skillset1",this.initOptions.p1Skillset);
         this.load.object("skillset2",this.initOptions.p2Skillset);
         //load props
-        this.load.spritesheet("fireball_sp", "project_assets/spritesheets/fireball.json");
+        this.load.spritesheet("fireball_sp", "project_assets/spritesheets/projectile.json");
         this.load.object("fireball","project_assets/props/fireball.json");
         
         this.isAI = this.initOptions.isP2AI;
+
+        this.load.image("pausescreen", "project_assets/backgrounds/pausescreen.png");
     }
 
     startScene(): void {
@@ -106,7 +114,8 @@ export default class GameLevel extends Scene {
         this.initProps();
         this.subscribeToEvents();
         this.addUI();
-        
+        this.addPauseScreen();
+
         // Initialize the round timer of 90 seconds
         this.countdownTimer = 3000;
         this.roundTimer = 90000;
@@ -135,17 +144,67 @@ export default class GameLevel extends Scene {
                 case Project_Events.PLAYER_KILLED:
                     this.roundOver();
                     break;
-                case Project_Events.PLAYER_ATTACK:
+                case Project_Events.UPDATE_ACTION:
+                    if(event.data.get("party") === Project_Color.RED){ //p1
+                        if(event.data.get("type") === "s")
+                            this.p1action = "attacking";
+                        if(event.data.get("type") === "p")
+                            this.p1action = "grabbing";    
+                        if(event.data.get("type") === "r")
+                            this.p1action = "blocking";  
+                        if(event.data.get("type") === "neutral")
+                            this.p1action = "neutral";     
+                        console.log(`Player[${event.data.get("party")} action is ${this.p1action}]`);
+                    }
+                    if(event.data.get("party") === Project_Color.BLUE){ //p2
+                        if(event.data.get("type") === "s")
+                            this.p2action = "attacking";
+                        if(event.data.get("type") === "p")
+                            this.p2action = "grabbing";    
+                        if(event.data.get("type") === "r")
+                            this.p2action = "blocking";
+                        if(event.data.get("type") === "neutral")
+                            this.p2action = "neutral";        
+                        console.log(`Player[${event.data.get("party")} action is ${this.p2action}]`);
+      
+                    }
+                    break;
+                case Project_Events.PLAYER_ATTACK: // red = p1         blue = p2
                     let dmgInfo = event.data;
                     let p1 = this.player1._ai as PlayerController;
                     let p2 = this.player2._ai as PlayerController;
                     console.log(`Player[${dmgInfo.get("party")}] attacks center[${dmgInfo.get("center")}] Range[${dmgInfo.get("range")}]`);
-                    if(dmgInfo.get("party") === Project_Color.RED) {
-                        if(p2.inRange(dmgInfo.get("center"),dmgInfo.get("range"),dmgInfo.get("state"),dmgInfo.get("dir")))
-                            this.incPlayerLife(Project_Color.BLUE,dmgInfo.get("dmg"));
-                    } else {
-                        if(p1.inRange(dmgInfo.get("center"),dmgInfo.get("range"),dmgInfo.get("state"),dmgInfo.get("dir")))
-                            this.incPlayerLife(Project_Color.RED,dmgInfo.get("dmg"));
+                    if(dmgInfo.get("party") === Project_Color.RED) {    //p1 attacking
+                        if(p2.inRange(dmgInfo.get("center"),dmgInfo.get("range"),dmgInfo.get("state"),dmgInfo.get("dir"))){ //if p2 is in range of attack, 
+                            if(dmgInfo.get("type") === "s" && !(this.p2action === "blocking")){ // p2 not blocking (p2 attacked)
+                                this.incPlayerLife(Project_Color.BLUE,dmgInfo.get("dmg"));
+                                p2.changeState(dmgInfo.get("state"));
+                            }
+                            if(dmgInfo.get("type") === "s" && this.p2action === "blocking"){ // p2 blocking (p1 attacked)
+                                this.incPlayerLife(Project_Color.RED,dmgInfo.get("dmg"));
+                                p1.changeState(dmgInfo.get("state"));
+                            }
+                            if(dmgInfo.get("type") === "p" && !(this.p2action === "attacking")){ // p1 grabs, p2 not attacking, p2 takes damage
+                                this.incPlayerLife(Project_Color.BLUE,dmgInfo.get("dmg"));
+                                p2.changeState(dmgInfo.get("state"));
+                            }
+                        }
+                        
+                    } else {    //p2 attacking
+                        if(p1.inRange(dmgInfo.get("center"),dmgInfo.get("range"),dmgInfo.get("state"),dmgInfo.get("dir"))){
+                            if(dmgInfo.get("type") === "s" && !(this.p1action === "blocking")){ //p1 not blocking (p1 attacked)
+                                this.incPlayerLife(Project_Color.RED,dmgInfo.get("dmg"));
+                                p1.changeState(dmgInfo.get("state"));
+                            }
+                            if(dmgInfo.get("type") === "s" && this.p1action === "blocking"){    //p1 blocking (p2 attacked)
+                                this.incPlayerLife(Project_Color.BLUE,dmgInfo.get("dmg"));
+                                p2.changeState(dmgInfo.get("state"));
+                            }
+                            if(dmgInfo.get("type") === "p" && !(this.p1action === "attacking")){ // p2 grabs, p1 not attacking, p1 takes damage
+                                this.incPlayerLife(Project_Color.RED,dmgInfo.get("dmg"));
+                                p1.changeState(dmgInfo.get("state"));
+                            }
+                        }
                     }
                     break;
                 case Project_Events.FIRE_PROJECTILE:
@@ -162,13 +221,11 @@ export default class GameLevel extends Scene {
         }
         this.countdownTimer -= deltaT;
         if(Input.isJustPressed("escape")){
+            this.gamePaused = !this.gamePaused;
             if(this.gamePaused){
-                this.gamePaused = false;
-                Input.enableInput();
-            }
-            else{
-                this.gamePaused = true;
-                Input.disableInput();
+                this.pauseUI.enable();
+            } else{
+                this.pauseUI.disable();
             }
         }
     }
@@ -182,13 +239,15 @@ export default class GameLevel extends Scene {
         // Add a layer for players and enemies
         this.addLayer("primary", 1);
         this.pauseUI = this.addUILayer("pauseUI");
-        this.pauseUI.disable;
+        this.pauseUI.setDepth(2);
+        this.pauseUI.disable();
     }
 
     /**
      * Initializes the viewport
      */
     protected initViewport(): void {
+        this.size = this.viewport.getHalfSize();
         this.viewport.setZoomLevel(2);
     }
 
@@ -202,7 +261,8 @@ export default class GameLevel extends Scene {
             Project_Events.PLAYER_KILLED,
             Project_Events.PLAYER_ATTACK,
             Project_Events.FIRE_PROJECTILE,
-            Project_Events.ROUND_END
+            Project_Events.ROUND_END,
+            Project_Events.UPDATE_ACTION
         ]);
     }
 
@@ -212,13 +272,21 @@ export default class GameLevel extends Scene {
      */
     protected addUI() {
         // In-game labels
-        this.hp1label = <Label>this.add.uiElement(UIElementType.LABEL, "UI", { position: new Vec2(100, 30), text: "Lives: " + GameLevel.hp1 });
+        this.hp1label = <Label>this.add.uiElement(UIElementType.LABEL, "UI", { position: new Vec2(100, 30), text: "Health: " + GameLevel.hp1 });
         this.hp1label.textColor = Color.BLACK;
         this.hp1label.font = "PixelSimple";
         
-        this.hp2label = <Label>this.add.uiElement(UIElementType.LABEL, "UI", { position: new Vec2(500, 30), text: "Lives: " + GameLevel.hp2 });
+        this.hp2label = <Label>this.add.uiElement(UIElementType.LABEL, "UI", { position: new Vec2(500, 30), text: "Health: " + GameLevel.hp2 });
         this.hp2label.textColor = Color.BLACK;
         this.hp2label.font = "PixelSimple";
+
+        this.round1label = <Label>this.add.uiElement(UIElementType.LABEL, "UI", { position: new Vec2(100, 60), text: "Rounds: " + this.p1rounds });
+        this.round1label.textColor = Color.BLACK;
+        this.round1label.font = "PixelSimple";
+        
+        this.round2label = <Label>this.add.uiElement(UIElementType.LABEL, "UI", { position: new Vec2(500, 60), text: "Rounds: " + this.p2rounds });
+        this.round2label.textColor = Color.BLACK;
+        this.round2label.font = "PixelSimple";
 
         // round over label (start off screen)
         this.roundOverLabel = <Label>this.add.uiElement(UIElementType.LABEL, "UI", { position: new Vec2(-300, 200), text: "Round Over!" });
@@ -242,6 +310,8 @@ export default class GameLevel extends Scene {
                 }
             ]
         });
+
+        
 
         // Create our particle system and initialize the pool
         this.system = new Project_ParticleSystem(100, new Vec2((5 * 32), (10 * 32)), 2000, 3, 1, 100);
@@ -278,6 +348,26 @@ export default class GameLevel extends Scene {
         });
     }
 
+
+    protected addPauseScreen(){
+        let bg = this.add.sprite("pausescreen", "pauseUI");
+        bg.scale.set(0.5, 0.5);
+        bg.position.copy(this.size);
+
+        // Create a back button
+        let backBtn = <Button>this.add.uiElement(UIElementType.BUTTON, "pauseUI", {position: new Vec2(this.size.x, this.size.y +100), text: "Back to Menu"});
+        backBtn.backgroundColor = Color.TRANSPARENT;
+        backBtn.borderColor = Color.WHITE;
+        backBtn.borderRadius = 0;
+        backBtn.setPadding(new Vec2(80, 30));
+        backBtn.font = "PixelSimple";
+
+        // When the back button is clicked, go to the next scene
+        backBtn.onEnter = () => {
+            this.sceneManager.changeToScene(HomeScreen, {}, {});
+        }
+    }
+
     /**
      * Initializes the player
      */
@@ -290,6 +380,7 @@ export default class GameLevel extends Scene {
             this.player1Spawn = Vec2.ZERO;
         }
         this.player1.position.copy(this.player1Spawn);
+        GameLevel.hp1 = 10;
         this.player1.addPhysics(new AABB(Vec2.ZERO, new Vec2(28, 28)));
         this.player1.colliderOffset.set(0, 2);
         this.player1.addAI(PlayerController, { 
@@ -299,6 +390,7 @@ export default class GameLevel extends Scene {
             skills:this.load.getObject("skillset1") 
         });
         this.player1.setGroup("player");
+        this.p1action = "neutral";
         this.viewport.follow(this.player1);
         // Add the player 2
         this.player2 = this.add.animatedSprite("player2", "primary");
@@ -309,6 +401,7 @@ export default class GameLevel extends Scene {
             this.player2Spawn = Vec2.ZERO;
         }
         this.player2.position.copy(this.player2Spawn);
+        GameLevel.hp2 = 10;
         this.player2.addPhysics(new AABB(Vec2.ZERO, new Vec2(28, 28)));
         this.player2.colliderOffset.set(0, 2);
         this.player2.addAI(PlayerController, { 
@@ -318,6 +411,7 @@ export default class GameLevel extends Scene {
             skills:this.load.getObject("skillset2")
         });
         this.player2.setGroup("player");
+        this.p2action = "neutral";
     }
 
     //TODO: Change UI
@@ -331,7 +425,9 @@ export default class GameLevel extends Scene {
 
         this.hp1label.text = "Lives: " + GameLevel.hp1;
         if (GameLevel.hp1 <= 0) {
-            Input.disableInput();
+            this.p2rounds +=1;
+            this.round2label.text = "Rounds: " + this.p2rounds;
+            //Input.disableInput();
             this.player1.disablePhysics();
             this.emitter.fireEvent(GameEventType.PLAY_SOUND, { key: "player_death", loop: false, holdReference: false });
             this.player1.tweens.play("death");
@@ -339,7 +435,9 @@ export default class GameLevel extends Scene {
 
         this.hp2label.text = "Lives: " + GameLevel.hp2;
         if (GameLevel.hp2 <= 0) {
-            Input.disableInput();
+            //Input.disableInput();
+            this.p1rounds +=1;
+            this.round1label.text = "Rounds: " + this.p1rounds;
             this.player2.disablePhysics();
             this.emitter.fireEvent(GameEventType.PLAY_SOUND, { key: "player_death", loop: false, holdReference: false });
             this.player2.tweens.play("death");
@@ -347,10 +445,13 @@ export default class GameLevel extends Scene {
     }
 
     protected roundOver(): void {
-        Input.disableInput();
         this.system.stopSystem();
         //all rounds over, back to main menu
-        if(this.rounds <= 0) {
+        if(this.p1rounds >= 2) {
+            this.emitter.fireEvent(Project_Events.LEVEL_END);
+            return;
+        }
+        if(this.p2rounds >= 2) {
             this.emitter.fireEvent(Project_Events.LEVEL_END);
             return;
         }
@@ -367,6 +468,8 @@ export default class GameLevel extends Scene {
         //reset player stat
         GameLevel.hp1 = 10;
         GameLevel.hp2 = 10;
+        this.hp1label.text = "Lives: " + GameLevel.hp1;
+        this.hp2label.text = "Lives: " + GameLevel.hp2;
         this.player1.position = this.player1Spawn.clone();
         this.player2.position = this.player2Spawn.clone();
         this.player1.alpha = 1;
@@ -393,12 +496,12 @@ export default class GameLevel extends Scene {
             if(!prop.visible) continue;
 
             let propAI = prop.ai as Prop;
-            if(this.player1.collisionShape.overlaps(prop.collisionShape) && p1.party != propAI.party) {
-                p1.hitWithProp(propAI.buff);
+            if(this.player1.collisionShape.overlaps(prop.collisionShape) && p1.party != propAI.party && !(this.p1action === "blocking")) { // this assumes projectile type is s, change later
+                p1.hitWithProp(propAI.buff);                                                                                                // todo: make projectiles put hit player in hurt stun
                 this.incPlayerLife(p1.party,propAI.dmg);
                 prop.visible = false;
             }
-            if(this.player2.collisionShape.overlaps(prop.collisionShape) && p2.party != propAI.party) {
+            if(this.player2.collisionShape.overlaps(prop.collisionShape) && p2.party != propAI.party && !(this.p2action === "blocking")) {
                 p2.hitWithProp(propAI.buff);
                 this.incPlayerLife(p2.party,propAI.dmg);
                 prop.visible = false;

@@ -21,6 +21,7 @@ import Skill1 from "./AttackStates/Skill1";
 import Skill2 from "./AttackStates/Skill2";
 import Skill3 from "./AttackStates/Skill3";
 import Walk from "./PlayerStates/Walk";
+import STUN from "./BuffStates/STUN";
 
 export enum PlayerType {
     PLATFORMER = "platformer",
@@ -68,14 +69,46 @@ export default class PlayerController extends StateMachineAI {
 
     attDir: number;
 
+    fadeSign: number;
+
     initializeAI(owner: GameNode, options: Record<string, any>){
         this.owner = owner;
         this.tilemap = this.owner.getScene().getTilemap(options.tilemap) as OrthogonalTilemap;
         this.party = options.color;
         this.skills = options.skills;
 
-        this.initializePlatformer();
+        if(options.playerType === "AI") {
+            this.initializeAsAI();
+        } else {
+            this.initializePlatformer();
+        }
         this.addTweens(owner);
+    }
+
+    initializeAsAI(): void {
+        this.speed = 400;
+
+        //TODO: Add AI States
+        
+        let attack = new Attack(this, this.owner, this.skills);
+        this.addState(PlayerStates.ATK, attack);
+        let grab = new Grab(this, this.owner, this.skills);
+        this.addState(PlayerStates.GRAB, grab);
+        let block = new Block(this, this.owner, this.skills);
+        this.addState(PlayerStates.BLOCK, block);
+        let skill1 = new Skill1(this, this.owner, this.skills);
+        this.addState(PlayerStates.SKILL1, skill1);
+        let skill2 = new Skill2(this, this.owner, this.skills);
+        this.addState(PlayerStates.SKILL2, skill2);
+        let skill3 = new Skill3(this, this.owner, this.skills);
+        this.addState(PlayerStates.SKILL3, skill3);
+
+        let hurt = new HURT(this, this.owner);
+        this.addState(PlayerStates.HURT, hurt);
+        let stun = new STUN(this, this.owner);
+        this.addState(PlayerStates.STUN, stun);
+        
+        this.initialize(PlayerStates.IDLE);
     }
 
     initializePlatformer(): void {
@@ -105,6 +138,8 @@ export default class PlayerController extends StateMachineAI {
 
         let hurt = new HURT(this, this.owner);
         this.addState(PlayerStates.HURT, hurt);
+        let stun = new STUN(this, this.owner);
+        this.addState(PlayerStates.STUN, stun);
         
         this.initialize(PlayerStates.IDLE);
     }
@@ -121,17 +156,35 @@ export default class PlayerController extends StateMachineAI {
     update(deltaT: number): void {
 		super.update(deltaT);
         if(this.currentState instanceof Attack) {
-            console.log(`${this.party} is attacking!`);
+            //console.log(`${this.party} is attacking!`);
         } else if(this.currentState instanceof HURT) {
-            console.log(`${this.party} is being hurt!`);
+            //console.log(`${this.party} is being hurt!`);
         }
-        //console.log(`Invincible ${this.invincible}`);
+        this.updateInvincible(deltaT);
+	}
+
+    updateInvincible(deltaT: number): void {
         if(this.protectTimer < 0) {
             this.invincible = false;
             this.protectTimer = 1;
         }
-        if(this.invincible) this.protectTimer -= deltaT;
-	}
+
+        if(this.invincible) {
+            this.protectTimer -= deltaT;   
+        }
+        this.update_hurt_fading(deltaT);
+    }
+
+    update_hurt_fading(deltaT: number): void {
+        if(this.invincible) {
+            this.owner.alpha += this.fadeSign * deltaT;
+            if(this.owner.alpha > 1 || this.owner.alpha < 0)
+                this.fadeSign = -this.fadeSign;
+        } else {
+            this.owner.alpha = 1;
+            this.fadeSign = -2;
+        }
+    }
 
     inRange(center: Vec2, range: Vec2, state: string, dir: number) {
         if(this.invincible) return false;
@@ -140,7 +193,6 @@ export default class PlayerController extends StateMachineAI {
         this.attDir = dir;
         console.log(`Opponent attemps to attack [${center}][${range}]. Currently at [${this.owner.position}] Distance:[${xDis},${yDis}]`);
         if(xDis <= range.x && yDis <= range.y) {
-            this.changeState(state);
             return true;
         }
         return false;

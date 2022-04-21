@@ -20,6 +20,12 @@ export default class Block extends AttackBase {
 		super.onEnter(options);
 	}
 
+	/*
+	onHold(options: Record<string,any>): void{
+		this.owner.animation.play("BLOCK_HOLD", false)
+		super.onHold(options);
+	}*/
+
 	onExit(): Record<string, any> {
 		this.owner.animation.stop();
 		return {};

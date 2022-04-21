@@ -1,0 +1,14 @@
+{
+    "name": "fireball",
+    "spriteSheetImage": "fireball.png",
+    "spriteWidth": 16,
+    "spriteHeight": 16,
+    "columns": 11,
+    "rows": 1,
+    "animations": [
+        { 
+            "name": "MOVE",
+            "frames": [ {"index": 0, "duration": 32}, {"index": 1, "duration": 32}, {"index": 0, "duration": 32}, {"index": 2, "duration": 32} ]
+        }
+    ]
+}

@@ -2,22 +2,24 @@
     "attack": {
         "dmg": -1,
         "range": {
-            "x": 30,
+            "x": 45,
             "y": 25
         },
         "state": "HURT",
         "timer": 1,
-        "projectile": ""
+        "projectile": "",
+        "type": "s"
     },
     "grab": {
-        "dmg": 0,
+        "dmg": -1,
         "range": {
-            "x": 2,
-            "y": 1
+            "x": 45,
+            "y": 25
         },
-        "state": "HURT",
+        "state": "STUN",
         "timer": 1,
-        "projectile": ""
+        "projectile": "",
+        "type": "p"
     },
     "block": {
         "dmg": 0,
@@ -25,9 +27,10 @@
             "x": 2,
             "y": 1
         },
-        "state": "HURT",
+        "state": "STUN",
         "timer": 1,
-        "projectile": ""
+        "projectile": "",
+        "type": "r"
     },
     "skill1": {
         "dmg": 1,
@@ -37,7 +40,8 @@
         },
         "state": "HURT",
         "timer": 1,
-        "projectile": "fireball"
+        "projectile": "fireball",
+        "type": "s"
     },
     "skill2": {
         "dmg": 1,
@@ -47,7 +51,8 @@
         },
         "state": "HURT",
         "timer": 1,
-        "projectile": ""
+        "projectile": "",
+        "type": "s"
     },
     "skill3": {
         "dmg": 1,
@@ -57,6 +62,7 @@
         },
         "state": "HURT",
         "timer": 1,
-        "projectile": ""
+        "projectile": "",
+        "type": "p"
     } 
 }

@@ -18,12 +18,12 @@ export default class Attack extends AttackBase {
 	}
 
 	onEnter(options: Record<string, any>): void {
-		//this.owner.animation.play("ATTACK", false);
+		this.owner.animation.play("ATTACK", false);
 		super.onEnter(options);
 	}
 
 	onExit(): Record<string, any> {
-		//this.owner.animation.stop();
+		this.owner.animation.stop();
 		return {};
 	}
 }
