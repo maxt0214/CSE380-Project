@@ -223,8 +223,12 @@ export default class GameLevel extends Scene {
         if(Input.isJustPressed("escape")){
             this.gamePaused = !this.gamePaused;
             if(this.gamePaused){
+                this.player1.freeze();
+                this.player2.freeze();
                 this.pauseUI.enable();
             } else{
+                this.player1.unfreeze();
+                this.player2.unfreeze();
                 this.pauseUI.disable();
             }
         }
