@@ -10,6 +10,7 @@ import Controls from "./Controls";
 //import Tutorial from "./TutorialScreen";
 import HelpScreen from "./Help";
 import GameModes from "./GameModes";
+import TempModes from "./TempModes";
 
 export default class HomeScreen extends Scene {
     animatedSprite: AnimatedSprite;
@@ -83,7 +84,9 @@ export default class HomeScreen extends Scene {
         //button click
         modesBtn.onClick = () => {
             console.log("Hello.............................");
-            this.sceneManager.changeToScene(GameModes, {}, {});
+            //this.sceneManager.changeToScene(GameModes, {}, {});
+            this.sceneManager.changeToScene(TempModes, {}, {});
+
         }
     }
 
