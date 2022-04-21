@@ -13,6 +13,12 @@ import Level1 from "./Level1";
 export default class StageSelect extends Scene {
     animatedSprite: AnimatedSprite;
     private bg: Sprite;
+    protected initOptions: Record<string, any>;
+    protected isAI: boolean;
+
+    initScene(init: Record<string, any>): void {
+        this.initOptions = init;
+    }
 
     loadScene(): void {
         this.load.image("stgsel", "project_assets/backgrounds/StageSelectbig.png");
@@ -21,6 +27,8 @@ export default class StageSelect extends Scene {
     startScene(): void {
         this.addUILayer("Main");
         this.addLayer("background", 0);
+        
+        this.isAI = this.initOptions.isP2AI
 
 
         this.bg = this.add.sprite("stgsel", "background");
@@ -74,7 +82,7 @@ export default class StageSelect extends Scene {
                 
                 p1Skillset: "project_assets/skills/fighter.json", 
                 p2Skillset: "project_assets/skills/fighter.json", 
-                isP2AI: false 
+                isP2AI: this.isAI
             }, sceneOptions);
         }
     }

@@ -6,31 +6,23 @@ import Button from "../../Wolfie2D/Nodes/UIElements/Button";
 import { UIElementType } from "../../Wolfie2D/Nodes/UIElements/UIElementTypes";
 import Scene from "../../Wolfie2D/Scene/Scene";
 import Color from "../../Wolfie2D/Utils/Color";
-import GameModes from "./GameModes";
-import StageSelect from "./StageSelect";
 import HomeScreen from "./HomeScreen";
+import CharSelect from "./CharSelect";
 
-export default class CharSelect extends Scene {
+export default class TempModes extends Scene {
     animatedSprite: AnimatedSprite;
     private bg: Sprite;
-    protected initOptions: Record<string, any>;
-    protected isAI: boolean;
-
-    initScene(init: Record<string, any>): void {
-        this.initOptions = init;
-    }
 
     loadScene(): void {
-        this.load.image("charsel", "project_assets/backgrounds/CharacterSelectbig.png");
+        this.load.image("tmodes", "project_assets/backgrounds/TempMenu.png");
     }
 
     startScene(): void {
         this.addUILayer("Main");
         this.addLayer("background", 0);
 
-        this.isAI = this.initOptions.isP2AI
 
-        this.bg = this.add.sprite("charsel", "background");
+        this.bg = this.add.sprite("tmodes", "background");
         this.bg.scale.set(1, 1);
 		this.bg.position.copy(this.viewport.getCenter());
 
@@ -40,7 +32,7 @@ export default class CharSelect extends Scene {
         this.viewport.setZoomLevel(1);
 
         // Create a back button
-        let backBtn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x, size.y + 320), text: "Back"});
+        let backBtn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x - 320, size.y + 280), text: "Back"});
         backBtn.backgroundColor = Color.TRANSPARENT;
         backBtn.borderColor = Color.WHITE;
         backBtn.borderRadius = 0;
@@ -49,26 +41,37 @@ export default class CharSelect extends Scene {
 
         // When the back button is clicked, go to the next scene
         backBtn.onClick = () => {
-            //this.sceneManager.changeToScene(GameModes, {}, {});
             this.sceneManager.changeToScene(HomeScreen, {}, {});
-
         }
 
-        // Create a cont button
-        let contBtn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x, size.y + 220), text: "Continue"});
-        contBtn.backgroundColor = Color.TRANSPARENT;
-        contBtn.borderColor = Color.WHITE;
-        contBtn.borderRadius = 0;
-        contBtn.setPadding(new Vec2(80, 30));
-        contBtn.font = "PixelSimple";
+        // Create a vs ai button
+        let aiBtn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x -320, size.y - 200), text: "ai Mode"});
+        aiBtn.backgroundColor = Color.TRANSPARENT;
+        aiBtn.borderColor = Color.WHITE;
+        aiBtn.borderRadius = 0;
+        aiBtn.setPadding(new Vec2(80, 30));
+        aiBtn.font = "PixelSimple";
 
-        // When the cont button is clicked, go to the next scene
-        contBtn.onClick = () => {
-            this.sceneManager.changeToScene(StageSelect, {isP2AI: this.isAI}, {});
+        //button click
+        aiBtn.onClick = () => {
+            this.sceneManager.changeToScene(CharSelect, {isP2AI: true}, {});
         }
-        
+
+        // Create a vs pvp button
+        let pvpBtn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x -320, size.y - 40), text: "pvp Mode"});
+        pvpBtn.backgroundColor = Color.TRANSPARENT;
+        pvpBtn.borderColor = Color.WHITE;
+        pvpBtn.borderRadius = 0;
+        pvpBtn.setPadding(new Vec2(80, 30));
+        pvpBtn.font = "PixelSimple";
+
+        //button click
+        pvpBtn.onClick = () => {
+            this.sceneManager.changeToScene(CharSelect, {isP2AI: false }, {});
+        }
     }
 
     unloadScene(): void {
     }
 }
+

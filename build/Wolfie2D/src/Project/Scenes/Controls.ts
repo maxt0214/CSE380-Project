@@ -13,7 +13,7 @@ export default class Controls extends Scene {
     private bg: Sprite;
 
     loadScene(): void {
-        this.load.image("controls", "project_assets/backgrounds/Controlsbig.png");
+        this.load.image("controls", "project_assets/backgrounds/Controlsnew.png");
     }
 
     startScene(): void {
