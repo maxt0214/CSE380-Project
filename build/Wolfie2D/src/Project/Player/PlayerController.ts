@@ -88,14 +88,7 @@ export default class PlayerController extends StateMachineAI {
     initializeAsAI(): void {
         this.speed = 400;
 
-        let idle = new Idle(this, this.owner);
-		this.addState(PlayerStates.IDLE, idle);
-		let walk = new Walk(this, this.owner);
-		this.addState(PlayerStates.WALK, walk);
-		let jump = new Jump(this, this.owner);
-        this.addState(PlayerStates.JUMP, jump);
-        let fall = new Fall(this, this.owner);
-        this.addState(PlayerStates.FALL, fall);
+        //TODO: Add AI States
         
         let attack = new Attack(this, this.owner, this.skills);
         this.addState(PlayerStates.ATK, attack);
