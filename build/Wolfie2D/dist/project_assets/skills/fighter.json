@@ -6,7 +6,7 @@
             "y": 25
         },
         "state": "HURT",
-        "timer": 1,
+        "timer": 0.5,
         "projectile": "",
         "type": "s",
         "priority": 3
@@ -18,7 +18,7 @@
             "y": 25
         },
         "state": "STUN",
-        "timer": 1,
+        "timer": 0.5,
         "projectile": "",
         "type": "p",
         "priority": 5
@@ -30,7 +30,7 @@
             "y": 1
         },
         "state": "STUN",
-        "timer": 1,
+        "timer": 0.5,
         "projectile": "",
         "type": "r",
         "priority": 7
