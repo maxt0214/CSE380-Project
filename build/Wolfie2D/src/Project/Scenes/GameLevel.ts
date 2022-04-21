@@ -101,8 +101,7 @@ export default class GameLevel extends Scene {
         this.load.spritesheet("fireball_sp", "project_assets/spritesheets/projectile.json");
         this.load.object("fireball","project_assets/props/fireball.json");
         
-        //this.isAI = this.initOptions.isP2AI;
-        this.isAI = true;
+        this.isAI = this.initOptions.isP2AI;
 
         this.load.image("pausescreen", "project_assets/backgrounds/pausescreen.png");
     }
@@ -498,12 +497,12 @@ export default class GameLevel extends Scene {
 
             let propAI = prop.ai as Prop;
             if(this.player1.collisionShape.overlaps(prop.collisionShape) && p1.party != propAI.party && !(this.p1action === "blocking")) { // this assumes projectile type is s, change later
-                p1.hitWithProp(propAI.buff);                                                                                                // todo: make projectiles put hit player in hurt stun
+                //p1.hitWithProp(propAI.buff);                                                                                                // todo: make projectiles put hit player in hurt stun
                 this.incPlayerLife(p1.party,propAI.dmg);
                 prop.visible = false;
             }
             if(this.player2.collisionShape.overlaps(prop.collisionShape) && p2.party != propAI.party && !(this.p2action === "blocking")) {
-                p2.hitWithProp(propAI.buff);
+                //p2.hitWithProp(propAI.buff);
                 this.incPlayerLife(p2.party,propAI.dmg);
                 prop.visible = false;
             }
