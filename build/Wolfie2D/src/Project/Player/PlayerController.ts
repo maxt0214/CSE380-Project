@@ -21,6 +21,7 @@ import Skill1 from "./AttackStates/Skill1";
 import Skill2 from "./AttackStates/Skill2";
 import Skill3 from "./AttackStates/Skill3";
 import Walk from "./PlayerStates/Walk";
+import STUN from "./BuffStates/STUN";
 
 export enum PlayerType {
     PLATFORMER = "platformer",
@@ -76,8 +77,45 @@ export default class PlayerController extends StateMachineAI {
         this.party = options.color;
         this.skills = options.skills;
 
-        this.initializePlatformer();
+        if(options.playerType === "AI") {
+            this.initializeAsAI();
+        } else {
+            this.initializePlatformer();
+        }
         this.addTweens(owner);
+    }
+
+    initializeAsAI(): void {
+        this.speed = 400;
+
+        let idle = new Idle(this, this.owner);
+		this.addState(PlayerStates.IDLE, idle);
+		let walk = new Walk(this, this.owner);
+		this.addState(PlayerStates.WALK, walk);
+		let jump = new Jump(this, this.owner);
+        this.addState(PlayerStates.JUMP, jump);
+        let fall = new Fall(this, this.owner);
+        this.addState(PlayerStates.FALL, fall);
+        
+        let attack = new Attack(this, this.owner, this.skills);
+        this.addState(PlayerStates.ATK, attack);
+        let grab = new Grab(this, this.owner, this.skills);
+        this.addState(PlayerStates.GRAB, grab);
+        let block = new Block(this, this.owner, this.skills);
+        this.addState(PlayerStates.BLOCK, block);
+        let skill1 = new Skill1(this, this.owner, this.skills);
+        this.addState(PlayerStates.SKILL1, skill1);
+        let skill2 = new Skill2(this, this.owner, this.skills);
+        this.addState(PlayerStates.SKILL2, skill2);
+        let skill3 = new Skill3(this, this.owner, this.skills);
+        this.addState(PlayerStates.SKILL3, skill3);
+
+        let hurt = new HURT(this, this.owner);
+        this.addState(PlayerStates.HURT, hurt);
+        let stun = new STUN(this, this.owner);
+        this.addState(PlayerStates.STUN, stun);
+        
+        this.initialize(PlayerStates.IDLE);
     }
 
     initializePlatformer(): void {
@@ -107,6 +145,8 @@ export default class PlayerController extends StateMachineAI {
 
         let hurt = new HURT(this, this.owner);
         this.addState(PlayerStates.HURT, hurt);
+        let stun = new STUN(this, this.owner);
+        this.addState(PlayerStates.STUN, stun);
         
         this.initialize(PlayerStates.IDLE);
     }

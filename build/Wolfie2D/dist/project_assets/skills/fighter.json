@@ -16,7 +16,7 @@
             "x": 45,
             "y": 25
         },
-        "state": "HURT",
+        "state": "STUN",
         "timer": 1,
         "projectile": "",
         "type": "p"
@@ -27,7 +27,7 @@
             "x": 2,
             "y": 1
         },
-        "state": "HURT",
+        "state": "STUN",
         "timer": 1,
         "projectile": "",
         "type": "r"
