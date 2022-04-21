@@ -25,7 +25,7 @@ export default class AIOnGround extends PlayerState {
 
 	//Sample Options: { Attack: 2, Block: 5, Grab:6 ... } meaning attack [0,2), block [2,5), block [5,6)
 	onEnter(options: Record<string, any>): void {
-		this.decision_timer = 5;
+		this.decision_timer = 2;
 	}
 
 	update(deltaT: number): void {
@@ -33,12 +33,6 @@ export default class AIOnGround extends PlayerState {
 			this.parent.velocity.y = 0;
 		}
 		super.update(deltaT);
-
-		let direction = this.getInputDirection();
-
-		if(direction.x !== 0){
-			(<Sprite>this.owner).invertX = MathUtils.sign(direction.x) < 0;
-		}
 
 		this.decide(deltaT);
 	}

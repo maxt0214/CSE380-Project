@@ -1,8 +1,11 @@
+import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import { PlayerStates } from "../PlayerController";
 import AIOnGround from "./AIOnGround";
 
 //This is a basic AI State that moves 
 export default class AIIDLE extends AIOnGround {
+	owner: AnimatedSprite;
+	
 	onEnter(options: Record<string, any>): void {
 		super.onEnter(options);
 	}
@@ -17,7 +20,12 @@ export default class AIIDLE extends AIOnGround {
 		this.owner.move(this.parent.velocity.scaled(deltaT));
 	}
 
+	updateAnim() {
+		this.owner.animation.playIfNotAlready("IDLE", true);
+	}
+
 	onExit(): Record<string, any> {
+		this.owner.animation.stop();
 		return super.onExit();
 	}
 }

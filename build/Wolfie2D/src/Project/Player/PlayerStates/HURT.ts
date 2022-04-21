@@ -23,7 +23,7 @@ export default class HURT extends PlayerState {
 		this.owner.invertX = this.dir === -1 ? false : true;
 		//set up velocity for nockback
 		this.parent.velocity.x = this.dir * this.parent.speed;
-		this.parent.velocity.y = -this.parent.speed * 10;
+		this.parent.velocity.y = -this.parent.speed * 2;
 		
 		console.log(`Hurting after ${this.freeTimer} seconds Moving Towards:${this.dir}`);
 	}
