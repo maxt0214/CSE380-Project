@@ -39,7 +39,7 @@ export default class HURT extends PlayerState {
 
 		this.parent.invincible = true;
 		if(this.freeTimer <= 0) {
-			this.finished(PlayerStates.IDLE);
+			this.finished(this.parent.is_bot ? PlayerStates.AIIDLE : PlayerStates.IDLE);
 		}
 	}
 

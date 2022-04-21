@@ -1,11 +1,7 @@
 import StateMachineAI from "../../Wolfie2D/AI/StateMachineAI";
 import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
-import Debug from "../../Wolfie2D/Debug/Debug";
-import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 import GameNode, { TweenableProperties } from "../../Wolfie2D/Nodes/GameNode";
-import Sprite from "../../Wolfie2D/Nodes/Sprites/Sprite";
 import OrthogonalTilemap from "../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
-import Timer, { TimerState } from "../../Wolfie2D/Timing/Timer";
 import { EaseFunctionType } from "../../Wolfie2D/Utils/EaseFunctions";
 import { Project_Color } from "../project_color";
 import { Project_Events } from "../project_enums";
@@ -22,6 +18,7 @@ import Skill2 from "./AttackStates/Skill2";
 import Skill3 from "./AttackStates/Skill3";
 import Walk from "./PlayerStates/Walk";
 import STUN from "./BuffStates/STUN";
+import AIIDLE from "./AIStates/AIIDLE";
 
 export enum PlayerType {
     PLATFORMER = "platformer",
@@ -47,6 +44,8 @@ export enum PlayerStates {
     STUN = "STUN",
 
     //AI states
+    AIIDLE = "ai_idle",
+    AIOnGround = "AIGround",
 
 	PREVIOUS = "previous"
 }
@@ -66,9 +65,11 @@ export default class PlayerController extends StateMachineAI {
     //invincible timer after being hit for high combo
     invincible: boolean = false;
     protectTimer: number = 1;
-
+    //is this player a bot
+    is_bot: boolean;
+    //direction of attack against this player
     attDir: number;
-
+    //used to fade player on attacked
     fadeSign: number;
 
     initializeAI(owner: GameNode, options: Record<string, any>){
@@ -76,8 +77,9 @@ export default class PlayerController extends StateMachineAI {
         this.tilemap = this.owner.getScene().getTilemap(options.tilemap) as OrthogonalTilemap;
         this.party = options.color;
         this.skills = options.skills;
+        this.is_bot = options.playerType === "AI";
 
-        if(options.playerType === "AI") {
+        if(this.is_bot) {
             this.initializeAsAI();
         } else {
             this.initializePlatformer();
@@ -89,6 +91,8 @@ export default class PlayerController extends StateMachineAI {
         this.speed = 400;
 
         //TODO: Add AI States
+        let aiidle = new AIIDLE(this, this.owner,this.generate_moveset());
+        this.addState(PlayerStates.AIIDLE, aiidle);
         
         let attack = new Attack(this, this.owner, this.skills);
         this.addState(PlayerStates.ATK, attack);
@@ -108,7 +112,18 @@ export default class PlayerController extends StateMachineAI {
         let stun = new STUN(this, this.owner);
         this.addState(PlayerStates.STUN, stun);
         
-        this.initialize(PlayerStates.IDLE);
+        this.initialize(PlayerStates.AIIDLE);
+    }
+
+    generate_moveset(): Record<string, any> {
+        return {
+            "Attack": this.skills.attack.priority,
+            "Block": this.skills.block.priority,
+            "Grab": this.skills.grab.priority,
+            "Skill1": this.skills.skill1.priority,
+            "Skill2": this.skills.skill2.priority,
+            "Skill3": this.skills.skill3.priority
+        }
     }
 
     initializePlatformer(): void {
@@ -199,7 +214,7 @@ export default class PlayerController extends StateMachineAI {
     }
 
     hitWithProp(state: string) {
-        //this.changeState(state);
+        this.changeState(state);
     }
 
     addTweens(owner: GameNode) : void {

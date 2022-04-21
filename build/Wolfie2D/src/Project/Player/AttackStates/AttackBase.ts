@@ -41,12 +41,12 @@ export default class AttackBase extends PlayerState {
 		super.update(deltaT);
 		this.timer -= deltaT;
 		if(this.timer < 0){
-			this.finished(PlayerStates.IDLE);
+			this.finished(this.parent.is_bot ? PlayerStates.AIIDLE : PlayerStates.IDLE);
 			this.emitter.fireEvent(Project_Events.UPDATE_ACTION,
-				{
-					party: this.parent.party, 
-					type: "neutral"
-				});
+			{
+				party: this.parent.party, 
+				type: "neutral"
+			});
 		}
 	}
 
