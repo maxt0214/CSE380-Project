@@ -193,7 +193,7 @@ export default class Game {
             this.sceneManager.render();
 
             // Hacky debug mode
-            if(Input.isKeyJustPressed("g")){
+            if(Input.isKeyJustPressed("`")){
                 this.showDebug = !this.showDebug;
             }
 
