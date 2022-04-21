@@ -46,7 +46,7 @@ export default class SplashScreen extends Scene {
         }
 
 
-        let skipBtn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x - 300, size.y - 320), text: "Skip to gameplay"});
+        let skipBtn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x - 300, size.y - 3200), text: "Skip to gameplay"});
         skipBtn.backgroundColor = Color.TRANSPARENT;
         skipBtn.borderColor = Color.WHITE;
         skipBtn.borderRadius = 0;

@@ -8,6 +8,7 @@ import Scene from "../../Wolfie2D/Scene/Scene";
 import Color from "../../Wolfie2D/Utils/Color";
 import GameModes from "./GameModes";
 import Level1 from "./Level1";
+import HomeScreen from "./HomeScreen";
 
 
 export default class StageSelect extends Scene {
@@ -50,11 +51,11 @@ export default class StageSelect extends Scene {
 
         // When the back button is clicked, go to the next scene
         backBtn.onClick = () => {
-            this.sceneManager.changeToScene(GameModes, {}, {});
+            this.sceneManager.changeToScene(HomeScreen, {}, {});
         }
 
         // Create a cont button
-        let contBtn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x - 100, size.y - 100), text: "Stage 1"});
+        let contBtn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x - 150, size.y - 150), text: "Stage 1"});
         contBtn.backgroundColor = Color.TRANSPARENT;
         contBtn.borderColor = Color.WHITE;
         contBtn.borderRadius = 0;
