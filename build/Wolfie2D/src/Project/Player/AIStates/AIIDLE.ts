@@ -11,7 +11,6 @@ export default class AIIDLE extends AIOnGround {
 		if(this.parent.velocity.y > 0 && !this.owner.onGround) {
 			this.finished(PlayerStates.FALL);
 		}
-
 		super.update(deltaT);
 
 		this.parent.velocity.x = 0;
