@@ -248,7 +248,7 @@ export default class GameLevel extends Scene {
      */
     protected initViewport(): void {
         this.size = this.viewport.getHalfSize();
-        this.viewport.setZoomLevel(2);
+        this.viewport.setZoomLevel(2.5);
     }
 
     /**
@@ -272,19 +272,19 @@ export default class GameLevel extends Scene {
      */
     protected addUI() {
         // In-game labels
-        this.hp1label = <Label>this.add.uiElement(UIElementType.LABEL, "UI", { position: new Vec2(100, 30), text: "Health: " + GameLevel.hp1 });
+        this.hp1label = <Label>this.add.uiElement(UIElementType.LABEL, "UI", { position: new Vec2(50, 30), text: "Health: " + GameLevel.hp1 });
         this.hp1label.textColor = Color.BLACK;
         this.hp1label.font = "PixelSimple";
         
-        this.hp2label = <Label>this.add.uiElement(UIElementType.LABEL, "UI", { position: new Vec2(500, 30), text: "Health: " + GameLevel.hp2 });
+        this.hp2label = <Label>this.add.uiElement(UIElementType.LABEL, "UI", { position: new Vec2(430, 30), text: "Health: " + GameLevel.hp2 });
         this.hp2label.textColor = Color.BLACK;
         this.hp2label.font = "PixelSimple";
 
-        this.round1label = <Label>this.add.uiElement(UIElementType.LABEL, "UI", { position: new Vec2(100, 60), text: "Rounds: " + this.p1rounds });
+        this.round1label = <Label>this.add.uiElement(UIElementType.LABEL, "UI", { position: new Vec2(50, 60), text: "Rounds: " + this.p1rounds });
         this.round1label.textColor = Color.BLACK;
         this.round1label.font = "PixelSimple";
         
-        this.round2label = <Label>this.add.uiElement(UIElementType.LABEL, "UI", { position: new Vec2(500, 60), text: "Rounds: " + this.p2rounds });
+        this.round2label = <Label>this.add.uiElement(UIElementType.LABEL, "UI", { position: new Vec2(430, 60), text: "Rounds: " + this.p2rounds });
         this.round2label.textColor = Color.BLACK;
         this.round2label.font = "PixelSimple";
 
