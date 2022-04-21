@@ -101,7 +101,8 @@ export default class GameLevel extends Scene {
         this.load.spritesheet("fireball_sp", "project_assets/spritesheets/projectile.json");
         this.load.object("fireball","project_assets/props/fireball.json");
         
-        this.isAI = this.initOptions.isP2AI;
+        //this.isAI = this.initOptions.isP2AI;
+        this.isAI = true;
 
         this.load.image("pausescreen", "project_assets/backgrounds/pausescreen.png");
     }

@@ -8,7 +8,8 @@
         "state": "HURT",
         "timer": 1,
         "projectile": "",
-        "type": "s"
+        "type": "s",
+        "priority": 3
     },
     "grab": {
         "dmg": -1,
@@ -19,7 +20,8 @@
         "state": "STUN",
         "timer": 1,
         "projectile": "",
-        "type": "p"
+        "type": "p",
+        "priority": 5
     },
     "block": {
         "dmg": 0,
@@ -30,7 +32,8 @@
         "state": "STUN",
         "timer": 1,
         "projectile": "",
-        "type": "r"
+        "type": "r",
+        "priority": 7
     },
     "skill1": {
         "dmg": 1,
@@ -41,7 +44,8 @@
         "state": "HURT",
         "timer": 1,
         "projectile": "fireball",
-        "type": "s"
+        "type": "s",
+        "priority": 10
     },
     "skill2": {
         "dmg": 1,
@@ -52,7 +56,8 @@
         "state": "HURT",
         "timer": 1,
         "projectile": "",
-        "type": "s"
+        "type": "s",
+        "priority": 10
     },
     "skill3": {
         "dmg": 1,
@@ -63,6 +68,7 @@
         "state": "HURT",
         "timer": 1,
         "projectile": "",
-        "type": "p"
+        "type": "p",
+        "priority": 10
     } 
 }
