@@ -18,6 +18,7 @@ export default class HomeScreen extends Scene {
 
     loadScene(): void {
         this.load.image("home", "project_assets/backgrounds/HomeMenubig.png");
+        this.load.audio("menu_music", "project_assets/music/menu.mp3");
     }
 
     startScene(): void {
@@ -90,10 +91,12 @@ export default class HomeScreen extends Scene {
             console.log("Hello.............................");
             //this.sceneManager.changeToScene(GameModes, {}, {});
             this.sceneManager.changeToScene(TempModes, {}, {});
-
         }
+
+        this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "menu_music", loop: true, holdReference: true});
     }
 
     unloadScene(): void {
+
     }
 }

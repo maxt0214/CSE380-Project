@@ -7,7 +7,6 @@ import { UIElementType } from "../../Wolfie2D/Nodes/UIElements/UIElementTypes";
 import Scene from "../../Wolfie2D/Scene/Scene";
 import Color from "../../Wolfie2D/Utils/Color";
 import HomeScreen from "./HomeScreen";
-import MainMenu from "./MainMenu"; 
 import StageSelect from "./StageSelect"; 
 
 export default class SplashScreen extends Scene {

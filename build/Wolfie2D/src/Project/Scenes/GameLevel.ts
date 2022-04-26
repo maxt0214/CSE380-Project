@@ -18,7 +18,6 @@ import { EaseFunctionType } from "../../Wolfie2D/Utils/EaseFunctions";
 import { Project_Color } from "../project_color";
 import { Project_Events } from "../project_enums";
 import PlayerController from "../Player/PlayerController";
-import MainMenu from "./MainMenu";
 import Project_ParticleSystem from "../project_ParticleSystem";
 import Prop from "../Props/Prop";
 import List from "../../Wolfie2D/DataTypes/List";

@@ -1,5 +1,4 @@
 import Game from "./Wolfie2D/Loop/Game";
-import MainMenu from "./Project/Scenes/MainMenu";
 import SplashScreen from "./Project/Scenes/SplashScreen";
 
 // The main function is your entrypoint into Wolfie2D. Specify your first scene and any options here.

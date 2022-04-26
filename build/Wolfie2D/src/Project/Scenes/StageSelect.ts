@@ -65,7 +65,7 @@ export default class StageSelect extends Scene {
 
         // When the stage1 button is clicked, go to the next scene
         stage1Btn.onClick = () => {
-            
+            this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "menu_music"});
             let sceneOptions = {
                 physics: {
                     groupNames: ["ground", "player", "props"],
@@ -98,7 +98,7 @@ export default class StageSelect extends Scene {
 
         // When the stage2 button is clicked, go to the next scene
         stage2Btn.onClick = () => {
-            
+            this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "menu_music"});
             let sceneOptions = {
                 physics: {
                     groupNames: ["ground", "player", "props"],
