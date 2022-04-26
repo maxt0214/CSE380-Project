@@ -12,6 +12,7 @@ export default class Level1 extends GameLevel {
         // Load common resources
         this.load.audio("jump", "project_assets/sounds/jump.wav");
         this.load.audio("player_death", "project_assets/sounds/player_death.wav");
+        this.load.audio("hit", "project_assets/sounds/hit.wav");
     }
 
     unloadScene(){

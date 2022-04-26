@@ -178,14 +178,17 @@ export default class GameLevel extends Scene {
                         if(p2.inRange(dmgInfo.get("center"),dmgInfo.get("range"),dmgInfo.get("state"),dmgInfo.get("dir"))){ //if p2 is in range of attack, 
                             if(dmgInfo.get("type") === "s" && !(this.p2action === "blocking")){ // p2 not blocking (p2 attacked)
                                 this.incPlayerLife(Project_Color.BLUE,dmgInfo.get("dmg"));
+                                this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "hit", loop: false, holdReference: false});
                                 p2.changeState(dmgInfo.get("state"));
                             }
                             if(dmgInfo.get("type") === "s" && this.p2action === "blocking"){ // p2 blocking (p1 attacked)
                                 this.incPlayerLife(Project_Color.RED,dmgInfo.get("dmg"));
+                                this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "hit", loop: false, holdReference: false});
                                 p1.changeState(dmgInfo.get("state"));
                             }
                             if(dmgInfo.get("type") === "p" && !(this.p2action === "attacking")){ // p1 grabs, p2 not attacking, p2 takes damage
                                 this.incPlayerLife(Project_Color.BLUE,dmgInfo.get("dmg"));
+                                this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "hit", loop: false, holdReference: false});
                                 p2.changeState(dmgInfo.get("state"));
                             }
                         }
@@ -194,14 +197,17 @@ export default class GameLevel extends Scene {
                         if(p1.inRange(dmgInfo.get("center"),dmgInfo.get("range"),dmgInfo.get("state"),dmgInfo.get("dir"))){
                             if(dmgInfo.get("type") === "s" && !(this.p1action === "blocking")){ //p1 not blocking (p1 attacked)
                                 this.incPlayerLife(Project_Color.RED,dmgInfo.get("dmg"));
+                                this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "hit", loop: false, holdReference: false});
                                 p1.changeState(dmgInfo.get("state"));
                             }
                             if(dmgInfo.get("type") === "s" && this.p1action === "blocking"){    //p1 blocking (p2 attacked)
                                 this.incPlayerLife(Project_Color.BLUE,dmgInfo.get("dmg"));
+                                this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "hit", loop: false, holdReference: false});
                                 p2.changeState(dmgInfo.get("state"));
                             }
                             if(dmgInfo.get("type") === "p" && !(this.p1action === "attacking")){ // p2 grabs, p1 not attacking, p1 takes damage
                                 this.incPlayerLife(Project_Color.RED,dmgInfo.get("dmg"));
+                                this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "hit", loop: false, holdReference: false});
                                 p1.changeState(dmgInfo.get("state"));
                             }
                         }
