@@ -15,6 +15,7 @@ import TempModes from "./TempModes";
 export default class HomeScreen extends Scene {
     animatedSprite: AnimatedSprite;
     private bg: Sprite;
+    public static startTime: number = 0;
 
     loadScene(): void {
         this.load.image("home", "project_assets/backgrounds/HomeMenubig.png");
@@ -93,10 +94,11 @@ export default class HomeScreen extends Scene {
             this.sceneManager.changeToScene(TempModes, {}, {});
         }
 
-        this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "menu_music", loop: true, holdReference: true});
+        HomeScreen.startTime++;
+        if(HomeScreen.startTime == 1)
+            this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "menu_music", loop: true, holdReference: true});
     }
 
     unloadScene(): void {
-
     }
 }

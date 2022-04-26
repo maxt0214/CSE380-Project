@@ -68,7 +68,6 @@ export default class CharSelect extends Scene {
         contBtn.onClick = () => {
             this.sceneManager.changeToScene(StageSelect, {isP2AI: this.isAI}, {});
         }
-        
     }
 
     unloadScene(): void {
