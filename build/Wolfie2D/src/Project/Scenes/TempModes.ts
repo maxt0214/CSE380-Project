@@ -32,9 +32,10 @@ export default class TempModes extends Scene {
         this.viewport.setZoomLevel(1);
 
         // Create a back button
-        let backBtn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x - 320, size.y + 280), text: "Back"});
+        let backBtn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x - 320, size.y + 260), text: "Back aaaaaaaaaa"});
         backBtn.backgroundColor = Color.TRANSPARENT;
-        backBtn.borderColor = Color.WHITE;
+        backBtn.borderColor = Color.TRANSPARENT;
+        backBtn.textColor = Color.TRANSPARENT;
         backBtn.borderRadius = 0;
         backBtn.setPadding(new Vec2(80, 30));
         backBtn.font = "PixelSimple";
@@ -45,9 +46,10 @@ export default class TempModes extends Scene {
         }
 
         // Create a vs ai button
-        let aiBtn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x -320, size.y - 200), text: "ai Mode"});
+        let aiBtn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x -320, size.y - 200), text: "ai Mode aaaaaaaa"});
         aiBtn.backgroundColor = Color.TRANSPARENT;
-        aiBtn.borderColor = Color.WHITE;
+        aiBtn.borderColor = Color.TRANSPARENT;
+        aiBtn.textColor = Color.TRANSPARENT;
         aiBtn.borderRadius = 0;
         aiBtn.setPadding(new Vec2(80, 30));
         aiBtn.font = "PixelSimple";
@@ -58,9 +60,10 @@ export default class TempModes extends Scene {
         }
 
         // Create a vs pvp button
-        let pvpBtn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x -320, size.y - 40), text: "pvp Mode"});
+        let pvpBtn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x -320, size.y - 40), text: "pvp Mode aaaaaaa"});
         pvpBtn.backgroundColor = Color.TRANSPARENT;
-        pvpBtn.borderColor = Color.WHITE;
+        pvpBtn.borderColor = Color.TRANSPARENT;
+        pvpBtn.textColor = Color.TRANSPARENT;
         pvpBtn.borderRadius = 0;
         pvpBtn.setPadding(new Vec2(80, 30));
         pvpBtn.font = "PixelSimple";

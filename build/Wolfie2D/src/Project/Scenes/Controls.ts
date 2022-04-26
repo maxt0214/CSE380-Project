@@ -31,9 +31,10 @@ export default class Controls extends Scene {
         this.viewport.setZoomLevel(1);
 
         // Create a back button
-        let backBtn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x, size.y + 320), text: "Back"});
+        let backBtn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x, size.y + 300), text: "Back aaaaaaaaaaa"});
         backBtn.backgroundColor = Color.TRANSPARENT;
-        backBtn.borderColor = Color.WHITE;
+        backBtn.borderColor = Color.TRANSPARENT;
+        backBtn.textColor = Color.TRANSPARENT;
         backBtn.borderRadius = 0;
         backBtn.setPadding(new Vec2(80, 30));
         backBtn.font = "PixelSimple";

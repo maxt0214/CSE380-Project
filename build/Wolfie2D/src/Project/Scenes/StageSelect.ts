@@ -44,7 +44,8 @@ export default class StageSelect extends Scene {
         // Create a back button
         let backBtn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x, size.y + 320), text: "Back"});
         backBtn.backgroundColor = Color.TRANSPARENT;
-        backBtn.borderColor = Color.WHITE;
+        backBtn.borderColor = Color.TRANSPARENT;
+        backBtn.textColor = Color.TRANSPARENT;
         backBtn.borderRadius = 0;
         backBtn.setPadding(new Vec2(80, 30));
         backBtn.font = "PixelSimple";
@@ -55,7 +56,7 @@ export default class StageSelect extends Scene {
         }
 
         // Create a stage1 button
-        let stage1Btn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x - 150, size.y - 150), text: "Stage 1"});
+        let stage1Btn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x - 250, size.y - 150), text: "Stage 1"});
         stage1Btn.backgroundColor = Color.TRANSPARENT;
         stage1Btn.borderColor = Color.WHITE;
         stage1Btn.borderRadius = 0;
