@@ -175,6 +175,20 @@ export default class GameLevel extends Scene {
                     let p2 = this.player2._ai as PlayerController;
                     console.log(`Player[${dmgInfo.get("party")}] attacks center[${dmgInfo.get("center")}] Range[${dmgInfo.get("range")}]`);
                     if(dmgInfo.get("party") === Project_Color.RED) {    //p1 attacking
+                        // play p1 attack sounds
+                        if(dmgInfo.get("name") === "ATTACK")
+                            this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "p1attack", loop: false, holdReference: false});
+                        if(dmgInfo.get("name") === "GRAB")
+                            this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "p1grab", loop: false, holdReference: false});
+                        if(dmgInfo.get("name") === "BLOCK")
+                            this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "p1block", loop: false, holdReference: false});
+                        if(dmgInfo.get("name") === "SKILL1")
+                            this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "p1skill1", loop: false, holdReference: false});
+                        if(dmgInfo.get("name") === "SKILL2")
+                            this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "p1skill2", loop: false, holdReference: false});
+                        if(dmgInfo.get("name") === "SKILL3")
+                            this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "p1skill3", loop: false, holdReference: false});
+
                         if(p2.inRange(dmgInfo.get("center"),dmgInfo.get("range"),dmgInfo.get("state"),dmgInfo.get("dir"))){ //if p2 is in range of attack, 
                             if(dmgInfo.get("type") === "s" && !(this.p2action === "blocking")){ // p2 not blocking (p2 attacked)
                                 this.incPlayerLife(Project_Color.BLUE,dmgInfo.get("dmg"));
@@ -194,6 +208,20 @@ export default class GameLevel extends Scene {
                         }
                         
                     } else {    //p2 attacking
+                        // play p2 attack sounds
+                        if(dmgInfo.get("name") === "ATTACK")
+                            this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "p2attack", loop: false, holdReference: false});
+                        if(dmgInfo.get("name") === "GRAB")
+                            this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "p2grab", loop: false, holdReference: false});
+                        if(dmgInfo.get("name") === "BLOCK")
+                            this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "p2block", loop: false, holdReference: false});
+                        if(dmgInfo.get("name") === "SKILL1")
+                            this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "p2skill1", loop: false, holdReference: false});
+                        if(dmgInfo.get("name") === "SKILL2")
+                            this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "p2skill2", loop: false, holdReference: false});
+                        if(dmgInfo.get("name") === "SKILL3")
+                            this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "p2skill3", loop: false, holdReference: false});
+
                         if(p1.inRange(dmgInfo.get("center"),dmgInfo.get("range"),dmgInfo.get("state"),dmgInfo.get("dir"))){
                             if(dmgInfo.get("type") === "s" && !(this.p1action === "blocking")){ //p1 not blocking (p1 attacked)
                                 this.incPlayerLife(Project_Color.RED,dmgInfo.get("dmg"));

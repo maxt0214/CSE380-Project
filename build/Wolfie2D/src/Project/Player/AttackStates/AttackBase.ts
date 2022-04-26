@@ -11,6 +11,7 @@ import PlayerState from "../PlayerStates/PlayerState";
 
 export default class AttackBase extends PlayerState {
 	owner: AnimatedSprite;
+	name: string;
 	damage: number;
 	range: Vec2;
 	buffState: string;
@@ -21,6 +22,7 @@ export default class AttackBase extends PlayerState {
 
 	constructor(parent: StateMachine, owner: GameNode, skill: Record<string,any>){
 		super(parent, owner);
+		this.name = skill.name;
 		this.damage = skill.dmg;
 		this.range = new Vec2(skill.range.x, skill.range.y);
 		this.buffState = skill.state;
@@ -65,6 +67,7 @@ export default class AttackBase extends PlayerState {
 		this.emitter.fireEvent(Project_Events.PLAYER_ATTACK, 
 		{
 			party: this.parent.party, 
+			name: this.name,
 			dmg: this.damage, 
 			center: this.owner.position.clone().add(offset),
 			range: this.range.clone(),

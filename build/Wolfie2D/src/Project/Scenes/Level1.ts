@@ -13,6 +13,23 @@ export default class Level1 extends GameLevel {
         this.load.audio("jump", "project_assets/sounds/jump.wav");
         this.load.audio("player_death", "project_assets/sounds/player_death.wav");
         this.load.audio("hit", "project_assets/sounds/hit.wav");
+
+        // player 1 attack sounds
+        this.load.audio("p1attack", "project_assets/sounds/attack.wav");
+        this.load.audio("p1grab", "project_assets/sounds/grab.wav");
+        this.load.audio("p1block", "project_assets/sounds/block.wav");
+        this.load.audio("p1skill1", "project_assets/sounds/attack.wav");
+        this.load.audio("p1skill2", "project_assets/sounds/attack.wav");
+        this.load.audio("p1skill3", "project_assets/sounds/attack.wav");
+
+        // player 2 attack sounds
+        this.load.audio("p2attack", "project_assets/sounds/attack.wav");
+        this.load.audio("p2grab", "project_assets/sounds/grab.wav");
+        this.load.audio("p2block", "project_assets/sounds/block.wav");
+        this.load.audio("p2skill1", "project_assets/sounds/attack.wav");
+        this.load.audio("p2skill2", "project_assets/sounds/attack.wav");
+        this.load.audio("p2skill3", "project_assets/sounds/attack.wav");
+
     }
 
     unloadScene(){
