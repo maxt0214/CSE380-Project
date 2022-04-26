@@ -16,7 +16,7 @@ export default class Skill3 extends AttackBase {
 	}
 
 	onEnter(options: Record<string, any>): void {
-		this.owner.animation.play("Skill3", false);
+		this.owner.animation.play("SKILL3", false);
 		super.onEnter(options);
 	}
 

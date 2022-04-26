@@ -2,7 +2,7 @@
     "name": "fighter",
     "spriteSheetImage": "fighter.png",
     "spriteWidth": 24,
-    "spriteHeight": 32,
+    "spriteHeight": 36,
     "columns": 6,
     "rows": 7,
     "animations": [
@@ -37,6 +37,14 @@
         {
             "name": "HURT",
             "frames": [ {"index": 36, "duration": 16}, {"index": 37, "duration": 16}, {"index": 38, "duration": 16}, {"index": 39, "duration": 16}, {"index": 40, "duration": 16}, {"index": 41, "duration": 16}]
+        },
+        {
+            "name": "SKILL2",
+            "frames": [ {"index": 42, "duration": 8}, {"index": 43, "duration": 16}, {"index": 44, "duration": 16}, {"index": 45, "duration": 8}]
+        },
+        {
+            "name": "SKILL3",
+            "frames": [ {"index": 48, "duration": 8}, {"index": 49, "duration": 16}, {"index": 50, "duration": 16}, {"index": 51, "duration": 8}, {"index": 52, "duration": 8}]
         }
     ]
 }

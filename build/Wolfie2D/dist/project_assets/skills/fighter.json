@@ -27,7 +27,7 @@
     },
     "block": {
         "name": "BLOCK",
-        "dmg": 0,
+        "dmg": 1,
         "range": {
             "x": 2,
             "y": 1
@@ -61,7 +61,7 @@
         "state": "HURT",
         "timer": 1,
         "projectile": "",
-        "type": "s",
+        "type": "r",
         "priority": 10
     },
     "skill3": {
@@ -74,7 +74,7 @@
         "state": "HURT",
         "timer": 1,
         "projectile": "",
-        "type": "p",
+        "type": "s",
         "priority": 10
     } 
 }
