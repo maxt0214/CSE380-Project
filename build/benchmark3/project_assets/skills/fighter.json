@@ -1,5 +1,6 @@
 {
     "attack": {
+        "name": "ATTACK",
         "dmg": -1,
         "range": {
             "x": 45,
@@ -12,6 +13,7 @@
         "priority": 3
     },
     "grab": {
+        "name": "GRAB",
         "dmg": -1,
         "range": {
             "x": 45,
@@ -24,7 +26,8 @@
         "priority": 5
     },
     "block": {
-        "dmg": 0,
+        "name": "BLOCK",
+        "dmg": 1,
         "range": {
             "x": 2,
             "y": 1
@@ -36,6 +39,7 @@
         "priority": 7
     },
     "skill1": {
+        "name": "SKILL1",
         "dmg": 1,
         "range": {
             "x": 2,
@@ -48,27 +52,29 @@
         "priority": 10
     },
     "skill2": {
-        "dmg": 1,
+        "name": "SKILL2",
+        "dmg": -1,
         "range": {
-            "x": 2,
-            "y": 1
+            "x": 25,
+            "y": 45
         },
         "state": "HURT",
-        "timer": 1,
+        "timer": 0.75,
         "projectile": "",
-        "type": "s",
-        "priority": 10
+        "type": "r",
+        "priority": 11
     },
     "skill3": {
-        "dmg": 1,
+        "name": "SKILL3",
+        "dmg": -1,
         "range": {
-            "x": 2,
-            "y": 1
+            "x": 55,
+            "y": 25
         },
         "state": "HURT",
-        "timer": 1,
+        "timer": 0.75,
         "projectile": "",
-        "type": "p",
-        "priority": 10
+        "type": "s",
+        "priority": 12
     } 
 }
