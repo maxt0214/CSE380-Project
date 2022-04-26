@@ -23,7 +23,7 @@ export default class Prop implements AI {
     
     party: Project_Color;
 
-    protected dir: Vec2;
+    public dir: Vec2;
     protected speed: number;
     protected minSpd: number;
     protected maxSpd: number;

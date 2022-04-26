@@ -20,6 +20,8 @@ import Walk from "./PlayerStates/Walk";
 import STUN from "./BuffStates/STUN";
 import AIIDLE from "./AIStates/AIIDLE";
 import AnimatedSprite from "../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
+import Input from "../../Wolfie2D/Input/Input";
+import TilemapRenderer from "../../Wolfie2D/Rendering/CanvasRendering/TilemapRenderer";
 
 export enum PlayerType {
     PLATFORMER = "platformer",
@@ -93,7 +95,6 @@ export default class PlayerController extends StateMachineAI {
     initializeAsAI(): void {
         this.speed = this.MAX_SPEED;
         
-        //TODO: Add AI States
         let aiidle = new AIIDLE(this, this.owner,this.generate_moveset());
         this.addState(PlayerStates.AIIDLE, aiidle);
         
@@ -222,8 +223,11 @@ export default class PlayerController extends StateMachineAI {
         return false;
     }
 
-    hitWithProp(state: string) {
+    hitWithProp(state: string, dir: number) {
+        if(this.invincible) return false;
+        this.attDir = dir;
         this.changeState(state);
+        return true;
     }
 
     addTweens(owner: GameNode) : void {

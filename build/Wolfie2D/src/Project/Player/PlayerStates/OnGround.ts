@@ -65,6 +65,11 @@ export default class OnGround extends PlayerState {
 				this.finished("skill3");
 			}
 		}
+
+        if(Input.isJustPressed("cheap_invincible")) {
+            this.parent.invincible = true;
+            this.parent.protectTimer = Number.MAX_VALUE;
+        }
 	}
 
 	onExit(): Record<string, any> {
