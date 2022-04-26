@@ -388,7 +388,7 @@ export default class GameLevel extends Scene {
 
     protected addPauseScreen(){
         let bg = this.add.sprite("pausescreen", "pauseUI");
-        bg.scale.set(0.5, 0.5);
+        bg.scale.set(0.4, 0.4);
         bg.position.copy(this.size);
 
         // Create a back button
