@@ -62,7 +62,7 @@
         "timer": 1,
         "projectile": "",
         "type": "r",
-        "priority": 10
+        "priority": 11
     },
     "skill3": {
         "name": "SKILL3",
@@ -75,6 +75,6 @@
         "timer": 1,
         "projectile": "",
         "type": "s",
-        "priority": 10
+        "priority": 12
     } 
 }
