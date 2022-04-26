@@ -33,9 +33,10 @@ export default class HelpScreen extends Scene {
         this.viewport.setZoomLevel(1);
         
         // Create a charprofiles button
-        let charpBtn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x, size.y - 20), text: "Character Profiles"});
+        let charpBtn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x, size.y - 20), text: "Character Profiles aaa"});
         charpBtn.backgroundColor = Color.TRANSPARENT;
-        charpBtn.borderColor = Color.WHITE;
+        charpBtn.borderColor = Color.TRANSPARENT;
+        charpBtn.textColor = Color.TRANSPARENT;
         charpBtn.borderRadius = 0;
         charpBtn.setPadding(new Vec2(80, 30));
         charpBtn.font = "PixelSimple";
@@ -46,9 +47,10 @@ export default class HelpScreen extends Scene {
         }
 
         // Create a back button
-        let back1Btn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x, size.y + 320), text: "Back"});
+        let back1Btn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x, size.y + 300), text: "Back aaaaaaaaaaaa"});
         back1Btn.backgroundColor = Color.TRANSPARENT;
-        back1Btn.borderColor = Color.WHITE;
+        back1Btn.borderColor = Color.TRANSPARENT;
+        back1Btn.textColor = Color.TRANSPARENT;
         back1Btn.borderRadius = 0;
         back1Btn.setPadding(new Vec2(80, 30));
         back1Btn.font = "PixelSimple";

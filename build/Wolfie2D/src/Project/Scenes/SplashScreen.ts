@@ -35,7 +35,8 @@ export default class SplashScreen extends Scene {
         // Create a play button
         let playBtn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x, size.y + 320), text: "Start Game"});
         playBtn.backgroundColor = Color.TRANSPARENT;
-        playBtn.borderColor = Color.WHITE;
+        playBtn.textColor = Color.TRANSPARENT;
+        playBtn.borderColor = Color.TRANSPARENT;
         playBtn.borderRadius = 0;
         playBtn.setPadding(new Vec2(80, 30));
         playBtn.font = "PixelSimple";
