@@ -65,3 +65,4 @@ node_modules/
 # dotenv environment variables file
 .env
 build/Wolfie2D/dist/bundle.js
+build/Wolfie2D/dist/bundle.js
