@@ -401,6 +401,8 @@ export default class GameLevel extends Scene {
 
         // When the back button is clicked, go to the next scene
         backBtn.onEnter = () => {
+            this.viewport.follow(null);
+            this.viewport.setCenter(this.origin_center);
             this.sceneManager.changeToScene(HomeScreen, {}, {});
         }
     }
