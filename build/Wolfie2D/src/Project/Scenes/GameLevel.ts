@@ -508,14 +508,16 @@ export default class GameLevel extends Scene {
 
             let propAI = prop.ai as Prop;
             if(this.player1.collisionShape.overlaps(prop.collisionShape) && p1.party != propAI.party && !(this.p1action === "blocking")) { // this assumes projectile type is s, change later
-                //p1.hitWithProp(propAI.buff);                                                                                                // todo: make projectiles put hit player in hurt stun
-                this.incPlayerLife(p1.party,propAI.dmg);
-                prop.visible = false;
+                if(p1.hitWithProp(propAI.buff,propAI.dir.x)) {
+                    this.incPlayerLife(p1.party,propAI.dmg);
+                    prop.visible = false;
+                }
             }
             if(this.player2.collisionShape.overlaps(prop.collisionShape) && p2.party != propAI.party && !(this.p2action === "blocking")) {
-                //p2.hitWithProp(propAI.buff);
-                this.incPlayerLife(p2.party,propAI.dmg);
-                prop.visible = false;
+                if(p2.hitWithProp(propAI.buff,propAI.dir.x)) {
+                    this.incPlayerLife(p2.party,propAI.dmg);
+                    prop.visible = false;
+                }
             }
 
             this.handleScreenDespawn(prop,viewPort,viewPortSize);
