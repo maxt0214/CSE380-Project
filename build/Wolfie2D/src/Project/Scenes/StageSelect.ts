@@ -54,16 +54,49 @@ export default class StageSelect extends Scene {
             this.sceneManager.changeToScene(HomeScreen, {}, {});
         }
 
-        // Create a cont button
-        let contBtn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x - 150, size.y - 150), text: "Stage 1"});
-        contBtn.backgroundColor = Color.TRANSPARENT;
-        contBtn.borderColor = Color.WHITE;
-        contBtn.borderRadius = 0;
-        contBtn.setPadding(new Vec2(80, 30));
-        contBtn.font = "PixelSimple";
+        // Create a stage1 button
+        let stage1Btn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x - 150, size.y - 150), text: "Stage 1"});
+        stage1Btn.backgroundColor = Color.TRANSPARENT;
+        stage1Btn.borderColor = Color.WHITE;
+        stage1Btn.borderRadius = 0;
+        stage1Btn.setPadding(new Vec2(80, 30));
+        stage1Btn.font = "PixelSimple";
 
-        // When the cont button is clicked, go to the next scene
-        contBtn.onClick = () => {
+        // When the stage1 button is clicked, go to the next scene
+        stage1Btn.onClick = () => {
+            
+            let sceneOptions = {
+                physics: {
+                    groupNames: ["ground", "player", "props"],
+                    collisions:
+                    [
+                        [0, 1, 0],
+                        [1, 0, 0],
+                        [0, 0, 0]
+                    ]
+                }
+            }
+            this.sceneManager.changeToScene(Level1, { 
+                map: "project_assets/tilemaps/meadow.json",
+                p1: "project_assets/spritesheets/fighter.json",
+                p2: "project_assets/spritesheets/fighter.json",
+                
+                p1Skillset: "project_assets/skills/fighter.json", 
+                p2Skillset: "project_assets/skills/fighter.json", 
+                isP2AI: this.isAI
+            }, sceneOptions);
+        }
+
+        // Create a stage2 button
+        let stage2Btn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x, size.y - 150), text: "Stage 2"});
+        stage2Btn.backgroundColor = Color.TRANSPARENT;
+        stage2Btn.borderColor = Color.WHITE;
+        stage2Btn.borderRadius = 0;
+        stage2Btn.setPadding(new Vec2(80, 30));
+        stage2Btn.font = "PixelSimple";
+
+        // When the stage2 button is clicked, go to the next scene
+        stage2Btn.onClick = () => {
             
             let sceneOptions = {
                 physics: {
