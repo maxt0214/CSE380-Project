@@ -7,7 +7,7 @@ import { UIElementType } from "../../Wolfie2D/Nodes/UIElements/UIElementTypes";
 import Scene from "../../Wolfie2D/Scene/Scene";
 import Color from "../../Wolfie2D/Utils/Color";
 import Controls from "./Controls";
-//import Tutorial from "./TutorialScreen";
+import Tutorial from "./tutorial";
 import HelpScreen from "./Help";
 import GameModes from "./GameModes";
 import TempModes from "./TempModes";
@@ -59,7 +59,7 @@ export default class HomeScreen extends Scene {
 
         //button click
         tutorialBtn.onClick = () => {
-            //this.sceneManager.changeToScene(Tutorial, {}, {});
+            this.sceneManager.changeToScene(Tutorial, {}, {});
         }
 
         // Create a controls button
