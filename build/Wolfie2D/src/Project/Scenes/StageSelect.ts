@@ -77,7 +77,7 @@ export default class StageSelect extends Scene {
                 }
             }
             this.sceneManager.changeToScene(Level1, { 
-                map: "project_assets/tilemaps/meadow.json",
+                map: "project_assets/tilemaps/beach.json",
                 p1: "project_assets/spritesheets/fighter.json",
                 p2: "project_assets/spritesheets/fighter.json",
                 
