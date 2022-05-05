@@ -35,6 +35,11 @@ export default class GameLevel extends Scene {
     protected static hp1: number = 10;
     protected p1action: String;      // neutral, attacking, grabbing, or blocking
     protected p1rounds: number = 0;
+    //hit timer stuff
+    protected p1MoveHit: boolean = true;
+    protected p1MoveTimer: number = 0;
+    protected p1StartupTimer: number = 0;
+    protected p1dmgInfo: Map<any>;
     //UI
     protected hp1label: Label;
     protected round1label: Label;
@@ -46,6 +51,11 @@ export default class GameLevel extends Scene {
     protected p2action: String;      // neutral, attacking, grabbing, or blocking
     protected p2rounds: number = 0;
     protected isAI: boolean;
+    //hit timer stuff
+    protected p2MoveHit: boolean = true;
+    protected p2MoveTimer: number = 0;
+    protected p2StartupTimer: number = 0;
+    protected p2dmgInfo: Map<any>;
     //props
     protected props: Array<AnimatedSprite> = new Array(50);
     //UI
@@ -187,25 +197,12 @@ export default class GameLevel extends Scene {
                             this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "p1skill2", loop: false, holdReference: false});
                         if(dmgInfo.get("name") === "SKILL3")
                             this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "p1skill3", loop: false, holdReference: false});
+                
+                        this.p1dmgInfo = dmgInfo;
+                        this.p1StartupTimer = dmgInfo.get("startup");
+                        this.p1MoveTimer = dmgInfo.get("timer");
+                        this.p1MoveHit = false;
 
-                        if(p2.inRange(dmgInfo.get("center"),dmgInfo.get("range"),dmgInfo.get("state"),dmgInfo.get("dir"))){ //if p2 is in range of attack, 
-                            if(dmgInfo.get("type") === "s" && !(this.p2action === "blocking")){ // p2 not blocking (p2 attacked)
-                                this.incPlayerLife(Project_Color.BLUE,dmgInfo.get("dmg"));
-                                this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "hit", loop: false, holdReference: false});
-                                p2.changeState(dmgInfo.get("state"));
-                            }
-                            if(dmgInfo.get("type") === "s" && this.p2action === "blocking"){ // p2 blocking (p1 attacked)
-                                this.incPlayerLife(Project_Color.RED,dmgInfo.get("dmg"));
-                                this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "hit", loop: false, holdReference: false});
-                                p1.changeState(dmgInfo.get("state"));
-                            }
-                            if(dmgInfo.get("type") === "p" && !(this.p2action === "attacking")){ // p1 grabs, p2 not attacking, p2 takes damage
-                                this.incPlayerLife(Project_Color.BLUE,dmgInfo.get("dmg"));
-                                this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "hit", loop: false, holdReference: false});
-                                p2.changeState(dmgInfo.get("state"));
-                            }
-                        }
-                        
                     } else {    //p2 attacking
                         // play p2 attack sounds
                         if(dmgInfo.get("name") === "ATTACK")
@@ -221,23 +218,10 @@ export default class GameLevel extends Scene {
                         if(dmgInfo.get("name") === "SKILL3")
                             this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "p2skill3", loop: false, holdReference: false});
 
-                        if(p1.inRange(dmgInfo.get("center"),dmgInfo.get("range"),dmgInfo.get("state"),dmgInfo.get("dir"))){
-                            if(dmgInfo.get("type") === "s" && !(this.p1action === "blocking")){ //p1 not blocking (p1 attacked)
-                                this.incPlayerLife(Project_Color.RED,dmgInfo.get("dmg"));
-                                this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "hit", loop: false, holdReference: false});
-                                p1.changeState(dmgInfo.get("state"));
-                            }
-                            if(dmgInfo.get("type") === "s" && this.p1action === "blocking"){    //p1 blocking (p2 attacked)
-                                this.incPlayerLife(Project_Color.BLUE,dmgInfo.get("dmg"));
-                                this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "hit", loop: false, holdReference: false});
-                                p2.changeState(dmgInfo.get("state"));
-                            }
-                            if(dmgInfo.get("type") === "p" && !(this.p1action === "attacking")){ // p2 grabs, p1 not attacking, p1 takes damage
-                                this.incPlayerLife(Project_Color.RED,dmgInfo.get("dmg"));
-                                this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "hit", loop: false, holdReference: false});
-                                p1.changeState(dmgInfo.get("state"));
-                            }
-                        }
+                        this.p2dmgInfo = dmgInfo;
+                        this.p2StartupTimer = dmgInfo.get("startup");
+                        this.p2MoveTimer = dmgInfo.get("timer");
+                        this.p2MoveHit = false;
                     }
                     break;
                 case Project_Events.FIRE_PROJECTILE:
@@ -245,6 +229,70 @@ export default class GameLevel extends Scene {
                     break;
             }
         }
+
+        // P1
+        // tick down move startup and move time timers
+        if(this.p1MoveTimer >= 0)
+            this.p1MoveTimer -= deltaT;
+        if(this.p1StartupTimer >= 0)
+            this.p1StartupTimer -= deltaT;
+
+        if(this.p1MoveTimer >= 0 && this.p1StartupTimer <= 0 && !this.p1MoveHit){ 
+            // the attack can only hit when the startup time is done, the move is still active, and the move has not hit yet.
+            let p1 = this.player1._ai as PlayerController;
+            let p2 = this.player2._ai as PlayerController;
+            if(p2.inRange(this.p1dmgInfo.get("center"),this.p1dmgInfo.get("range"),this.p1dmgInfo.get("state"),this.p1dmgInfo.get("dir"))){ //if p2 is in range of attack, 
+                this.p1MoveHit = true;
+                if(this.p1dmgInfo.get("type") === "s" && !(this.p2action === "blocking")){ // p2 not blocking (p2 attacked)
+                    this.incPlayerLife(Project_Color.BLUE,this.p1dmgInfo.get("dmg"));
+                    this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "hit", loop: false, holdReference: false});
+                    p2.changeState(this.p1dmgInfo.get("state"));
+                }
+                if(this.p1dmgInfo.get("type") === "s" && this.p2action === "blocking"){ // p2 blocking (p1 attacked)
+                    this.incPlayerLife(Project_Color.RED,this.p1dmgInfo.get("dmg"));
+                    this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "hit", loop: false, holdReference: false});
+                    p1.changeState(this.p1dmgInfo.get("state"));
+                }
+                if(this.p1dmgInfo.get("type") === "p" && !(this.p2action === "attacking")){ // p1 grabs, p2 not attacking, p2 takes damage
+                    this.incPlayerLife(Project_Color.BLUE,this.p1dmgInfo.get("dmg"));
+                    this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "hit", loop: false, holdReference: false});
+                    p2.changeState(this.p1dmgInfo.get("state"));
+            
+                }
+            }
+        }
+        // P2
+        // tick down move startup and move time timers
+        if(this.p2MoveTimer >= 0)
+            this.p2MoveTimer -= deltaT;
+        if(this.p2StartupTimer >= 0)
+            this.p2StartupTimer -= deltaT;
+
+        if(this.p2MoveTimer >= 0 && this.p2StartupTimer <= 0 && !this.p2MoveHit){ 
+            // the attack can only hit when the startup time is done, the move is still active, and the move has not hit yet.
+            let p1 = this.player1._ai as PlayerController;
+            let p2 = this.player2._ai as PlayerController;
+            if(p1.inRange(this.p2dmgInfo.get("center"),this.p2dmgInfo.get("range"),this.p2dmgInfo.get("state"),this.p2dmgInfo.get("dir"))){ //if p1 is in range of attack, 
+                this.p2MoveHit = true;
+                if(this.p2dmgInfo.get("type") === "s" && !(this.p1action === "blocking")){ // p1 not blocking (p1 attacked)
+                    this.incPlayerLife(Project_Color.BLUE,this.p2dmgInfo.get("dmg"));
+                    this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "hit", loop: false, holdReference: false});
+                    p1.changeState(this.p2dmgInfo.get("state"));
+                }
+                if(this.p2dmgInfo.get("type") === "s" && this.p1action === "blocking"){ // p1 blocking (p2 attacked)
+                    this.incPlayerLife(Project_Color.RED,this.p2dmgInfo.get("dmg"));
+                    this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "hit", loop: false, holdReference: false});
+                    p2.changeState(this.p2dmgInfo.get("state"));
+                }
+                if(this.p2dmgInfo.get("type") === "p" && !(this.p1action === "attacking")){ // p2 grabs, p1 not attacking, p1 takes damage
+                    this.incPlayerLife(Project_Color.BLUE,this.p2dmgInfo.get("dmg"));
+                    this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "hit", loop: false, holdReference: false});
+                    p1.changeState(this.p2dmgInfo.get("state"));
+            
+                }
+            }
+        }
+
         //handle timers
         if(this.countdownTimer <= 0) {
             if(this.roundTimer <= 0) {

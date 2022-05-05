@@ -15,8 +15,10 @@ export default class AttackBase extends PlayerState {
 	damage: number;
 	range: Vec2;
 	buffState: string;
-	cdTime: number;
+	cdTime: number;		//time the player is paused for the move to happen. includes startup time.
 	timer: number;
+	startup: number;	//time before the hitbox is active
+	startupTime: number;
 	projectile: string;
 	type: string;
 
@@ -28,11 +30,13 @@ export default class AttackBase extends PlayerState {
 		this.buffState = skill.state;
 		this.projectile = skill.projectile;
 		this.cdTime = skill.timer * 1;
+		this.startup = skill.startup;
 		this.type = skill.type;
 	}
 
 	onEnter(options: Record<string, any>): void {
 		this.timer = this.cdTime;
+		this.startupTime = this.startup;
 		if(this.projectile === "")
 			this.close_range();
 		else
@@ -73,7 +77,9 @@ export default class AttackBase extends PlayerState {
 			range: this.range.clone(),
 			state: this.buffState, //state the enemy will enter after hit. This is essentially buff
 			dir: offset.x,
-			type: this.type
+			type: this.type,
+			timer: this.timer,
+			startup: this.startupTime
 		});
 	}
 

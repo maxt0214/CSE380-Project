@@ -16,6 +16,10 @@ export default class StageSelect extends Scene {
     private bg: Sprite;
     protected initOptions: Record<string, any>;
     protected isAI: boolean;
+    protected p1: String;
+    protected p1Skillset: String;
+    protected p2: String;
+    protected p2Skillset: String;
 
     initScene(init: Record<string, any>): void {
         this.initOptions = init;
@@ -31,6 +35,10 @@ export default class StageSelect extends Scene {
         
         this.isAI = this.initOptions.isP2AI
 
+        this.p1 = this.initOptions.p1
+        this.p1Skillset = this.initOptions.p1Skillset
+        this.p2 = this.initOptions.p2
+        this.p2Skillset = this.initOptions.p2Skillset
 
         this.bg = this.add.sprite("stgsel", "background");
         this.bg.scale.set(1, 1);
@@ -76,15 +84,25 @@ export default class StageSelect extends Scene {
                     ]
                 }
             }
-            this.sceneManager.changeToScene(Level1, { 
-                map: "project_assets/tilemaps/meadow.json",
-                p1: "project_assets/spritesheets/fighter.json",
-                p2: "project_assets/spritesheets/fighter.json",
-                
-                p1Skillset: "project_assets/skills/fighter.json", 
-                p2Skillset: "project_assets/skills/fighter.json", 
-                isP2AI: this.isAI
-            }, sceneOptions);
+            if(!this.isAI){      // player v player
+                this.sceneManager.changeToScene(Level1, { 
+                    map: "project_assets/tilemaps/meadow.json",
+                    p1: this.p1,
+                    p2: this.p2,
+                    p1Skillset: this.p1Skillset, 
+                    p2Skillset: this.p2Skillset, 
+                    isP2AI: this.isAI
+                }, sceneOptions);
+            } else { // player v ai (predertermined opponent char based on stage)
+                this.sceneManager.changeToScene(Level1, { 
+                    map: "project_assets/tilemaps/meadow.json",
+                    p1: this.p1,
+                    p2: "project_assets/spritesheets/fighter.json",
+                    p1Skillset: this.p1Skillset, 
+                    p2Skillset: "project_assets/skills/fighter.json", 
+                    isP2AI: this.isAI
+                }, sceneOptions);
+            }
         }
 
         // Create a stage2 button
@@ -109,15 +127,25 @@ export default class StageSelect extends Scene {
                     ]
                 }
             }
-            this.sceneManager.changeToScene(Level1, { 
-                map: "project_assets/tilemaps/beach.json",
-                p1: "project_assets/spritesheets/fighter.json",
-                p2: "project_assets/spritesheets/fighter.json",
-                
-                p1Skillset: "project_assets/skills/fighter.json", 
-                p2Skillset: "project_assets/skills/fighter.json", 
-                isP2AI: this.isAI
-            }, sceneOptions);
+            if(!this.isAI){      // player v player
+                this.sceneManager.changeToScene(Level1, { 
+                    map: "project_assets/tilemaps/beach.json",
+                    p1: this.p1,
+                    p2: this.p2,
+                    p1Skillset: this.p1Skillset, 
+                    p2Skillset: this.p2Skillset, 
+                    isP2AI: this.isAI
+                }, sceneOptions);
+            } else { // player v ai (predertermined opponent char based on stage)
+                this.sceneManager.changeToScene(Level1, { 
+                    map: "project_assets/tilemaps/beach.json",
+                    p1: this.p1,
+                    p2: "project_assets/spritesheets/fighter.json",
+                    p1Skillset: this.p1Skillset, 
+                    p2Skillset: "project_assets/skills/fighter.json", 
+                    isP2AI: this.isAI
+                }, sceneOptions);
+            }
         }
     }
 
