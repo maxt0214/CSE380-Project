@@ -119,6 +119,39 @@ export default class StageSelect extends Scene {
                 isP2AI: this.isAI
             }, sceneOptions);
         }
+
+        // Create a stage3 button
+        let stage3Btn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x+250, size.y - 150), text: "Stage 3"});
+        stage3Btn.backgroundColor = Color.TRANSPARENT;
+        stage3Btn.borderColor = Color.WHITE;
+        stage3Btn.borderRadius = 0;
+        stage3Btn.setPadding(new Vec2(80, 30));
+        stage3Btn.font = "PixelSimple";
+
+        // When the stage2 button is clicked, go to the next scene
+        stage3Btn.onClick = () => {
+            this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "menu_music"});
+            let sceneOptions = {
+                physics: {
+                    groupNames: ["ground", "player", "props"],
+                    collisions:
+                    [
+                        [0, 1, 0],
+                        [1, 0, 0],
+                        [0, 0, 0]
+                    ]
+                }
+            }
+            this.sceneManager.changeToScene(Level1, { 
+                map: "project_assets/tilemaps/undersea.json",
+                p1: "project_assets/spritesheets/waterlady.json",
+                p2: "project_assets/spritesheets/waterlady.json",
+                
+                p1Skillset: "project_assets/skills/waterlady.json", 
+                p2Skillset: "project_assets/skills/waterlady.json", 
+                isP2AI: this.isAI
+            }, sceneOptions);
+        }
     }
 
     unloadScene(): void {

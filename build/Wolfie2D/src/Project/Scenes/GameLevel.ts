@@ -98,7 +98,9 @@ export default class GameLevel extends Scene {
         this.load.object("skillset2",this.initOptions.p2Skillset);
         //load props
         this.load.spritesheet("fireball_sp", "project_assets/spritesheets/projectile.json");
+        this.load.spritesheet("bubble_sp", "project_assets/spritesheets/bubble.json");
         this.load.object("fireball","project_assets/props/fireball.json");
+        this.load.object("bubble","project_assets/props/bubble.json");
         
         this.isAI = this.initOptions.isP2AI;
 
