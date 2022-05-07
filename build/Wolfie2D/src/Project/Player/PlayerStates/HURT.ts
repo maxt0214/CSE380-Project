@@ -49,7 +49,7 @@ export default class HURT extends PlayerState {
 		} else {
 			this.parent.velocity.x = Math.min(this.parent.velocity.x + this.parent.speed * deltaT,0);
 		}
-		console.log(`Player Velocity:${this.parent.velocity} Moving step:${this.parent.velocity.scaled(deltaT)}`);
+		//console.log(`Player Velocity:${this.parent.velocity} Moving step:${this.parent.velocity.scaled(deltaT)}`);
 		this.owner.move(this.parent.velocity.scaled(deltaT));
 	}
 

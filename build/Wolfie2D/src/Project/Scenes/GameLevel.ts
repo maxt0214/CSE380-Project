@@ -301,16 +301,22 @@ export default class GameLevel extends Scene {
             this.roundTimer -= deltaT;
         }
         this.countdownTimer -= deltaT;
-        if(Input.isJustPressed("escape")){
+        if(Input.isJustPressed("escape")){          // issues : you can wait out invincibility timer in pause : button click does not work (rn you mouse over it).
             this.gamePaused = !this.gamePaused;
-            if(this.gamePaused){
+            if(this.gamePaused){    // pause game
                 this.player1.freeze();
                 this.player2.freeze();
                 this.pauseUI.enable();
-            } else{
+                for(let i = 0; i < 50; i++) {
+                    this.props[i].freeze();
+                }
+            } else{             //unapuse game
                 this.player1.unfreeze();
                 this.player2.unfreeze();
                 this.pauseUI.disable();
+                for(let i = 0; i < 50; i++) {
+                    this.props[i].unfreeze();
+                }
             }
         }
     }
@@ -637,6 +643,16 @@ export default class GameLevel extends Scene {
         });
         prop.setGroup("props");
         prop.visible = visible;
+    }
+
+    protected addHazard(spriteKey: string, tilePos: Vec2, aiOptions: Record<string, any>): void {
+        let hazard = this.add.animatedSprite(spriteKey, "primary");
+        hazard.position.set(tilePos.x*32, tilePos.y*32);
+        hazard.scale.set(2, 2);
+        hazard.addPhysics();
+        hazard.addAI(Prop, aiOptions);
+        hazard.setGroup("hazard");
+
     }
     
     protected handleScreenDespawn(node: AnimatedSprite, viewportCenter: Vec2, paddedViewportSize: Vec2): void {
