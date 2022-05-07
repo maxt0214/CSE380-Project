@@ -171,15 +171,25 @@ export default class StageSelect extends Scene {
                     ]
                 }
             }
-            this.sceneManager.changeToScene(Level1, { 
-                map: "project_assets/tilemaps/undersea.json",
-                p1: "project_assets/spritesheets/waterlady.json",
-                p2: "project_assets/spritesheets/waterlady.json",
-                
-                p1Skillset: "project_assets/skills/waterlady.json", 
-                p2Skillset: "project_assets/skills/waterlady.json", 
-                isP2AI: this.isAI
-            }, sceneOptions);
+            if(!this.isAI){      // player v player
+                this.sceneManager.changeToScene(Level1, {           //change to level3 later!
+                    map: "project_assets/tilemaps/undersea.json",
+                    p1: this.p1,
+                    p2: this.p2,
+                    p1Skillset: this.p1Skillset, 
+                    p2Skillset: this.p2Skillset, 
+                    isP2AI: this.isAI
+                }, sceneOptions);
+            } else { // player v ai (predertermined opponent char based on stage)
+                this.sceneManager.changeToScene(Level1, {            //change to level3 later!
+                    map: "project_assets/tilemaps/undersea.json",
+                    p1: this.p1,
+                    p2: "project_assets/spritesheets/waterlady.json",
+                    p1Skillset: this.p1Skillset, 
+                    p2Skillset: "project_assets/skills/waterlady.json", 
+                    isP2AI: this.isAI
+                }, sceneOptions);
+            }
         }
     }
 
