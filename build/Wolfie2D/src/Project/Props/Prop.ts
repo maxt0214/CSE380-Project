@@ -28,6 +28,8 @@ export default class Prop implements AI {
     protected minSpd: number;
     protected maxSpd: number;
     protected incSpd: number;
+    protected storedSpeed: number;
+    protected paused: boolean = false;
 
     dmg: number;
     buff: string;
@@ -64,13 +66,21 @@ export default class Prop implements AI {
     }
 
     update(deltaT: number): void {
-        if(this.owner.visible) {
+        if(this.owner.visible && !this.paused) {
             //While this bullet is active, accelerate the bullet to a max speed over time. 
             this.speed += deltaT * this.incSpd;
             this.speed = MathUtils.clamp(this.speed, this.minSpd, this.maxSpd);
 
             // Update the position
             this.owner.position.add(this.dir.scaled(deltaT * this.speed));
+        }
+        if(this.owner.frozen){       //pause handling
+            this.paused = true;
+            this.storedSpeed = this.speed;
+            this.speed = 0;
+        } else if(this.paused){
+            this.paused = false;
+            this.speed = this.storedSpeed;
         }
     }
 }
