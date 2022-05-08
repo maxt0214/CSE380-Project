@@ -13,8 +13,8 @@ export default class HazardController {
     beach_harzards: Vec2[] = [new Vec2(96, 288), new Vec2(288, 288), new Vec2(448, 320), new Vec2(640, 288), new Vec2(832, 320), new Vec2(1024, 288)];
     undersea_hazards: Vec2[] = [new Vec2(0, 448), new Vec2(1088, 448)];
     city_hazard: Vec2 = new Vec2(640, 512);
-    lava_hazards: Vec2[] = [new Vec2(96, 288), new Vec2(288, 288)];//TODO: Change coord of lava falling
-    mountain_hazards: Vec2[] = [new Vec2(96, 288), new Vec2(288, 288)];//TODO: Change coord of rock falling
+    lava_hazards: Vec2[] = [new Vec2(96, 0), new Vec2(160, 0), new Vec2(224, 0), new Vec2(288, 0), new Vec2(352, 0), new Vec2(416, 0), new Vec2(480, 0), new Vec2(544, 0)];
+    mountain_hazards: Vec2[] = [new Vec2(96, 0), new Vec2(160, 0), new Vec2(224, 0), new Vec2(288, 0), new Vec2(352, 0), new Vec2(416, 0), new Vec2(480, 0), new Vec2(544, 0)];
 
     constructor(stage: string) {
         if(stage.includes("beach"))
