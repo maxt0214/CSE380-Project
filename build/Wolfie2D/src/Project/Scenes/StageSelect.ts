@@ -9,6 +9,7 @@ import Color from "../../Wolfie2D/Utils/Color";
 import GameModes from "./GameModes";
 import Level1 from "./Level1";
 import HomeScreen from "./HomeScreen";
+import Level4 from "./Level4";
 
 
 export default class StageSelect extends Scene {
@@ -214,7 +215,7 @@ export default class StageSelect extends Scene {
                 }
             }
             if(!this.isAI){      // player v player
-                this.sceneManager.changeToScene(Level1, {           //change to level4 later!
+                this.sceneManager.changeToScene(Level4, {           //change to level4 later!
                     map: "project_assets/tilemaps/cityscape.json",
                     p1: this.p1,
                     p2: this.p2,
@@ -223,7 +224,7 @@ export default class StageSelect extends Scene {
                     isP2AI: this.isAI
                 }, sceneOptions);
             } else { // player v ai (predertermined opponent char based on stage)
-                this.sceneManager.changeToScene(Level1, {            //change to level4 later!
+                this.sceneManager.changeToScene(Level4, {            //change to level4 later!
                     map: "project_assets/tilemaps/cityscape.json",
                     p1: this.p1,
                     p2: "project_assets/spritesheets/fighter.json",
