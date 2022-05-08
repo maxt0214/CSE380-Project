@@ -331,7 +331,7 @@ export default class GameLevel extends Scene {
                 for(let i = 0; i < 50; i++) {
                     this.props[i].freeze();
                 }
-            } else{             //unapuse game
+            } else{             //unpause game
                 this.player1.unfreeze();
                 this.player2.unfreeze();
                 this.pauseUI.disable();
@@ -471,14 +471,18 @@ export default class GameLevel extends Scene {
         backBtn.backgroundColor = Color.TRANSPARENT;
         backBtn.borderColor = Color.WHITE;
         backBtn.borderRadius = 0;
-        backBtn.setPadding(new Vec2(80, 30));
+        backBtn.setPadding(new Vec2(40, 15));
         backBtn.font = "PixelSimple";
 
         // When the back button is clicked, go to the next scene
-        backBtn.onClick = () => {
-            this.viewport.follow(null);
-            this.viewport.setCenter(this.origin_center);
-            this.sceneManager.changeToScene(HomeScreen, {}, {});
+        backBtn.onEnter = () => {
+            //console.log('BBBBBBBBBBBBBBBBB')
+            if(Input.isMouseJustPressed()){
+                //console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAA')
+                this.viewport.follow(null);
+                this.viewport.setCenter(this.origin_center);
+                this.sceneManager.changeToScene(HomeScreen, {}, {});
+            }
         }
     }
 
