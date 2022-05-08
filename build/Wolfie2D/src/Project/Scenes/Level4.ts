@@ -4,7 +4,7 @@ import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 import { Project_Color } from "../project_color";
 import GameLevel from "./GameLevel";
 
-export default class Level1 extends GameLevel {
+export default class Level4 extends GameLevel {
 
     loadScene(): void {
         super.loadScene();
@@ -65,7 +65,7 @@ export default class Level1 extends GameLevel {
     startScene(): void {
         this.add.tilemap("level", new Vec2(2, 2));//this is loaded in loadScene in gamelevel
         //TODO: Change viewport
-        this.viewport.setBounds(0, 0, 24*32, 20*32); 
+        this.viewport.setBounds(0, 0, 20*32, 20*32); 
 
         this.player1Spawn = new Vec2(5*32, 14*32);
         this.player2Spawn = new Vec2(12*32, 14*32);
