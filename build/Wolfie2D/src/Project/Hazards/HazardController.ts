@@ -12,7 +12,7 @@ export default class HazardController {
 
     beach_harzards: Vec2[] = [new Vec2(96, 288), new Vec2(288, 288), new Vec2(448, 320), new Vec2(640, 288), new Vec2(832, 320), new Vec2(1024, 288)];
     undersea_hazards: Vec2[] = [new Vec2(0, 448), new Vec2(1088, 448)];
-    city_hazard: Vec2 = new Vec2(960, 512);
+    city_hazard: Vec2 = new Vec2(640, 512);
 
     constructor(stage: string) {
         if(stage.includes("beach"))
@@ -35,7 +35,7 @@ export default class HazardController {
             case "undersea":
                 this.update_undersea();
                 break;
-            case "cityscape":
+            case "city":
                 this.update_city();
                 break;
         }

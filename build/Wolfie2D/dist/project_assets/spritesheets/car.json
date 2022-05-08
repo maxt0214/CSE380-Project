@@ -1,6 +1,6 @@
 {
-    "name": "car_hazard",
-    "spriteSheetImage": "car_hazard.png",
+    "name": "car",
+    "spriteSheetImage": "car.png",
     "spriteWidth": 40,
     "spriteHeight": 28,
     "leftBuffer": 0,

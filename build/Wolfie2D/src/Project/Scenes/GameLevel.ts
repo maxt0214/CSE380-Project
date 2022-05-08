@@ -115,12 +115,12 @@ export default class GameLevel extends Scene {
         this.load.spritesheet("bubble_sp", "project_assets/spritesheets/bubble.json");
         this.load.spritesheet("coconut_sp", "project_assets/spritesheets/coconut.json");
         this.load.spritesheet("swirl_sp", "project_assets/spritesheets/swirl.json");
-        this.load.spritesheet("car_sp", "project_assets/spritesheets/car_hazard.json");
+        this.load.spritesheet("car_sp", "project_assets/spritesheets/car.json");
         this.load.object("fireball","project_assets/props/fireball.json");
         this.load.object("bubble","project_assets/props/bubble.json");
         this.load.object("coconut","project_assets/props/coconut.json");
         this.load.object("swirl","project_assets/props/swirl.json");
-        this.load.object("car","project_assets/props/car_hazard.json");
+        this.load.object("car","project_assets/props/car.json");
         
         this.isAI = this.initOptions.isP2AI;
 
@@ -650,6 +650,7 @@ export default class GameLevel extends Scene {
     }
 
     protected respawnProp(i: number, options: Record<string,any>, visible: boolean) {
+        console.log(`Firing Projectile ${JSON.stringify(options)}`);
         this.props[i] = this.add.animatedSprite(options.get("projectile")+"_sp","primary");
 
         let prop = this.props[i];

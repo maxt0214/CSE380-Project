@@ -39,6 +39,10 @@
             "frames": [ {"index": 36, "duration": 16}, {"index": 37, "duration": 16}, {"index": 38, "duration": 16}, {"index": 39, "duration": 16}, {"index": 40, "duration": 16}, {"index": 41, "duration": 16}]
         },
         {
+            "name": "SKILL1",
+            "frames": [ {"index": 0, "duration": 16}]
+        },
+        {
             "name": "SKILL2",
             "frames": [ {"index": 42, "duration": 8}, {"index": 43, "duration": 16}, {"index": 44, "duration": 16}, {"index": 45, "duration": 8}]
         },
