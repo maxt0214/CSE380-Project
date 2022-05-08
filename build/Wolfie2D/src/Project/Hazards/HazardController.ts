@@ -23,9 +23,9 @@ export default class HazardController {
             this.level = "city";
         else if(stage.includes("undersea"))
             this.level = "undersea";
-        else if(stage.includes("mountain"))//TODO: change stage name
+        else if(stage.includes("Mountain"))//TODO: change stage name
             this.level = "mountain";
-        else if(stage.includes("lava"))//TODO: change stage name
+        else if(stage.includes("volcano"))//TODO: change stage name
             this.level = "lava";
         this.emitter = new Emitter();
     }

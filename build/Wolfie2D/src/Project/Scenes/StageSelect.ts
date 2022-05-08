@@ -176,7 +176,7 @@ export default class StageSelect extends Scene {
             }
             if(!this.isAI){      // player v player
                 this.sceneManager.changeToScene(Level3, {    
-                    map: "project_assets/tilemaps/Mountain.json", //TODO: change to mountain
+                    map: "project_assets/tilemaps/Mountain.json",
                     p1: this.p1,
                     p2: this.p2,
                     p1Skillset: this.p1Skillset, 
