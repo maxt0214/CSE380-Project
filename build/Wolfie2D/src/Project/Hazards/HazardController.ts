@@ -52,7 +52,7 @@ export default class HazardController {
             dir: new Vec2(0,1),
             projectile: "coconut"
         });
-        this.timer = 2;
+        this.timer = RandUtils.randInt(1, 3);
     }
 
     update_undersea() {
@@ -66,7 +66,7 @@ export default class HazardController {
             dir: dir,
             projectile: "swirl"
         });
-        this.timer = 5;
+        this.timer = RandUtils.randInt(1, 5);
     }
 
     update_city() {
@@ -78,6 +78,6 @@ export default class HazardController {
             dir: new Vec2(-1,0),
             projectile: "car"
         });
-        this.timer = 1;
+        this.timer = RandUtils.randInt(1, 7);
     }
 }
