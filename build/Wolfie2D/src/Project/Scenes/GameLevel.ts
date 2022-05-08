@@ -90,6 +90,8 @@ export default class GameLevel extends Scene {
 
     protected initOptions: Record<string, any>;
 
+    protected hazardController: HazardController;
+
     initScene(init: Record<string, any>): void {
         this.origin_center = this.viewport.getCenter().clone();
         this.initOptions = init;
@@ -99,6 +101,7 @@ export default class GameLevel extends Scene {
     loadScene(): void {
 
         this.load.tilemap("level", this.initOptions.map);
+        this.hazardController = new HazardController(this.initOptions.map);
         //load p1 and p2
         this.load.spritesheet("player1", this.initOptions.p1);
         this.load.spritesheet("player2", this.initOptions.p2);
@@ -110,8 +113,12 @@ export default class GameLevel extends Scene {
         //load props
         this.load.spritesheet("fireball_sp", "project_assets/spritesheets/projectile.json");
         this.load.spritesheet("bubble_sp", "project_assets/spritesheets/bubble.json");
+        this.load.spritesheet("coconut_sp", "project_assets/spritesheets/coconut.json");
+        this.load.spritesheet("swirl_sp", "project_assets/spritesheets/swirl.json");
         this.load.object("fireball","project_assets/props/fireball.json");
         this.load.object("bubble","project_assets/props/bubble.json");
+        this.load.object("coconut","project_assets/props/coconut.json");
+        this.load.object("swirl","project_assets/props/swirl.json");
         
         this.isAI = this.initOptions.isP2AI;
 
@@ -138,6 +145,7 @@ export default class GameLevel extends Scene {
 
     updateScene(deltaT: number) {
         this.handleProps();
+        this.hazardController.update(deltaT);
         // Handle events and update the UI if needed
         while (this.receiver.hasNextEvent()) {
             let event = this.receiver.getNextEvent();
@@ -650,22 +658,6 @@ export default class GameLevel extends Scene {
         });
         prop.setGroup("props");
         prop.visible = visible;
-    }
-
-    protected addHazard(spriteKey: string, tilePos: Vec2, aiOptions: Record<string, any>): void {       // sets up turrets that fire projectiles (props) or maybe do other things
-        let hazard = this.add.animatedSprite(spriteKey, "primary");
-        hazard.position.set(tilePos.x*32, tilePos.y*32);
-        hazard.scale.set(2, 2);
-        hazard.addPhysics(null, null, false, true);
-        let offset = new Vec2(hazard.invertX ? -1 : 1, 0);
-        hazard.addAI(HazardController, {
-            party: aiOptions.party,
-            center: hazard.position.clone().add(offset),
-            dir: offset,
-            projectile: aiOptions.projecile
-        });
-        hazard.setGroup("hazards");
-
     }
     
     protected handleScreenDespawn(node: AnimatedSprite, viewportCenter: Vec2, paddedViewportSize: Vec2): void {
