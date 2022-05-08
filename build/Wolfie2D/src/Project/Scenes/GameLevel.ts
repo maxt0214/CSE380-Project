@@ -525,7 +525,7 @@ export default class GameLevel extends Scene {
             this.round2label.text = "Rounds: " + this.p2rounds;
             //Input.disableInput();
             this.player1.disablePhysics();
-            this.emitter.fireEvent(GameEventType.PLAY_SOUND, { key: "player_death", loop: false, holdReference: false });
+            this.emitter.fireEvent(GameEventType.PLAY_SOUND, { key: "p1player_death", loop: false, holdReference: false });
             this.player1.tweens.play("death");
         }
 
@@ -535,7 +535,7 @@ export default class GameLevel extends Scene {
             this.p1rounds +=1;
             this.round1label.text = "Rounds: " + this.p1rounds;
             this.player2.disablePhysics();
-            this.emitter.fireEvent(GameEventType.PLAY_SOUND, { key: "player_death", loop: false, holdReference: false });
+            this.emitter.fireEvent(GameEventType.PLAY_SOUND, { key: "p2player_death", loop: false, holdReference: false });
             this.player2.tweens.play("death");
         }
     }

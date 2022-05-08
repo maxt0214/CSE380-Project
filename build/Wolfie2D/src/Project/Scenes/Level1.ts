@@ -8,27 +8,53 @@ export default class Level1 extends GameLevel {
 
     loadScene(): void {
         super.loadScene();
-        // Load common resources
-        this.load.audio("jump", "project_assets/sounds/jump.wav");
-        this.load.audio("player_death", "project_assets/sounds/player_death.wav");
         this.load.audio("hit", "project_assets/sounds/hit.wav");
+        this.loadp1Sound(this.initOptions.p1Skillset);
+        this.loadp2Sound(this.initOptions.p2Skillset);
+    }
 
-        // player 1 attack sounds
-        this.load.audio("p1attack", "project_assets/sounds/attack.wav");
-        this.load.audio("p1grab", "project_assets/sounds/grab.wav");
-        this.load.audio("p1block", "project_assets/sounds/block.wav");
-        this.load.audio("p1skill1", "project_assets/sounds/attack.wav");
-        this.load.audio("p1skill2", "project_assets/sounds/skill2.wav");
-        this.load.audio("p1skill3", "project_assets/sounds/skill3.wav");
+    loadp1Sound(name: string) {
+        if(name.includes("fighter")) {
+            this.load.audio("p1jump", "project_assets/sounds/fighter/jump.wav");
+            this.load.audio("p1player_death", "project_assets/sounds/fighter/player_death.wav");
+            this.load.audio("p1attack", "project_assets/sounds/fighter/attack.wav");
+            this.load.audio("p1grab", "project_assets/sounds/fighter/grab.wav");
+            this.load.audio("p1block", "project_assets/sounds/fighter/block.wav");
+            this.load.audio("p1skill1", "project_assets/sounds/fighter/attack.wav");
+            this.load.audio("p1skill2", "project_assets/sounds/fighter/skill2.wav");
+            this.load.audio("p1skill3", "project_assets/sounds/fighter/skill3.wav");
+        } else if(name.includes("waterlady")) {
+            this.load.audio("p1jump", "project_assets/sounds/waterlady/jump.wav");
+            this.load.audio("p1player_death", "project_assets/sounds/waterlady/player_death.wav");
+            this.load.audio("p1attack", "project_assets/sounds/waterlady/attack.wav");
+            this.load.audio("p1grab", "project_assets/sounds/waterlady/grab.wav");
+            this.load.audio("p1block", "project_assets/sounds/waterlady/block.wav");
+            this.load.audio("p1skill1", "project_assets/sounds/waterlady/skill1.wav");
+            this.load.audio("p1skill2", "project_assets/sounds/waterlady/skill2.wav");
+            this.load.audio("p1skill3", "project_assets/sounds/waterlady/skill3.wav");
+        }
+    }
 
-        // player 2 attack sounds
-        this.load.audio("p2attack", "project_assets/sounds/attack.wav");
-        this.load.audio("p2grab", "project_assets/sounds/grab.wav");
-        this.load.audio("p2block", "project_assets/sounds/block.wav");
-        this.load.audio("p2skill1", "project_assets/sounds/attack.wav");
-        this.load.audio("p2skill2", "project_assets/sounds/skill2.wav");
-        this.load.audio("p2skill3", "project_assets/sounds/skill3.wav");
-
+    loadp2Sound(name: string) {
+        if(name.includes("fighter")) {
+            this.load.audio("p2jump", "project_assets/sounds/fighter/jump.wav");
+            this.load.audio("p2player_death", "project_assets/sounds/fighter/player_death.wav");
+            this.load.audio("p2attack", "project_assets/sounds/fighter/attack.wav");
+            this.load.audio("p2grab", "project_assets/sounds/fighter/grab.wav");
+            this.load.audio("p2block", "project_assets/sounds/fighter/block.wav");
+            this.load.audio("p2skill1", "project_assets/sounds/fighter/attack.wav");
+            this.load.audio("p2skill2", "project_assets/sounds/fighter/skill2.wav");
+            this.load.audio("p2skill3", "project_assets/sounds/fighter/skill3.wav");
+        } else if(name.includes("waterlady")) {
+            this.load.audio("p2jump", "project_assets/sounds/waterlady/jump.wav");
+            this.load.audio("p2player_death", "project_assets/sounds/waterlady/player_death.wav");
+            this.load.audio("p2attack", "project_assets/sounds/waterlady/attack.wav");
+            this.load.audio("p2grab", "project_assets/sounds/waterlady/grab.wav");
+            this.load.audio("p2block", "project_assets/sounds/waterlady/block.wav");
+            this.load.audio("p2skill1", "project_assets/sounds/waterlady/skill1.wav");
+            this.load.audio("p2skill2", "project_assets/sounds/waterlady/skill2.wav");
+            this.load.audio("p2skill3", "project_assets/sounds/waterlady/skill3.wav");
+        }
     }
 
     unloadScene(){
