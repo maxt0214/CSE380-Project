@@ -11,6 +11,8 @@ import HomeScreen from "./HomeScreen";
 import Level4 from "./Level4";
 import Level2 from "./Level2";
 import Level5 from "./Level5";
+import Level3 from "./Level3";
+import Level6 from "./Level6";
 
 
 export default class StageSelect extends Scene {
@@ -173,8 +175,8 @@ export default class StageSelect extends Scene {
                 }
             }
             if(!this.isAI){      // player v player
-                this.sceneManager.changeToScene(Level2, {    //TODO: Change to level3       
-                    map: "project_assets/tilemaps/undersea.json", //TODO: change to mountain
+                this.sceneManager.changeToScene(Level3, {    
+                    map: "project_assets/tilemaps/Mountain.json", //TODO: change to mountain
                     p1: this.p1,
                     p2: this.p2,
                     p1Skillset: this.p1Skillset, 
@@ -182,8 +184,8 @@ export default class StageSelect extends Scene {
                     isP2AI: this.isAI
                 }, sceneOptions);
             } else { // player v ai (predertermined opponent char based on stage)
-                this.sceneManager.changeToScene(Level2, {            
-                    map: "project_assets/tilemaps/undersea.json",
+                this.sceneManager.changeToScene(Level3, {            
+                    map: "project_assets/tilemaps/Mountain.json",
                     p1: this.p1,
                     p2: "project_assets/spritesheets/waterlady.json",
                     p1Skillset: this.p1Skillset, 
@@ -302,7 +304,7 @@ export default class StageSelect extends Scene {
                 }
             }
             if(!this.isAI){      // player v player
-                this.sceneManager.changeToScene(Level4, {           
+                this.sceneManager.changeToScene(Level6, {
                     map: "project_assets/tilemaps/volcano.json",
                     p1: this.p1,
                     p2: this.p2,
@@ -311,12 +313,12 @@ export default class StageSelect extends Scene {
                     isP2AI: this.isAI
                 }, sceneOptions);
             } else { // player v ai (predertermined opponent char based on stage)
-                this.sceneManager.changeToScene(Level4, {           
+                this.sceneManager.changeToScene(Level6, {            //change to level6 later!
                     map: "project_assets/tilemaps/volcano.json",
                     p1: this.p1,
-                    p2: "project_assets/spritesheets/waterlady.json",
+                    p2: "project_assets/spritesheets/fighter.json",
                     p1Skillset: this.p1Skillset, 
-                    p2Skillset: "project_assets/skills/waterlady.json", 
+                    p2Skillset: "project_assets/skills/fighter.json",
                     isP2AI: this.isAI
                 }, sceneOptions);
             }
