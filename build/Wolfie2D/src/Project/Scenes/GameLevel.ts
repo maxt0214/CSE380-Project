@@ -239,10 +239,12 @@ export default class GameLevel extends Scene {
 
         // P1
         // tick down move startup and move time timers
-        if(this.p1MoveTimer >= 0)
-            this.p1MoveTimer -= deltaT;
-        if(this.p1StartupTimer >= 0)
-            this.p1StartupTimer -= deltaT;
+        if(!this.gamePaused){
+            if(this.p1MoveTimer >= 0)
+                this.p1MoveTimer -= deltaT;
+            if(this.p1StartupTimer >= 0)
+                this.p1StartupTimer -= deltaT;
+        }
 
         if(this.p1MoveTimer >= 0 && this.p1StartupTimer <= 0 && !this.p1MoveHit){ 
             // the attack can only hit when the startup time is done, the move is still active, and the move has not hit yet.
@@ -270,10 +272,12 @@ export default class GameLevel extends Scene {
         }
         // P2
         // tick down move startup and move time timers
-        if(this.p2MoveTimer >= 0)
-            this.p2MoveTimer -= deltaT;
-        if(this.p2StartupTimer >= 0)
-            this.p2StartupTimer -= deltaT;
+        if(!this.gamePaused){
+            if(this.p2MoveTimer >= 0)
+                this.p2MoveTimer -= deltaT;
+            if(this.p2StartupTimer >= 0)
+                this.p2StartupTimer -= deltaT;
+        }
 
         if(this.p2MoveTimer >= 0 && this.p2StartupTimer <= 0 && !this.p2MoveHit){ 
             // the attack can only hit when the startup time is done, the move is still active, and the move has not hit yet.
@@ -665,7 +669,6 @@ export default class GameLevel extends Scene {
             projectile: aiOptions.projecile
         });
         hazard.setGroup("hazards");
-
     }
     
     protected handleScreenDespawn(node: AnimatedSprite, viewportCenter: Vec2, paddedViewportSize: Vec2): void {

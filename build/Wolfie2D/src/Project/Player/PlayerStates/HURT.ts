@@ -29,9 +29,11 @@ export default class HURT extends PlayerState {
 	}
 
 	update(deltaT: number): void {
-		super.update(deltaT);
-		this.updateFreeTimer(deltaT);
-		this.knockback(deltaT);
+		if(!this.owner.frozen){
+			super.update(deltaT);
+			this.updateFreeTimer(deltaT);
+			this.knockback(deltaT);
+		}
 	}
 
 	updateFreeTimer(deltaT: number): void {
