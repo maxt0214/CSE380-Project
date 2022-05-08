@@ -7,7 +7,7 @@ import { Project_Events } from "../project_enums";
 export default class HazardController {
     party: Project_Color = Project_Color.GREEN;
     level: string;
-    timer: number = 10;
+    timer: number = 6;
     emitter: Emitter;
 
     beach_harzards: Vec2[] = [new Vec2(96, 288), new Vec2(288, 288), new Vec2(448, 320), new Vec2(640, 288), new Vec2(832, 320), new Vec2(1024, 288)];
