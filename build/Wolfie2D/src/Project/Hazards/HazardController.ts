@@ -13,6 +13,8 @@ export default class HazardController {
     beach_harzards: Vec2[] = [new Vec2(96, 288), new Vec2(288, 288), new Vec2(448, 320), new Vec2(640, 288), new Vec2(832, 320), new Vec2(1024, 288)];
     undersea_hazards: Vec2[] = [new Vec2(0, 448), new Vec2(1088, 448)];
     city_hazard: Vec2 = new Vec2(640, 512);
+    lava_hazards: Vec2[] = [new Vec2(96, 288), new Vec2(288, 288)];//TODO: Change coord of lava falling
+    mountain_hazards: Vec2[] = [new Vec2(96, 288), new Vec2(288, 288)];//TODO: Change coord of rock falling
 
     constructor(stage: string) {
         if(stage.includes("beach"))
@@ -21,6 +23,10 @@ export default class HazardController {
             this.level = "city";
         else if(stage.includes("undersea"))
             this.level = "undersea";
+        else if(stage.includes("mountain"))//TODO: change stage name
+            this.level = "mountain";
+        else if(stage.includes("lava"))//TODO: change stage name
+            this.level = "lava";
         this.emitter = new Emitter();
     }
 
@@ -37,6 +43,12 @@ export default class HazardController {
                 break;
             case "city":
                 this.update_city();
+                break;
+            case "mountain":
+                this.update_mountain();
+                break;
+            case "lava":
+                this.update_lava();
                 break;
         }
     }
@@ -79,5 +91,31 @@ export default class HazardController {
             projectile: "car"
         });
         this.timer = RandUtils.randInt(1, 7);
+    }
+
+    update_mountain() {
+        let idx = RandUtils.randInt(0, this.mountain_hazards.length);
+        this.emitter.fireEvent(Project_Events.FIRE_PROJECTILE, 
+        {
+            name: "rock",
+            party: this.party,
+            center: this.mountain_hazards[idx],
+            dir: new Vec2(0,1),
+            projectile: "rock"
+        });
+        this.timer = RandUtils.randInt(1, 6);
+    }
+
+    update_lava() {
+        let idx = RandUtils.randInt(0, this.lava_hazards.length);
+        this.emitter.fireEvent(Project_Events.FIRE_PROJECTILE, 
+        {
+            name: "lavadrop",
+            party: this.party,
+            center: this.lava_hazards[idx],
+            dir: new Vec2(0,1),
+            projectile: "lavadrop"
+        });
+        this.timer = RandUtils.randInt(1, 6);
     }
 }

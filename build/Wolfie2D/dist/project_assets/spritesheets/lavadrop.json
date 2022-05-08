@@ -1,8 +1,8 @@
 {
-    "name": "bubble",
-    "spriteSheetImage": "bubble.png",
-    "spriteWidth": 16,
-    "spriteHeight": 16,
+    "name": "lavadrop",
+    "spriteSheetImage": "lavadrop.png",
+    "spriteWidth": 32,
+    "spriteHeight": 32,
     "leftBuffer": 0,
     "rightBuffer": 0,
     "topBuffer": 0,
@@ -16,11 +16,11 @@
             "frames": [
                 {
                     "index": 0,
-                    "duration": 10
+                    "duration": 3
                 },
                 {
                     "index": 1,
-                    "duration": 11
+                    "duration": 3
                 }
             ]
         }
