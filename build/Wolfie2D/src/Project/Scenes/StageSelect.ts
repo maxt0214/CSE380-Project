@@ -157,7 +157,7 @@ export default class StageSelect extends Scene {
         stage3Btn.setPadding(new Vec2(80, 30));
         stage3Btn.font = "PixelSimple";
 
-        // When the stage2 button is clicked, go to the next scene
+        // When the stage3 button is clicked, go to the next scene
         stage3Btn.onClick = () => {
             this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "menu_music"});
             let sceneOptions = {
@@ -187,6 +187,49 @@ export default class StageSelect extends Scene {
                     p2: "project_assets/spritesheets/waterlady.json",
                     p1Skillset: this.p1Skillset, 
                     p2Skillset: "project_assets/skills/waterlady.json", 
+                    isP2AI: this.isAI
+                }, sceneOptions);
+            }
+        }
+
+        // Create a stage4 button
+        let stage4Btn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x - 250, size.y - 50), text: "Stage 4"});
+        stage4Btn.backgroundColor = Color.TRANSPARENT;
+        stage4Btn.borderColor = Color.WHITE;
+        stage4Btn.borderRadius = 0;
+        stage4Btn.setPadding(new Vec2(80, 30));
+        stage4Btn.font = "PixelSimple";
+
+        // When the stage4 button is clicked, go to the next scene
+        stage4Btn.onClick = () => {
+            this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "menu_music"});
+            let sceneOptions = {
+                physics: {
+                    groupNames: ["ground", "player", "props"],
+                    collisions:
+                    [
+                        [0, 1, 0],
+                        [1, 0, 0],
+                        [0, 0, 0]
+                    ]
+                }
+            }
+            if(!this.isAI){      // player v player
+                this.sceneManager.changeToScene(Level1, {           //change to level4 later!
+                    map: "project_assets/tilemaps/cityscape.json",
+                    p1: this.p1,
+                    p2: this.p2,
+                    p1Skillset: this.p1Skillset, 
+                    p2Skillset: this.p2Skillset, 
+                    isP2AI: this.isAI
+                }, sceneOptions);
+            } else { // player v ai (predertermined opponent char based on stage)
+                this.sceneManager.changeToScene(Level1, {            //change to level4 later!
+                    map: "project_assets/tilemaps/cityscape.json",
+                    p1: this.p1,
+                    p2: "project_assets/spritesheets/fighter.json",
+                    p1Skillset: this.p1Skillset, 
+                    p2Skillset: "project_assets/skills/fighter.json", 
                     isP2AI: this.isAI
                 }, sceneOptions);
             }
