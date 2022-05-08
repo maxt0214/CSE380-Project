@@ -88,6 +88,7 @@ export default class AttackBase extends PlayerState {
 		let offset = new Vec2(this.owner.invertX ? -1 : 1, 0);
 		this.emitter.fireEvent(Project_Events.FIRE_PROJECTILE, 
 		{
+			name: this.name,
 			party: this.parent.party,
 			center: this.owner.position.clone().add(offset),
 			dir: offset,

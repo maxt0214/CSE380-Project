@@ -227,6 +227,10 @@ export default class GameLevel extends Scene {
                     }
                     break;
                 case Project_Events.FIRE_PROJECTILE:
+                    if(event.data.get("party") === Project_Color.RED)
+                        this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "p1skill1", loop: false, holdReference: false});
+                    else if(event.data.get("party") === Project_Color.BLUE)
+                        this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "p2skill1", loop: false, holdReference: false});
                     this.fireProjectile(event.data);
                     break;
             }
