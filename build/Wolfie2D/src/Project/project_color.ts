@@ -1,4 +1,5 @@
 export enum Project_Color {
     RED = "red",
-    BLUE = "blue"
+    BLUE = "blue",
+    GREEN = "green"
 }

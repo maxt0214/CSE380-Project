@@ -29,6 +29,9 @@ export default class Level2 extends GameLevel {
         this.load.audio("p2skill2", "project_assets/sounds/skill2.wav");
         this.load.audio("p2skill3", "project_assets/sounds/skill3.wav");
 
+
+        this.load.spritesheet("red", "project_assets/spritesheets/redBalloon.json");
+
     }
 
     unloadScene(){
@@ -48,8 +51,8 @@ export default class Level2 extends GameLevel {
         super.startScene();
 
         // add stage hazards:   
-        for(let pos of [new Vec2(18, 8), new Vec2(25, 3), new Vec2(52, 5)]){
-            this.addHazard("red", pos, {color: Project_Color.RED});
+        for(let pos of [new Vec2(18, 10), new Vec2(3, 13), new Vec2(8, 15)]){
+            this.addHazard("red", pos, {party: Project_Color.GREEN, center: 0, dir: 0, projectile: "fireball"});         //sprite key (above), position, aiOptions (party, center, direction, projectile)
         }
 
         this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "level_music", loop: true, holdReference: true});

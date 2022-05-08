@@ -18,6 +18,7 @@ import { EaseFunctionType } from "../../Wolfie2D/Utils/EaseFunctions";
 import { Project_Color } from "../project_color";
 import { Project_Events } from "../project_enums";
 import PlayerController from "../Player/PlayerController";
+import HazardController from "../Hazards/HazardController";
 import Project_ParticleSystem from "../project_ParticleSystem";
 import Prop from "../Props/Prop";
 import List from "../../Wolfie2D/DataTypes/List";
@@ -647,13 +648,19 @@ export default class GameLevel extends Scene {
         prop.visible = visible;
     }
 
-    protected addHazard(spriteKey: string, tilePos: Vec2, aiOptions: Record<string, any>): void {
+    protected addHazard(spriteKey: string, tilePos: Vec2, aiOptions: Record<string, any>): void {       // sets up turrets that fire projectiles (props) or maybe do other things
         let hazard = this.add.animatedSprite(spriteKey, "primary");
         hazard.position.set(tilePos.x*32, tilePos.y*32);
         hazard.scale.set(2, 2);
-        hazard.addPhysics();
-        hazard.addAI(Prop, aiOptions);
-        hazard.setGroup("hazard");
+        hazard.addPhysics(null, null, false, true);
+        let offset = new Vec2(hazard.invertX ? -1 : 1, 0);
+        hazard.addAI(HazardController, {
+            party: aiOptions.party,
+            center: hazard.position.clone().add(offset),
+            dir: offset,
+            projectile: aiOptions.projecile
+        });
+        hazard.setGroup("hazards");
 
     }
     
