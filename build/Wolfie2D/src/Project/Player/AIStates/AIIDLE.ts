@@ -48,7 +48,7 @@ export default class AIIDLE extends AIOnGround {
 
 	move(): void {
 		let distance = this.owner.position.distanceTo(this.parent.other_player.position);
-		if(distance < 50) {
+		if(distance < 30) {
 			this.parent.velocity.x = 0;
 		} else if(distance < 200) {
 			this.parent.velocity.x = this.owner.invertX ? -this.parent.speed : this.parent.speed;
