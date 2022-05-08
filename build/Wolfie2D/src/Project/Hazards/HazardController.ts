@@ -1,19 +1,5 @@
-import AI from "../../Wolfie2D/DataTypes/Interfaces/AI";
-import AABB from "../../Wolfie2D/DataTypes/Shapes/AABB";
 import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
-import Debug from "../../Wolfie2D/Debug/Debug";
 import Emitter from "../../Wolfie2D/Events/Emitter";
-import GameEvent from "../../Wolfie2D/Events/GameEvent";
-import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
-import Receiver from "../../Wolfie2D/Events/Receiver";
-import GameNode, { TweenableProperties } from "../../Wolfie2D/Nodes/GameNode";
-import Graphic from "../../Wolfie2D/Nodes/Graphic";
-import AnimatedSprite from "../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
-import Sprite from "../../Wolfie2D/Nodes/Sprites/Sprite";
-import OrthogonalTilemap from "../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
-import Timer, { TimerState } from "../../Wolfie2D/Timing/Timer";
-import { EaseFunctionType } from "../../Wolfie2D/Utils/EaseFunctions";
-import MathUtils from "../../Wolfie2D/Utils/MathUtils";
 import RandUtils from "../../Wolfie2D/Utils/RandUtils";
 import { Project_Color } from "../project_color";
 import { Project_Events } from "../project_enums";
@@ -86,12 +72,12 @@ export default class HazardController {
     update_city() {
         this.emitter.fireEvent(Project_Events.FIRE_PROJECTILE, 
         {
-            name: "car_hazard",
+            name: "car",
             party: this.party,
             center: this.city_hazard,
             dir: new Vec2(-1,0),
-            projectile: "car_hazard"
+            projectile: "car"
         });
-        this.timer = 8;
+        this.timer = 1;
     }
 }
