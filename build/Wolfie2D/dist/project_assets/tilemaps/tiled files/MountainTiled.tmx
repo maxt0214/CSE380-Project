@@ -12,6 +12,14 @@
  <tileset firstgid="51" name="mountain" tilewidth="16" tileheight="16" tilecount="25" columns="5">
   <image source="../Mountain.png" width="80" height="80"/>
  </tileset>
+ <tileset firstgid="76" name="rock" tilewidth="32" tileheight="32" tilecount="2" columns="1">
+  <image source="../../spritesheets/rock.png" width="32" height="64"/>
+ </tileset>
+ <tileset firstgid="78" source="fighter.tsx"/>
+ <tileset firstgid="132" name="dwarf" tilewidth="24" tileheight="36" tilecount="48" columns="8">
+  <image source="../../spritesheets/dwarf.png" width="192" height="216"/>
+ </tileset>
+ <tileset firstgid="180" source="waterlady.tsx"/>
  <layer id="5" name="Wall" width="21" height="20">
   <properties>
    <property name="Collidable" type="bool" value="true"/>
@@ -147,14 +155,14 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,76,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,77,0,0,0,0,0,
+0,0,0,0,0,76,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,220,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>

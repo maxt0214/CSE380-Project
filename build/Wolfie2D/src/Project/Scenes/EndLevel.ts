@@ -23,6 +23,11 @@ export default class EndLevel extends GameLevel {
     curr_scene_cut: number = 0;
     scenecuts: Sprite[];
 
+    levelEndLabel: Label;
+    color_timer: number = 1;
+    curr_color: number = 0;
+    colors: Color[] = [Color.RED, Color.CYAN, Color.ORANGE, Color.BLACK, Color.GREEN, Color.MAGENTA, Color.WHITE, Color.YELLOW];
+    
     loadScene(): void {
         this.load.audio("level_music", "project_assets/music/end.mp3");
         this.initscenecut(this.initOptions.p1);
@@ -36,8 +41,14 @@ export default class EndLevel extends GameLevel {
     startScene(): void {
         this.addUILayer("UI");
         this.addLayer("background", 0);
-        this.viewport.setBounds(0, 0, 640, 640);
+        this.viewport.follow(null);
+        //Center view port
+        let size = this.viewport.getHalfSize();
+        this.viewport.setFocus(size);
+        this.viewport.setCenter(size);
+        this.viewport.setZoomLevel(1);
         //init scenecuts
+        this.scenecuts = [];
         this.addscenecut(LevelName.MEADOW);
         this.addscenecut(LevelName.BEACH);
         this.addscenecut(LevelName.MOUNTAIN);
@@ -45,21 +56,17 @@ export default class EndLevel extends GameLevel {
         this.addscenecut(LevelName.UNDERSEA);
         this.addscenecut(LevelName.VOLCANO);
         this.changescenecut();
-        //Center view port
-        let size = this.viewport.getHalfSize();
-        this.viewport.setFocus(size);
-        this.viewport.setZoomLevel(1);
         //Wining text
-        let levelEndLabel = <Label>this.add.uiElement(UIElementType.LABEL, "UI", {position: new Vec2(size.x, size.y), text: "You Won! Our New Champion!"});
-        levelEndLabel.size.set(600, 60);
-        levelEndLabel.borderRadius = 0;
-        levelEndLabel.backgroundColor = new Color(34, 32, 52);
-        levelEndLabel.textColor = Color.WHITE;
-        levelEndLabel.fontSize = 48;
-        levelEndLabel.font = "PixelSimple";
+        this.levelEndLabel = <Label>this.add.uiElement(UIElementType.LABEL, "UI", {position: new Vec2(size.x, size.y), text: "You Won! Our New Champion!"});
+        this.levelEndLabel.size.set(600, 60);
+        this.levelEndLabel.borderRadius = 0;
+        this.levelEndLabel.backgroundColor = Color.TRANSPARENT;
+        this.levelEndLabel.textColor = Color.WHITE;
+        this.levelEndLabel.fontSize = 48;
+        this.levelEndLabel.font = "PixelSimple";
 
         // Create a back button
-        let backBtn = <Button>this.add.uiElement(UIElementType.BUTTON, "UI", {position: new Vec2(size.x + 360, size.y - 320), text: "Back"});
+        let backBtn = <Button>this.add.uiElement(UIElementType.BUTTON, "UI", {position: new Vec2(size.x + 380, size.y - 320), text: "Back"});
         backBtn.backgroundColor = Color.TRANSPARENT;
         backBtn.borderColor = Color.WHITE;
         backBtn.textColor = Color.WHITE;
@@ -79,14 +86,22 @@ export default class EndLevel extends GameLevel {
         if(this.timer <= 0) {
             this.curr_scene_cut = this.curr_scene_cut >= 5 ? 0 : this.curr_scene_cut+1;
             this.changescenecut();
+            this.timer = 5;
+        }
+
+        if(this.color_timer <= 0) {
+            this.levelEndLabel.textColor = this.colors[this.curr_color];
+            this.curr_color = this.curr_color >= (this.colors.length-1) ? 0 : this.curr_color+1;
+            this.color_timer = 1;
         }
 
         this.timer -= deltaT;
+        this.color_timer -= deltaT;
     }
 
     addscenecut(scene: LevelName) {
         var bg = this.add.sprite(scene, "background");
-        bg.scale.set(2, 2);
+        bg.scale.set(4, 3);
 		bg.position.copy(this.viewport.getCenter());
         bg.visible = false;
         this.scenecuts.push(bg);

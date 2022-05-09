@@ -6,6 +6,12 @@
  <tileset firstgid="26" name="Plains" tilewidth="16" tileheight="16" tilecount="25" columns="5">
   <image source="../Plains.png" width="80" height="80"/>
  </tileset>
+ <tileset firstgid="51" name="Car" tilewidth="40" tileheight="28" tilecount="4" columns="4">
+  <image source="../../spritesheets/car.png" width="160" height="28"/>
+ </tileset>
+ <tileset firstgid="55" source="fighter.tsx"/>
+ <tileset firstgid="109" source="dwarf.tsx"/>
+ <tileset firstgid="157" source="waterlady.tsx"/>
  <layer id="5" name="Wall" width="30" height="20">
   <properties>
    <property name="Collidable" type="bool" value="true"/>
@@ -123,7 +129,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,116,0,0,0,53,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
