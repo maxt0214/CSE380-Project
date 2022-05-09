@@ -87,6 +87,13 @@ export default class GameLevel extends Scene {
 
     protected hazardController: HazardController;
 
+    // next level on level end vs AI stuff
+    protected nextMap: String;
+    protected nextEnemy: String;
+    protected nextEnemySkillset: String;
+    protected p1Lost: boolean = false;
+    protected level_is_last: boolean = false;
+
     initScene(init: Record<string, any>): void {
         this.origin_center = this.viewport.getCenter().clone();
         this.initOptions = init;
@@ -157,12 +164,35 @@ export default class GameLevel extends Scene {
                     Input.enableInput();
                     break;
                 case Project_Events.LEVEL_END:
-                    // On level end, go back to main menu
-                    Input.enableInput();
-                    this.viewport.follow(null);
-                    this.viewport.setCenter(this.origin_center);
-                    this.sceneManager.changeToScene(HomeScreen, {});
-                    break;
+                    // On level end in pvp or if player lost in p v ai, go back to main menu
+                    if(!this.isAI || this.p1Lost || this.level_is_last){
+                        Input.enableInput();
+                        this.viewport.follow(null);
+                        this.viewport.setCenter(this.origin_center);
+                        this.sceneManager.changeToScene(HomeScreen, {});
+                        break;
+                    } else{ // on level end vs AI, go to the next level. 
+                        let sceneOptions1 = {
+                            physics: {
+                                groupNames: ["ground", "player", "props"],
+                                collisions:
+                                [
+                                    [0, 1, 0],
+                                    [1, 0, 0],
+                                    [0, 0, 0]
+                                ]
+                            }
+                        }
+                        this.sceneManager.changeToScene(this.nextLevel, { 
+                            map: this.nextMap,
+                            p1: this.initOptions.p1,    //keep same
+                            p2: this.nextEnemy,
+                            p1Skillset: this.initOptions.p1Skillset,    //keep same
+                            p2Skillset: this.nextEnemySkillset, 
+                            isP2AI: this.isAI       //keep same
+                        }, sceneOptions1);
+
+                    }
                 case Project_Events.PLAYER_KILLED:
                     this.roundOver();
                     break;
@@ -322,6 +352,11 @@ export default class GameLevel extends Scene {
             this.roundTimer -= deltaT;
         }
         this.countdownTimer -= deltaT;
+
+        if(Input.isJustPressed("instant_win") && !this.gamePaused){ // instant win cheat if game is not paused
+            this.incPlayerLife(Project_Color.BLUE, -100);
+        }
+
         if(Input.isJustPressed("escape")){          // issues : you can wait out invincibility timer in pause : button click does not work (rn you mouse over it).
             this.gamePaused = !this.gamePaused;
             if(this.gamePaused){    // pause game
@@ -331,7 +366,7 @@ export default class GameLevel extends Scene {
                 for(let i = 0; i < 50; i++) {
                     this.props[i].freeze();
                 }
-            } else{             //unapuse game
+            } else{             //unpause game
                 this.player1.unfreeze();
                 this.player2.unfreeze();
                 this.pauseUI.disable();
@@ -471,14 +506,18 @@ export default class GameLevel extends Scene {
         backBtn.backgroundColor = Color.TRANSPARENT;
         backBtn.borderColor = Color.WHITE;
         backBtn.borderRadius = 0;
-        backBtn.setPadding(new Vec2(80, 30));
+        backBtn.setPadding(new Vec2(40, 15));
         backBtn.font = "PixelSimple";
 
         // When the back button is clicked, go to the next scene
-        backBtn.onClick = () => {
-            this.viewport.follow(null);
-            this.viewport.setCenter(this.origin_center);
-            this.sceneManager.changeToScene(HomeScreen, {}, {});
+        backBtn.onEnter = () => {
+            //console.log('BBBBBBBBBBBBBBBBB')
+            if(Input.isMouseJustPressed()){
+                //console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAA')
+                this.viewport.follow(null);
+                this.viewport.setCenter(this.origin_center);
+                this.sceneManager.changeToScene(HomeScreen, {}, {});
+            }
         }
     }
 
@@ -546,6 +585,9 @@ export default class GameLevel extends Scene {
             this.player1.disablePhysics();
             this.emitter.fireEvent(GameEventType.PLAY_SOUND, { key: "p1player_death", loop: false, holdReference: false });
             this.player1.tweens.play("death");
+            for(let i = 0; i < 50; i++) {
+                this.props[i].visible = false;
+            }
         }
 
         this.hp2label.text = "Lives: " + GameLevel.hp2;
@@ -556,6 +598,9 @@ export default class GameLevel extends Scene {
             this.player2.disablePhysics();
             this.emitter.fireEvent(GameEventType.PLAY_SOUND, { key: "p2player_death", loop: false, holdReference: false });
             this.player2.tweens.play("death");
+            for(let i = 0; i < 50; i++) {
+                this.props[i].visible = false;
+            }
         }
     }
 
@@ -563,10 +608,12 @@ export default class GameLevel extends Scene {
         this.system.stopSystem();
         //all rounds over, back to main menu
         if(this.p1rounds >= 2) {
+            this.p1Lost = false;
             this.emitter.fireEvent(Project_Events.LEVEL_END);
             return;
         }
         if(this.p2rounds >= 2) {
+            this.p1Lost = true;
             this.emitter.fireEvent(Project_Events.LEVEL_END);
             return;
         }

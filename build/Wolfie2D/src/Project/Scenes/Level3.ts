@@ -1,6 +1,7 @@
 import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
 import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 import GameLevel from "./GameLevel";
+import Level4 from "./Level4";
 
 export default class Level3 extends GameLevel {
 
@@ -70,7 +71,11 @@ export default class Level3 extends GameLevel {
 
         // Do generic setup for a GameLevel
         super.startScene();
-        
+
+        this.nextLevel = Level4;
+        this.nextMap = "project_assets/tilemaps/cityscape.json";
+        this.nextEnemy = "project_assets/spritesheets/fighter.json";
+        this.nextEnemySkillset =  "project_assets/skills/fighter.json";
         this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "level_music", loop: true, holdReference: true});
     }
 

@@ -3,6 +3,8 @@ import Debug from "../../Wolfie2D/Debug/Debug";
 import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 import { Project_Color } from "../project_color";
 import GameLevel from "./GameLevel";
+import Level6 from "./Level6";
+
 //undersea
 export default class Level5 extends GameLevel {
 
@@ -73,6 +75,11 @@ export default class Level5 extends GameLevel {
         // Do generic setup for a GameLevel
         super.startScene();
         
+        this.nextLevel = Level6;
+        this.nextMap = "project_assets/tilemaps/volcano.json";
+        this.nextEnemy = "project_assets/spritesheets/fighter.json";
+        this.nextEnemySkillset =  "project_assets/skills/fighter.json";
+
         this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "level_music", loop: true, holdReference: true});
     }
 

@@ -30,9 +30,9 @@ export default class AIIDLE extends AIOnGround {
 			if(RandUtils.randInt(0,100) < 1) {
 				this.finished("jump");
 				this.parent.velocity.y = -500;
-				if(this.parent.velocity.x !== 0){
-					this.owner.tweens.play("flip");
-				}
+				//if(this.parent.velocity.x !== 0){
+					//this.owner.tweens.play("flip");
+				//}
 			} else {
 				super.update(deltaT);
 				this.move();

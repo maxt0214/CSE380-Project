@@ -33,7 +33,10 @@ import SplashScreen from "./Project/Scenes/SplashScreen";
 
             {name: "escape", keys: ["escape"]},
 
-            {name: "cheap_invincible", keys: ["c"]},
+            //cheats
+            {name: "cheap_invincible", keys: ["b"]},
+            {name: "unlock_all_lvls", keys: ["m"]},
+            {name: "instant_win", keys: ["n"]}
         ],
         useWebGL: false,                        // Tell the game we want to use webgl
         showDebug: false                       // Whether to show debug messages. You can change this to true if you want

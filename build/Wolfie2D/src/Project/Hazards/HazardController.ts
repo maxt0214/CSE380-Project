@@ -28,6 +28,7 @@ export default class HazardController {
         else if(stage.includes("volcano"))
             this.level = "lava";
         this.emitter = new Emitter();
+        console.log('asdasdasdasdasdas HAZARD CONTROLLER CHECK');
     }
 
     update(deltaT: number): void {

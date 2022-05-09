@@ -24,6 +24,7 @@ export default class StageSelect extends Scene {
     protected p1Skillset: String;
     protected p2: String;
     protected p2Skillset: String;
+    protected stageUnlocked: number = 6;    // latest stage unlocked. starts at 1 and maxes at 6.
 
     initScene(init: Record<string, any>): void {
         this.initOptions = init;
@@ -43,6 +44,9 @@ export default class StageSelect extends Scene {
         this.p1Skillset = this.initOptions.p1Skillset
         this.p2 = this.initOptions.p2
         this.p2Skillset = this.initOptions.p2Skillset
+
+        if(this.initOptions.stageUnlocked > this.stageUnlocked)
+            this.stageUnlocked = this.initOptions.stageUnlocked
 
         this.bg = this.add.sprite("stgsel", "background");
         this.bg.scale.set(1, 1);
@@ -68,260 +72,287 @@ export default class StageSelect extends Scene {
         }
 
         // Create a stage1 button
-        let stage1Btn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x - 200, size.y - 150), text: "Meadow"});
-        stage1Btn.backgroundColor = Color.TRANSPARENT;
-        stage1Btn.borderColor = Color.TRANSPARENT;
-        stage1Btn.borderRadius = 0;
-        stage1Btn.setPadding(new Vec2(80, 30));
-        stage1Btn.font = "PixelSimple";
+        if(this.stageUnlocked >= 1 || !this.isAI){
+            let stage1Btn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x - 200, size.y - 150), text: "Meadow"});
+            stage1Btn.backgroundColor = Color.TRANSPARENT;
+            stage1Btn.borderColor = Color.TRANSPARENT;
+            stage1Btn.borderRadius = 0;
+            stage1Btn.setPadding(new Vec2(80, 30));
+            stage1Btn.font = "PixelSimple";
 
-        // When the stage1 button is clicked, go to the next scene
-        stage1Btn.onClick = () => {
-            let sceneOptions = {
-                physics: {
-                    groupNames: ["ground", "player", "props"],
-                    collisions:
-                    [
-                        [0, 1, 0],
-                        [1, 0, 0],
-                        [0, 0, 0]
-                    ]
+            // When the stage1 button is clicked, go to the next scene
+            stage1Btn.onClick = () => {
+                let sceneOptions = {
+                    physics: {
+                        groupNames: ["ground", "player", "props"],
+                        collisions:
+                        [
+                            [0, 1, 0],
+                            [1, 0, 0],
+                            [0, 0, 0]
+                        ]
+                    }
                 }
-            }
-            if(!this.isAI){      // player v player
-                this.sceneManager.changeToScene(Level1, { 
-                    map: "project_assets/tilemaps/meadow.json",
-                    p1: this.p1,
-                    p2: this.p2,
-                    p1Skillset: this.p1Skillset, 
-                    p2Skillset: this.p2Skillset, 
-                    isP2AI: this.isAI
-                }, sceneOptions);
-            } else { // player v ai (predertermined opponent char based on stage)
-                this.sceneManager.changeToScene(Level1, { 
-                    map: "project_assets/tilemaps/meadow.json",
-                    p1: this.p1,
-                    p2: "project_assets/spritesheets/fighter.json",
-                    p1Skillset: this.p1Skillset, 
-                    p2Skillset: "project_assets/skills/fighter.json", 
-                    isP2AI: this.isAI
-                }, sceneOptions);
+                if(!this.isAI){      // player v player
+                    this.sceneManager.changeToScene(Level1, { 
+                        map: "project_assets/tilemaps/meadow.json",
+                        p1: this.p1,
+                        p2: this.p2,
+                        p1Skillset: this.p1Skillset, 
+                        p2Skillset: this.p2Skillset, 
+                        isP2AI: this.isAI
+                    }, sceneOptions);
+                } else { // player v ai (predertermined opponent char based on stage)
+                    this.sceneManager.changeToScene(Level1, { 
+                        map: "project_assets/tilemaps/meadow.json",
+                        p1: this.p1,
+                        p2: "project_assets/spritesheets/fighter.json",
+                        p1Skillset: this.p1Skillset, 
+                        p2Skillset: "project_assets/skills/fighter.json", 
+                        isP2AI: this.isAI
+                    }, sceneOptions);
+                }
             }
         }
 
-        // Create a stage2 button
-        let stage2Btn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x, size.y - 150), text: "Beach"});
-        stage2Btn.backgroundColor = Color.TRANSPARENT;
-        stage2Btn.borderColor = Color.TRANSPARENT;
-        stage2Btn.borderRadius = 0;
-        stage2Btn.setPadding(new Vec2(80, 30));
-        stage2Btn.font = "PixelSimple";
+        if(this.stageUnlocked >= 2 || !this.isAI){
+            // Create a stage2 button
+            let stage2Btn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x, size.y - 150), text: "Beach"});
+            stage2Btn.backgroundColor = Color.TRANSPARENT;
+            stage2Btn.borderColor = Color.TRANSPARENT;
+            stage2Btn.borderRadius = 0;
+            stage2Btn.setPadding(new Vec2(80, 30));
+            stage2Btn.font = "PixelSimple";
 
-        // When the stage2 button is clicked, go to the next scene
-        stage2Btn.onClick = () => {
-            this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "menu_music"});
-            let sceneOptions = {
-                physics: {
-                    groupNames: ["ground", "player", "props"],
-                    collisions:
-                    [
-                        [0, 1, 0],
-                        [1, 0, 0],
-                        [0, 0, 0]
-                    ]
+            // When the stage2 button is clicked, go to the next scene
+            stage2Btn.onClick = () => {
+                this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "menu_music"});
+                let sceneOptions = {
+                    physics: {
+                        groupNames: ["ground", "player", "props"],
+                        collisions:
+                        [
+                            [0, 1, 0],
+                            [1, 0, 0],
+                            [0, 0, 0]
+                        ]
+                    }
                 }
-            }
-            if(!this.isAI){      // player v player
-                this.sceneManager.changeToScene(Level2, { 
-                    map: "project_assets/tilemaps/beach.json",
-                    p1: this.p1,
-                    p2: this.p2,
-                    p1Skillset: this.p1Skillset, 
-                    p2Skillset: this.p2Skillset, 
-                    isP2AI: this.isAI
-                }, sceneOptions);
-            } else { // player v ai (predertermined opponent char based on stage)
-                this.sceneManager.changeToScene(Level2, { 
-                    map: "project_assets/tilemaps/beach.json",
-                    p1: this.p1,
-                    p2: "project_assets/spritesheets/waterlady.json",
-                    p1Skillset: this.p1Skillset, 
-                    p2Skillset: "project_assets/skills/waterlady.json", 
-                    isP2AI: this.isAI
-                }, sceneOptions);
+                if(!this.isAI){      // player v player
+                    this.sceneManager.changeToScene(Level2, { 
+                        map: "project_assets/tilemaps/beach.json",
+                        p1: this.p1,
+                        p2: this.p2,
+                        p1Skillset: this.p1Skillset, 
+                        p2Skillset: this.p2Skillset, 
+                        isP2AI: this.isAI
+                    }, sceneOptions);
+                } else { // player v ai (predertermined opponent char based on stage)
+                    this.sceneManager.changeToScene(Level2, { 
+                        map: "project_assets/tilemaps/beach.json",
+                        p1: this.p1,
+                        p2: "project_assets/spritesheets/waterlady.json",
+                        p1Skillset: this.p1Skillset, 
+                        p2Skillset: "project_assets/skills/waterlady.json", 
+                        isP2AI: this.isAI
+                    }, sceneOptions);
+                }
             }
         }
 
-        // Create a stage3 button
-        let stage3Btn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x+200, size.y - 150), text: "Mountain"});
-        stage3Btn.backgroundColor = Color.TRANSPARENT;
-        stage3Btn.borderColor = Color.TRANSPARENT;
-        stage3Btn.borderRadius = 0;
-        stage3Btn.setPadding(new Vec2(80, 30));
-        stage3Btn.font = "PixelSimple";
+        if(this.stageUnlocked >= 3 || !this.isAI){
+            // Create a stage3 button
+            let stage3Btn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x+200, size.y - 150), text: "Mountain"});
+            stage3Btn.backgroundColor = Color.TRANSPARENT;
+            stage3Btn.borderColor = Color.TRANSPARENT;
+            stage3Btn.borderRadius = 0;
+            stage3Btn.setPadding(new Vec2(80, 30));
+            stage3Btn.font = "PixelSimple";
 
-        // When the stage3 button is clicked, go to the next scene
-        stage3Btn.onClick = () => {
-            this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "menu_music"});
-            let sceneOptions = {
-                physics: {
-                    groupNames: ["ground", "player", "props"],
-                    collisions:
-                    [
-                        [0, 1, 0],
-                        [1, 0, 0],
-                        [0, 0, 0]
-                    ]
+            // When the stage3 button is clicked, go to the next scene
+            stage3Btn.onClick = () => {
+                this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "menu_music"});
+                let sceneOptions = {
+                    physics: {
+                        groupNames: ["ground", "player", "props"],
+                        collisions:
+                        [
+                            [0, 1, 0],
+                            [1, 0, 0],
+                            [0, 0, 0]
+                        ]
+                    }
                 }
-            }
-            if(!this.isAI){      // player v player
-                this.sceneManager.changeToScene(Level3, {    
-                    map: "project_assets/tilemaps/Mountain.json",
-                    p1: this.p1,
-                    p2: this.p2,
-                    p1Skillset: this.p1Skillset, 
-                    p2Skillset: this.p2Skillset, 
-                    isP2AI: this.isAI
-                }, sceneOptions);
-            } else { // player v ai (predertermined opponent char based on stage)
-                this.sceneManager.changeToScene(Level3, {            
-                    map: "project_assets/tilemaps/Mountain.json",
-                    p1: this.p1,
-                    p2: "project_assets/spritesheets/waterlady.json",
-                    p1Skillset: this.p1Skillset, 
-                    p2Skillset: "project_assets/skills/waterlady.json", 
-                    isP2AI: this.isAI
-                }, sceneOptions);
+                if(!this.isAI){      // player v player
+                    this.sceneManager.changeToScene(Level3, {    
+                        map: "project_assets/tilemaps/Mountain.json",
+                        p1: this.p1,
+                        p2: this.p2,
+                        p1Skillset: this.p1Skillset, 
+                        p2Skillset: this.p2Skillset, 
+                        isP2AI: this.isAI
+                    }, sceneOptions);
+                } else { // player v ai (predertermined opponent char based on stage)
+                    this.sceneManager.changeToScene(Level3, {            
+                        map: "project_assets/tilemaps/Mountain.json",
+                        p1: this.p1,
+                        p2: "project_assets/spritesheets/waterlady.json",
+                        p1Skillset: this.p1Skillset, 
+                        p2Skillset: "project_assets/skills/waterlady.json", 
+                        isP2AI: this.isAI
+                    }, sceneOptions);
+                }
             }
         }
 
-        // Create a stage4 button
-        let stage4Btn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x - 200, size.y+70), text: "City"});
-        stage4Btn.backgroundColor = Color.TRANSPARENT;
-        stage4Btn.borderColor = Color.TRANSPARENT;
-        stage4Btn.borderRadius = 0;
-        stage4Btn.setPadding(new Vec2(80, 30));
-        stage4Btn.font = "PixelSimple";
+        if(this.stageUnlocked >= 4 || !this.isAI){
+            // Create a stage4 button
+            let stage4Btn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x - 200, size.y+70), text: "City"});
+            stage4Btn.backgroundColor = Color.TRANSPARENT;
+            stage4Btn.borderColor = Color.TRANSPARENT;
+            stage4Btn.borderRadius = 0;
+            stage4Btn.setPadding(new Vec2(80, 30));
+            stage4Btn.font = "PixelSimple";
 
-        // When the stage4 button is clicked, go to the next scene
-        stage4Btn.onClick = () => {
-            this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "menu_music"});
-            let sceneOptions = {
-                physics: {
-                    groupNames: ["ground", "player", "props"],
-                    collisions:
-                    [
-                        [0, 1, 0],
-                        [1, 0, 0],
-                        [0, 0, 0]
-                    ]
+            // When the stage4 button is clicked, go to the next scene
+            stage4Btn.onClick = () => {
+                this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "menu_music"});
+                let sceneOptions = {
+                    physics: {
+                        groupNames: ["ground", "player", "props"],
+                        collisions:
+                        [
+                            [0, 1, 0],
+                            [1, 0, 0],
+                            [0, 0, 0]
+                        ]
+                    }
                 }
-            }
-            if(!this.isAI){      // player v player
-                this.sceneManager.changeToScene(Level4, {           
-                    map: "project_assets/tilemaps/cityscape.json",
-                    p1: this.p1,
-                    p2: this.p2,
-                    p1Skillset: this.p1Skillset, 
-                    p2Skillset: this.p2Skillset, 
-                    isP2AI: this.isAI
-                }, sceneOptions);
-            } else { // player v ai (predertermined opponent char based on stage)
-                this.sceneManager.changeToScene(Level4, {           
-                    map: "project_assets/tilemaps/cityscape.json",
-                    p1: this.p1,
-                    p2: "project_assets/spritesheets/fighter.json",
-                    p1Skillset: this.p1Skillset, 
-                    p2Skillset: "project_assets/skills/fighter.json", 
-                    isP2AI: this.isAI
-                }, sceneOptions);
+                if(!this.isAI){      // player v player
+                    this.sceneManager.changeToScene(Level4, {           
+                        map: "project_assets/tilemaps/cityscape.json",
+                        p1: this.p1,
+                        p2: this.p2,
+                        p1Skillset: this.p1Skillset, 
+                        p2Skillset: this.p2Skillset, 
+                        isP2AI: this.isAI
+                    }, sceneOptions);
+                } else { // player v ai (predertermined opponent char based on stage)
+                    this.sceneManager.changeToScene(Level4, {           
+                        map: "project_assets/tilemaps/cityscape.json",
+                        p1: this.p1,
+                        p2: "project_assets/spritesheets/fighter.json",
+                        p1Skillset: this.p1Skillset, 
+                        p2Skillset: "project_assets/skills/fighter.json", 
+                        isP2AI: this.isAI
+                    }, sceneOptions);
+                }
             }
         }
 
-        // Create a stage5 button
-        let stage5Btn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x, size.y+70), text: "UnderSea"});
-        stage5Btn.backgroundColor = Color.TRANSPARENT;
-        stage5Btn.borderColor = Color.TRANSPARENT;
-        stage5Btn.borderRadius = 0;
-        stage5Btn.setPadding(new Vec2(80, 30));
-        stage5Btn.font = "PixelSimple";
+        if(this.stageUnlocked >= 5 || !this.isAI){
+            // Create a stage5 button
+            let stage5Btn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x, size.y+70), text: "UnderSea"});
+            stage5Btn.backgroundColor = Color.TRANSPARENT;
+            stage5Btn.borderColor = Color.TRANSPARENT;
+            stage5Btn.borderRadius = 0;
+            stage5Btn.setPadding(new Vec2(80, 30));
+            stage5Btn.font = "PixelSimple";
 
-        // When the stage5 button is clicked, go to the next scene
-        stage5Btn.onClick = () => {
-            this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "menu_music"});
-            let sceneOptions = {
-                physics: {
-                    groupNames: ["ground", "player", "props"],
-                    collisions:
-                    [
-                        [0, 1, 0],
-                        [1, 0, 0],
-                        [0, 0, 0]
-                    ]
+            // When the stage5 button is clicked, go to the next scene
+            stage5Btn.onClick = () => {
+                this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "menu_music"});
+                let sceneOptions = {
+                    physics: {
+                        groupNames: ["ground", "player", "props"],
+                        collisions:
+                        [
+                            [0, 1, 0],
+                            [1, 0, 0],
+                            [0, 0, 0]
+                        ]
+                    }
                 }
-            }
-            if(!this.isAI){      // player v player
-                this.sceneManager.changeToScene(Level5, {           
-                    map: "project_assets/tilemaps/undersea.json",
-                    p1: this.p1,
-                    p2: this.p2,
-                    p1Skillset: this.p1Skillset, 
-                    p2Skillset: this.p2Skillset, 
-                    isP2AI: this.isAI
-                }, sceneOptions);
-            } else { // player v ai (predertermined opponent char based on stage)
-                this.sceneManager.changeToScene(Level5, {           
-                    map: "project_assets/tilemaps/undersea.json",
-                    p1: this.p1,
-                    p2: "project_assets/spritesheets/waterlady.json",
-                    p1Skillset: this.p1Skillset, 
-                    p2Skillset: "project_assets/skills/waterlady.json", 
-                    isP2AI: this.isAI
-                }, sceneOptions);
+                if(!this.isAI){      // player v player
+                    this.sceneManager.changeToScene(Level5, {           
+                        map: "project_assets/tilemaps/undersea.json",
+                        p1: this.p1,
+                        p2: this.p2,
+                        p1Skillset: this.p1Skillset, 
+                        p2Skillset: this.p2Skillset, 
+                        isP2AI: this.isAI
+                    }, sceneOptions);
+                } else { // player v ai (predertermined opponent char based on stage)
+                    this.sceneManager.changeToScene(Level5, {           
+                        map: "project_assets/tilemaps/undersea.json",
+                        p1: this.p1,
+                        p2: "project_assets/spritesheets/waterlady.json",
+                        p1Skillset: this.p1Skillset, 
+                        p2Skillset: "project_assets/skills/waterlady.json", 
+                        isP2AI: this.isAI
+                    }, sceneOptions);
+                }
             }
         }
 
-        // Create a stage6 button
-        let stage6Btn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x+200, size.y+70), text: "Volcano"});
-        stage6Btn.backgroundColor = Color.TRANSPARENT;
-        stage6Btn.borderColor = Color.TRANSPARENT;
-        stage6Btn.borderRadius = 0;
-        stage6Btn.setPadding(new Vec2(80, 30));
-        stage6Btn.font = "PixelSimple";
+        if(this.stageUnlocked >= 6 || !this.isAI){
+            // Create a stage6 button
+            let stage6Btn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x+200, size.y+70), text: "Volcano"});
+            stage6Btn.backgroundColor = Color.TRANSPARENT;
+            stage6Btn.borderColor = Color.TRANSPARENT;
+            stage6Btn.borderRadius = 0;
+            stage6Btn.setPadding(new Vec2(80, 30));
+            stage6Btn.font = "PixelSimple";
 
-        // When the stage6 button is clicked, go to the next scene
-        stage6Btn.onClick = () => {
-            this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "menu_music"});
-            let sceneOptions = {
-                physics: {
-                    groupNames: ["ground", "player", "props"],
-                    collisions:
-                    [
-                        [0, 1, 0],
-                        [1, 0, 0],
-                        [0, 0, 0]
-                    ]
+            // When the stage6 button is clicked, go to the next scene
+            stage6Btn.onClick = () => {
+                this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "menu_music"});
+                let sceneOptions = {
+                    physics: {
+                        groupNames: ["ground", "player", "props"],
+                        collisions:
+                        [
+                            [0, 1, 0],
+                            [1, 0, 0],
+                            [0, 0, 0]
+                        ]
+                    }
+                }
+                if(!this.isAI){      // player v player
+                    this.sceneManager.changeToScene(Level6, {
+                        map: "project_assets/tilemaps/volcano.json",
+                        p1: this.p1,
+                        p2: this.p2,
+                        p1Skillset: this.p1Skillset, 
+                        p2Skillset: this.p2Skillset, 
+                        isP2AI: this.isAI
+                    }, sceneOptions);
+                } else { // player v ai (predertermined opponent char based on stage)
+                    this.sceneManager.changeToScene(Level6, {            //change to level6 later!
+                        map: "project_assets/tilemaps/volcano.json",
+                        p1: this.p1,
+                        p2: "project_assets/spritesheets/fighter.json",
+                        p1Skillset: this.p1Skillset, 
+                        p2Skillset: "project_assets/skills/fighter.json",
+                        isP2AI: this.isAI
+                    }, sceneOptions);
                 }
             }
-            if(!this.isAI){      // player v player
-                this.sceneManager.changeToScene(Level6, {
-                    map: "project_assets/tilemaps/volcano.json",
-                    p1: this.p1,
-                    p2: this.p2,
-                    p1Skillset: this.p1Skillset, 
-                    p2Skillset: this.p2Skillset, 
-                    isP2AI: this.isAI
-                }, sceneOptions);
-            } else { // player v ai (predertermined opponent char based on stage)
-                this.sceneManager.changeToScene(Level6, {            //change to level6 later!
-                    map: "project_assets/tilemaps/volcano.json",
-                    p1: this.p1,
-                    p2: "project_assets/spritesheets/fighter.json",
-                    p1Skillset: this.p1Skillset, 
-                    p2Skillset: "project_assets/skills/fighter.json",
-                    isP2AI: this.isAI
-                }, sceneOptions);
-            }
+        }
+
+        
+        // Create a cont button
+        let contBtn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x, size.y + 180), text: "Unlock All Levels"});
+        contBtn.backgroundColor = Color.TRANSPARENT;
+        contBtn.borderColor = Color.TRANSPARENT;
+        contBtn.textColor = Color.WHITE;
+        contBtn.borderRadius = 0;
+        contBtn.setPadding(new Vec2(80, 30));
+        contBtn.font = "PixelSimple";
+
+        // When the cont button is clicked, go to the next scene
+        contBtn.onClick = () => {
+            this.stageUnlocked = 6;
         }
     }
 
