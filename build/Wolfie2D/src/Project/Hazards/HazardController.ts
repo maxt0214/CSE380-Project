@@ -64,7 +64,7 @@ export default class HazardController {
             dir: new Vec2(0,1),
             projectile: "coconut"
         });
-        this.timer = RandUtils.randInt(1, 3);
+        this.timer = RandUtils.randInt(2, 4);
     }
 
     update_undersea() {
@@ -78,7 +78,7 @@ export default class HazardController {
             dir: dir,
             projectile: "swirl"
         });
-        this.timer = RandUtils.randInt(1, 5);
+        this.timer = RandUtils.randInt(5, 8);
     }
 
     update_city() {
@@ -90,7 +90,7 @@ export default class HazardController {
             dir: new Vec2(-1,0),
             projectile: "car"
         });
-        this.timer = RandUtils.randInt(1, 7);
+        this.timer = RandUtils.randInt(3, 7);
     }
 
     update_mountain() {
@@ -103,7 +103,7 @@ export default class HazardController {
             dir: new Vec2(0,1),
             projectile: "rock"
         });
-        this.timer = RandUtils.randInt(1, 2);
+        this.timer = RandUtils.randInt(3, 8);
     }
 
     update_lava() {
@@ -129,6 +129,6 @@ export default class HazardController {
             });
         }
         
-        this.timer = RandUtils.randInt(1, 6);
+        this.timer = RandUtils.randInt(2, 6);
     }
 }

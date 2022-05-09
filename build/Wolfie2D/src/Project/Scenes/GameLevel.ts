@@ -119,7 +119,6 @@ export default class GameLevel extends Scene {
         this.load.spritesheet("rock_sp", "project_assets/spritesheets/rock.json");
         this.load.spritesheet("lavadrop_sp", "project_assets/spritesheets/lavadrop.json");
         this.load.spritesheet("deadlylava_sp", "project_assets/spritesheets/lavadrop.json");
-        this.load.spritesheet("crystal_sp", "project_assets/spritesheets/crystal.json")
         
         this.load.object("fireball","project_assets/props/fireball.json");
         this.load.object("bubble","project_assets/props/bubble.json");
@@ -129,7 +128,6 @@ export default class GameLevel extends Scene {
         this.load.object("rock","project_assets/props/rock.json");
         this.load.object("lavadrop","project_assets/props/lavadrop.json");
         this.load.object("deadlylava","project_assets/props/deadlylava.json");
-        this.load.object("crystal","project_assets/props/crystal.json")
         
         this.isAI = this.initOptions.isP2AI;
 
@@ -312,6 +310,12 @@ export default class GameLevel extends Scene {
                     p2.changeState(this.p1dmgInfo.get("state"));
             
                 }
+                if(this.p1dmgInfo.get("type") === "r" && !(this.p1dmgInfo.get("name") === "BLOCK") && !(this.p2action === "grabbing")){ // p1 rock move that is not a block, p2 is not grabbing, p2 takes dmg
+                    this.incPlayerLife(Project_Color.BLUE,this.p1dmgInfo.get("dmg"));
+                    this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "hit", loop: false, holdReference: false});
+                    p2.changeState(this.p1dmgInfo.get("state"));
+            
+                }
             }
         }
         // P2
@@ -344,6 +348,11 @@ export default class GameLevel extends Scene {
                     this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "hit", loop: false, holdReference: false});
                     p1.changeState(this.p2dmgInfo.get("state"));
             
+                }
+                if(this.p2dmgInfo.get("type") === "r" && !(this.p2dmgInfo.get("name") === "BLOCK") && !(this.p1action === "grabbing")){ // p2 rock move that is not a block, p1 is not grabbing, p1 takes dmg
+                    this.incPlayerLife(Project_Color.BLUE,this.p1dmgInfo.get("dmg"));
+                    this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "hit", loop: false, holdReference: false});
+                    p2.changeState(this.p1dmgInfo.get("state"));
                 }
             }
         }
