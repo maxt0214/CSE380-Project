@@ -33,6 +33,8 @@ export default class Level6 extends GameLevel {
         // Do generic setup for a GameLevel
         super.startScene();
 
+        //this.level_is_last = true;
+
         this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "level_music", loop: true, holdReference: true});
     }
 

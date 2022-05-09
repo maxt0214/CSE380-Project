@@ -8,9 +8,12 @@ export default class Level3 extends GameLevel {
     loadScene(): void {
         super.loadScene();
         this.load.audio("level_music", "project_assets/music/mountain.mp3");
+        this.load.audio("hit", "project_assets/sounds/hit.wav");
         this.loadp1Sound(this.initOptions.p1Skillset);
         this.loadp2Sound(this.initOptions.p2Skillset);
     }
+
+    
 
     unloadScene(){
         this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "level_music"});
@@ -18,7 +21,6 @@ export default class Level3 extends GameLevel {
     }
 
     startScene(): void {
-        this.nextLevel = Level4;
         this.add.tilemap("level", new Vec2(2, 2));//this is loaded in loadScene in gamelevel
         //TODO: Change viewport
         this.viewport.setBounds(0, 0, 21*32, 20*32); 
