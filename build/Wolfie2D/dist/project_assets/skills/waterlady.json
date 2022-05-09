@@ -80,7 +80,7 @@
         "timer": 0.75,
         "startup": 0.4,
         "projectile": "",
-        "type": "s",
+        "type": "p",
         "priority": 12
     } 
 }

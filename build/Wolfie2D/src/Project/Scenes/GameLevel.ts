@@ -72,6 +72,7 @@ export default class GameLevel extends Scene {
     protected gamePaused: boolean = false;
     protected pauseUI: Layer;
 
+    protected controlsUI: Layer;
 
     // Stuff to end the level and go to the next level
     protected nextLevel: new (...args: any) => GameLevel;
@@ -131,6 +132,7 @@ export default class GameLevel extends Scene {
         this.isAI = this.initOptions.isP2AI;
 
         this.load.image("pausescreen", "project_assets/backgrounds/pausescreen.png");
+        this.load.image("controls", "project_assets/backgrounds/Controlsnew.png");
     }
 
     startScene(): void {
@@ -142,6 +144,7 @@ export default class GameLevel extends Scene {
         this.subscribeToEvents();
         this.addUI();
         this.addPauseScreen();
+        this.addControlsScreen();
 
         // Initialize the round timer of 90 seconds
         this.countdownTimer = 3000;
@@ -307,6 +310,12 @@ export default class GameLevel extends Scene {
                     p2.changeState(this.p1dmgInfo.get("state"));
             
                 }
+                if(this.p1dmgInfo.get("type") === "r" && !(this.p1dmgInfo.get("name") === "BLOCK") && !(this.p2action === "grabbing")){ // p1 rock move that is not a block, p2 is not grabbing, p2 takes dmg
+                    this.incPlayerLife(Project_Color.BLUE,this.p1dmgInfo.get("dmg"));
+                    this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "hit", loop: false, holdReference: false});
+                    p2.changeState(this.p1dmgInfo.get("state"));
+            
+                }
             }
         }
         // P2
@@ -340,6 +349,11 @@ export default class GameLevel extends Scene {
                     p1.changeState(this.p2dmgInfo.get("state"));
             
                 }
+                if(this.p2dmgInfo.get("type") === "r" && !(this.p2dmgInfo.get("name") === "BLOCK") && !(this.p1action === "grabbing")){ // p2 rock move that is not a block, p1 is not grabbing, p1 takes dmg
+                    this.incPlayerLife(Project_Color.BLUE,this.p1dmgInfo.get("dmg"));
+                    this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "hit", loop: false, holdReference: false});
+                    p2.changeState(this.p1dmgInfo.get("state"));
+                }
             }
         }
 
@@ -362,6 +376,7 @@ export default class GameLevel extends Scene {
                 this.player1.freeze();
                 this.player2.freeze();
                 this.pauseUI.enable();
+                this.controlsUI.disable();
                 for(let i = 0; i < 50; i++) {
                     this.props[i].freeze();
                 }
@@ -369,6 +384,7 @@ export default class GameLevel extends Scene {
                 this.player1.unfreeze();
                 this.player2.unfreeze();
                 this.pauseUI.disable();
+                this.controlsUI.disable();
                 for(let i = 0; i < 50; i++) {
                     this.props[i].unfreeze();
                 }
@@ -387,6 +403,10 @@ export default class GameLevel extends Scene {
         this.pauseUI = this.addUILayer("pauseUI");
         this.pauseUI.setDepth(2);
         this.pauseUI.disable();
+
+        this.controlsUI = this.addUILayer("controlsUI");
+        this.controlsUI.setDepth(3);
+        this.controlsUI.disable();
     }
 
     /**
@@ -516,6 +536,45 @@ export default class GameLevel extends Scene {
                 this.viewport.follow(null);
                 this.viewport.setCenter(this.origin_center);
                 this.sceneManager.changeToScene(HomeScreen, {}, {});
+            }
+        }
+
+        let ctrlsBtn = <Button>this.add.uiElement(UIElementType.BUTTON, "pauseUI", {position: new Vec2(this.size.x, this.size.y), text: "Controls"});
+        ctrlsBtn.backgroundColor = Color.TRANSPARENT;
+        ctrlsBtn.borderColor = Color.WHITE;
+        ctrlsBtn.borderRadius = 0;
+        ctrlsBtn.setPadding(new Vec2(40, 15));
+        ctrlsBtn.font = "PixelSimple";
+
+        // When the ctrls button is clicked, go to the next scene
+        ctrlsBtn.onEnter = () => {
+            if(Input.isMouseJustPressed()){
+                this.controlsUI.enable();
+                this.pauseUI.disable();
+            }
+        }
+    }
+
+    protected addControlsScreen(){
+        let bg = this.add.sprite("controls", "controlsUI");
+        bg.scale.set(0.4, 0.4);
+        bg.position.copy(this.size);
+
+        // Create a back button
+        let backBtn = <Button>this.add.uiElement(UIElementType.BUTTON, "controlsUI", {position: new Vec2(this.size.x, this.size.y +100), text: "Back"});
+        backBtn.backgroundColor = Color.TRANSPARENT;
+        backBtn.borderColor = Color.WHITE;
+        backBtn.borderRadius = 0;
+        backBtn.setPadding(new Vec2(40, 15));
+        backBtn.font = "PixelSimple";
+
+        // When the back button is clicked, go to the next scene
+        backBtn.onEnter = () => {
+            //console.log('BBBBBBBBBBBBBBBBB')
+            if(Input.isMouseJustPressed()){
+                //console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAA')
+                this.controlsUI.disable();
+                this.pauseUI.enable();
             }
         }
     }
