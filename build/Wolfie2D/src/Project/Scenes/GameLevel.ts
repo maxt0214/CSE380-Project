@@ -731,14 +731,14 @@ export default class GameLevel extends Scene {
             this.load.audio("p1skill2", "project_assets/sounds/waterlady/skill2.wav");
             this.load.audio("p1skill3", "project_assets/sounds/waterlady/skill3.wav");
         } else {
-            this.load.audio("p1jump", "project_assets/sounds/miner/jump.wav");
-            this.load.audio("p1player_death", "project_assets/sounds/miner/player_death.wav");
-            this.load.audio("p1attack", "project_assets/sounds/miner/attack.wav");
-            this.load.audio("p1grab", "project_assets/sounds/miner/grab.wav");
-            this.load.audio("p1block", "project_assets/sounds/miner/block.wav");
-            this.load.audio("p1skill1", "project_assets/sounds/miner/skill1.wav");
-            this.load.audio("p1skill2", "project_assets/sounds/miner/skill2.wav");
-            this.load.audio("p1skill3", "project_assets/sounds/miner/skill3.wav");
+            this.load.audio("p1jump", "project_assets/sounds/dwarf/jump.wav");
+            this.load.audio("p1player_death", "project_assets/sounds/dwarf/player_death.wav");
+            this.load.audio("p1attack", "project_assets/sounds/dwarf/attack.wav");
+            this.load.audio("p1grab", "project_assets/sounds/dwarf/grab.wav");
+            this.load.audio("p1block", "project_assets/sounds/dwarf/block.wav");
+            this.load.audio("p1skill1", "project_assets/sounds/dwarf/skill1.wav");
+            this.load.audio("p1skill2", "project_assets/sounds/dwarf/skill2.wav");
+            this.load.audio("p1skill3", "project_assets/sounds/dwarf/skill3.wav");
         }
     }
     //Load p2 sfx
@@ -761,15 +761,15 @@ export default class GameLevel extends Scene {
             this.load.audio("p2skill1", "project_assets/sounds/waterlady/skill1.wav");
             this.load.audio("p2skill2", "project_assets/sounds/waterlady/skill2.wav");
             this.load.audio("p2skill3", "project_assets/sounds/waterlady/skill3.wav");
-        } else { //miner
-            this.load.audio("p2jump", "project_assets/sounds/miner/jump.wav");
-            this.load.audio("p2player_death", "project_assets/sounds/miner/player_death.wav");
-            this.load.audio("p2attack", "project_assets/sounds/miner/attack.wav");
-            this.load.audio("p2grab", "project_assets/sounds/miner/grab.wav");
-            this.load.audio("p2block", "project_assets/sounds/miner/block.wav");
-            this.load.audio("p2skill1", "project_assets/sounds/miner/skill1.wav");
-            this.load.audio("p2skill2", "project_assets/sounds/miner/skill2.wav");
-            this.load.audio("p2skill3", "project_assets/sounds/miner/skill3.wav");
+        } else { //dwarf
+            this.load.audio("p2jump", "project_assets/sounds/dwarf/jump.wav");
+            this.load.audio("p2player_death", "project_assets/sounds/dwarf/player_death.wav");
+            this.load.audio("p2attack", "project_assets/sounds/dwarf/attack.wav");
+            this.load.audio("p2grab", "project_assets/sounds/dwarf/grab.wav");
+            this.load.audio("p2block", "project_assets/sounds/dwarf/block.wav");
+            this.load.audio("p2skill1", "project_assets/sounds/dwarf/skill1.wav");
+            this.load.audio("p2skill2", "project_assets/sounds/dwarf/skill2.wav");
+            this.load.audio("p2skill3", "project_assets/sounds/dwarf/skill3.wav");
         }
     }
 }

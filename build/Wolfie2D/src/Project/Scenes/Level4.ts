@@ -16,13 +16,13 @@ export default class Level4 extends GameLevel {
         this.loadp2Sound(this.initOptions.p2Skillset);
     }
 
+    
     unloadScene(){
         this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "level_music"});
         this.resourceManager.unloadAllResources();
     }
 
     startScene(): void {
-        this.nextLevel = Level5;
         this.add.tilemap("level", new Vec2(2, 2));//this is loaded in loadScene in gamelevel
         //TODO: Change viewport
         this.viewport.setBounds(0, 0, 21*32, 20*32); 

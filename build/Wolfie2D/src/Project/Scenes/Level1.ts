@@ -14,14 +14,14 @@ export default class Level1 extends GameLevel {
         this.loadp1Sound(this.initOptions.p1Skillset);
         this.loadp2Sound(this.initOptions.p2Skillset);
     }
-  
+
+    
     unloadScene(){
         this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "level_music"});
         this.resourceManager.unloadAllResources();
     }
 
     startScene(): void {
-        this.nextLevel = Level2;
         this.add.tilemap("level", new Vec2(2, 2));//this is loaded in loadScene in gamelevel
         //TODO: Change viewport
         this.viewport.setBounds(0, 0, 28*32, 20*32); 
