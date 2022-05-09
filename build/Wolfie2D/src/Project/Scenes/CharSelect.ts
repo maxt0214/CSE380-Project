@@ -96,6 +96,7 @@ export default class CharSelect extends Scene {
 
         // When the char1 button is clicked, handle changing char
         char1Btn.onClick = () => {
+            this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "splash_sound", loop: false, holdReference: false});
             if(this.p1 === "no char"){          //if p1 has not chosen a char, make them the char that this button assigns them to
                 this.p1 = "project_assets/spritesheets/fighter.json";
                 this.p1Skillset = "project_assets/skills/fighter.json";
@@ -118,6 +119,7 @@ export default class CharSelect extends Scene {
 
         // When the char2 button is clicked, handle changing char
         char2Btn.onClick = () => {
+            this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "splash_sound", loop: false, holdReference: false});
             if(this.p1 === "no char"){          //if p1 has not chosen a char, make them the char that this button assigns them to
                 this.p1 = "project_assets/spritesheets/waterlady.json";
                 this.p1Skillset = "project_assets/skills/waterlady.json";
@@ -140,6 +142,7 @@ export default class CharSelect extends Scene {
 
         // When the char3 button is clicked, handle changing char
         char3Btn.onClick = () => {
+            this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "splash_sound", loop: false, holdReference: false});
             if(this.p1 === "no char"){          //if p1 has not chosen a char, make them the char that this button assigns them to
                 this.p1 = "project_assets/spritesheets/dwarf.json";
                 this.p1Skillset = "project_assets/skills/dwarf.json";

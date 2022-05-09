@@ -19,6 +19,7 @@ export default class Level5 extends GameLevel {
     
     unloadScene(){
         this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "level_music"});
+        this.resourceManager.keepAudio("splash_sound");
         this.resourceManager.unloadAllResources();
     }
 
@@ -27,8 +28,8 @@ export default class Level5 extends GameLevel {
         //TODO: Change viewport
         this.viewport.setBounds(0, 0, 35*32, 20*32); 
 
-        this.player1Spawn = new Vec2(5*32, 14*32);
-        this.player2Spawn = new Vec2(12*32, 14*32);
+        this.player1Spawn = new Vec2(14*32, 14*32);
+        this.player2Spawn = new Vec2(20*32, 14*32);
 
         // Do generic setup for a GameLevel
         super.startScene();
