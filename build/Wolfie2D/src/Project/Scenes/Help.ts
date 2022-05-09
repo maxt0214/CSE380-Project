@@ -13,7 +13,11 @@ import CharProfiles from "./CharProfiles";
 export default class HelpScreen extends Scene {
     animatedSprite: AnimatedSprite;
     private bg: Sprite;
-
+    protected stageUnlocked: number;    // latest stage unlocked. starts at 1 and maxes at 6.
+    protected initOptions: Record<string, any>;
+    initScene(init: Record<string, any>): void {
+        this.initOptions = init;
+    }
     loadScene(): void {
         this.load.image("help", "project_assets/backgrounds/Helpbig.png");
     }
@@ -21,6 +25,7 @@ export default class HelpScreen extends Scene {
     startScene(): void {
         this.addUILayer("Main");
         this.addLayer("background", 0);
+        this.stageUnlocked = this.initOptions.stageUnlocked;
 
 
         this.bg = this.add.sprite("help", "background");
@@ -43,7 +48,7 @@ export default class HelpScreen extends Scene {
 
         // When the charp button is clicked, go to the next scene
         charpBtn.onClick = () => {
-            this.sceneManager.changeToScene(CharProfiles, {}, {});
+            this.sceneManager.changeToScene(CharProfiles, {stageUnlocked: this.stageUnlocked}, {});
         }
 
         // Create a back button
@@ -57,7 +62,7 @@ export default class HelpScreen extends Scene {
 
         // When the back button is clicked, go to the next scene
         back1Btn.onClick = () => {
-            this.sceneManager.changeToScene(HomeScreen, {}, {});
+            this.sceneManager.changeToScene(HomeScreen, {stageUnlocked: this.stageUnlocked}, {});
         }
 
         

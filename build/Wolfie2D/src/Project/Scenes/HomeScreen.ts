@@ -16,7 +16,11 @@ export default class HomeScreen extends Scene {
     animatedSprite: AnimatedSprite;
     private bg: Sprite;
     public static startTime: number = 0;
-
+    protected stageUnlocked: number;    // latest stage unlocked. starts at 1 and maxes at 6.
+    protected initOptions: Record<string, any>;
+    initScene(init: Record<string, any>): void {
+        this.initOptions = init;
+    }
     loadScene(): void {
         this.load.image("home", "project_assets/backgrounds/HomeMenubig.png");
         this.load.audio("menu_music", "project_assets/music/menu.mp3");
@@ -30,6 +34,8 @@ export default class HomeScreen extends Scene {
         this.bg = this.add.sprite("home", "background");
         this.bg.scale.set(1, 1);
 		this.bg.position.copy(this.viewport.getCenter());
+
+        this.stageUnlocked = this.initOptions.stageUnlocked;
 
         // Center the viewport
         let size = this.viewport.getHalfSize();
@@ -47,7 +53,7 @@ export default class HomeScreen extends Scene {
 
         //button click
         helpBtn.onClick = () => {
-            this.sceneManager.changeToScene(HelpScreen, {}, {});
+            this.sceneManager.changeToScene(HelpScreen, {stageUnlocked: this.stageUnlocked}, {});
         }
 
         // Create a tutorial button
@@ -61,7 +67,7 @@ export default class HomeScreen extends Scene {
 
         //button click
         tutorialBtn.onClick = () => {
-            this.sceneManager.changeToScene(Tutorial, {}, {});
+            this.sceneManager.changeToScene(Tutorial, {stageUnlocked: this.stageUnlocked}, {});
         }
 
         // Create a controls button
@@ -75,7 +81,7 @@ export default class HomeScreen extends Scene {
 
         //button click
         controlsBtn.onClick = () => {
-            this.sceneManager.changeToScene(Controls, {}, {});
+            this.sceneManager.changeToScene(Controls, {stageUnlocked: this.stageUnlocked}, {});
         }
 
         // Create a modes button
@@ -91,7 +97,7 @@ export default class HomeScreen extends Scene {
         modesBtn.onClick = () => {
             console.log("Hello.............................");
             //this.sceneManager.changeToScene(GameModes, {}, {});
-            this.sceneManager.changeToScene(TempModes, {}, {});
+            this.sceneManager.changeToScene(TempModes, {stageUnlocked: this.stageUnlocked}, {});
         }
 
         HomeScreen.startTime++;

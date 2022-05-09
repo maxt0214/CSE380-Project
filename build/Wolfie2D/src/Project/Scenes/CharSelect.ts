@@ -19,6 +19,7 @@ export default class CharSelect extends Scene {
     protected p1Skillset: String;
     protected p2: String = "no char";
     protected p2Skillset: String;
+    protected stageUnlocked: number;    // latest stage unlocked. starts at 1 and maxes at 6.
 
     initScene(init: Record<string, any>): void {
         this.initOptions = init;
@@ -31,7 +32,8 @@ export default class CharSelect extends Scene {
     startScene(): void {
         this.addUILayer("Main");
         this.addLayer("background", 0);
-
+        this.stageUnlocked = this.initOptions.stageUnlocked;
+        
         this.isAI = this.initOptions.isP2AI
 
         this.bg = this.add.sprite("charsel", "background");
@@ -55,7 +57,7 @@ export default class CharSelect extends Scene {
         // When the back button is clicked, go to the next scene
         backBtn.onClick = () => {
             //this.sceneManager.changeToScene(GameModes, {}, {});
-            this.sceneManager.changeToScene(HomeScreen, {}, {});
+            this.sceneManager.changeToScene(HomeScreen, {stageUnlocked: this.stageUnlocked}, {});
 
         }
 
@@ -76,7 +78,8 @@ export default class CharSelect extends Scene {
                 p1: this.p1,
                 p1Skillset: this.p1Skillset,
                 p2: this.p2,
-                p2Skillset: this.p2Skillset
+                p2Skillset: this.p2Skillset,
+                stageUnlocked: this.stageUnlocked
                 }, {});
         }
         
