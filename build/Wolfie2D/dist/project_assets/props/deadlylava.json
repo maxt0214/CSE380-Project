@@ -1,0 +1,13 @@
+{
+    "def": {
+        "dmg": -10,
+        "range": {
+            "x": 20,
+            "y": 20
+        },
+        "speed": 50,
+        "maxspeed": 100,
+        "incspeed": 5,
+        "buff": "HURT"
+    }
+}
