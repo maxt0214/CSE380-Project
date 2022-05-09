@@ -172,7 +172,6 @@ export default class PlayerController extends StateMachineAI {
         // If we jump or fall, push the state so we can go back to our current state later
         // unless we're going from jump to fall or something
         if((stateName === PlayerStates.JUMP || stateName === PlayerStates.FALL) && !(this.stack.peek() instanceof InAir)){
-            console.log(`Stroing ${stateName} before FALL`);
             this.stack.push(this.stateMap.get(stateName));
         }
         super.changeState(stateName);
@@ -216,7 +215,6 @@ export default class PlayerController extends StateMachineAI {
         let xDis = Math.abs(this.owner.position.x - center.x);
         let yDis = Math.abs(this.owner.position.y - center.y);
         this.attDir = dir;
-        console.log(`Opponent attemps to attack [${center}][${range}]. Currently at [${this.owner.position}] Distance:[${xDis},${yDis}]`);
         if(xDis <= range.x && yDis <= range.y) {
             return true;
         }

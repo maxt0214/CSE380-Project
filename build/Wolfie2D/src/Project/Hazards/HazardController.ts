@@ -13,8 +13,8 @@ export default class HazardController {
     beach_harzards: Vec2[] = [new Vec2(96, 288), new Vec2(288, 288), new Vec2(448, 320), new Vec2(640, 288), new Vec2(832, 320), new Vec2(1024, 288)];
     undersea_hazards: Vec2[] = [new Vec2(0, 448), new Vec2(1088, 448)];
     city_hazard: Vec2 = new Vec2(640, 512);
-    lava_hazards: Vec2[] = [new Vec2(96, 0), new Vec2(160, 0), new Vec2(224, 0), new Vec2(288, 0), new Vec2(352, 0), new Vec2(416, 0), new Vec2(480, 0), new Vec2(544, 0)];
-    mountain_hazards: Vec2[] = [new Vec2(96, 0), new Vec2(160, 0), new Vec2(224, 0), new Vec2(288, 0), new Vec2(352, 0), new Vec2(416, 0), new Vec2(480, 0), new Vec2(544, 0)];
+    lava_hazards: Vec2[] = [new Vec2(96, 224), new Vec2(160, 224), new Vec2(224, 224), new Vec2(288, 224), new Vec2(352, 224), new Vec2(416, 224), new Vec2(480, 224), new Vec2(544, 224)];
+    mountain_hazards: Vec2[] = [new Vec2(96, 224), new Vec2(160, 224), new Vec2(224, 224), new Vec2(288, 224), new Vec2(352, 224), new Vec2(416, 224), new Vec2(480, 224), new Vec2(544, 224)];
 
     constructor(stage: string) {
         if(stage.includes("beach"))
@@ -23,9 +23,9 @@ export default class HazardController {
             this.level = "city";
         else if(stage.includes("undersea"))
             this.level = "undersea";
-        else if(stage.includes("Mountain"))//TODO: change stage name
+        else if(stage.includes("Mountain"))
             this.level = "mountain";
-        else if(stage.includes("volcano"))//TODO: change stage name
+        else if(stage.includes("volcano"))
             this.level = "lava";
         this.emitter = new Emitter();
     }
@@ -33,7 +33,6 @@ export default class HazardController {
     update(deltaT: number): void {
         this.timer -= deltaT;
         if(this.timer > 0) return;
-
         switch(this.level) {
             case "beach":
                 this.update_beach();
@@ -103,7 +102,7 @@ export default class HazardController {
             dir: new Vec2(0,1),
             projectile: "rock"
         });
-        this.timer = RandUtils.randInt(1, 6);
+        this.timer = RandUtils.randInt(1, 2);
     }
 
     update_lava() {

@@ -650,7 +650,6 @@ export default class GameLevel extends Scene {
     }
 
     protected respawnProp(i: number, options: Record<string,any>, visible: boolean) {
-        console.log(`Firing Projectile ${JSON.stringify(options)}`);
         this.props[i] = this.add.animatedSprite(options.get("projectile")+"_sp","primary");
 
         let prop = this.props[i];
