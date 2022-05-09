@@ -17,6 +17,10 @@ export default class EndLevel extends Scene {
     descrips: string[];
 
     descripLabel: Label;
+
+    protected initOptions: Record<string, any>;
+    protected stageUnlocked: number;    // latest stage unlocked. starts at 1 and maxes at 6.
+
     initScene(init: Record<string, any>): void {
         this.initOptions = init;
     }
@@ -40,7 +44,7 @@ export default class EndLevel extends Scene {
         let size = this.viewport.getHalfSize();
         this.viewport.setZoomLevel(1);
         //Wining text
-	this.stageUnlocked = this.initOptions.stageUnlocked;
+	    this.stageUnlocked = this.initOptions.stageUnlocked;
         this.descripLabel = <Label>this.add.uiElement(UIElementType.LABEL, "UI", {position: new Vec2(size.x, size.y), text: ""});
         this.descripLabel.size.set(600, 60);
         this.descripLabel.borderRadius = 0;

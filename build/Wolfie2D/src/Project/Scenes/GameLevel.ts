@@ -721,7 +721,7 @@ export default class GameLevel extends Scene {
             let propAI = prop.ai as Prop;
             console.log('proj type:' + propAI.type)
 
-            if(this.player1.collisionShape.overlaps(prop.collisionShape) && p1.party != propAI.party && !(this.p1action === "blocking") && propAI.type === "s") { // s hits p1 when not blocking
+            if(this.player1.collisionShape.overlaps(prop.collisionShape) && p1.party != propAI.party && propAI.type === "s") { // s hits p1 when not blocking
                 if(!(this.p1action === "blocking")){
                     if(p1.hitWithProp(propAI.buff,propAI.dir.x)) {
                         this.incPlayerLife(p1.party,propAI.dmg);
