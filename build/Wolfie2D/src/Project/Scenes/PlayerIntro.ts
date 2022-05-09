@@ -16,8 +16,9 @@ export default class EndLevel extends Scene {
     descrips: string[];
 
     descripLabel: Label;
-    initOptions: Record<string, any>;
-    stageUnlocked: any;
+
+    protected initOptions: Record<string, any>;
+    protected stageUnlocked: number;    // latest stage unlocked. starts at 1 and maxes at 6.
     initScene(init: Record<string, any>): void {
         this.initOptions = init;
     }

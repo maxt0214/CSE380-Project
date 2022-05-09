@@ -349,19 +349,7 @@ export default class StageSelect extends Scene {
         }
 
         
-        // Create a cont button
-        let contBtn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x, size.y + 180), text: "Unlock All Levels"});
-        contBtn.backgroundColor = Color.TRANSPARENT;
-        contBtn.borderColor = Color.TRANSPARENT;
-        contBtn.textColor = Color.WHITE;
-        contBtn.borderRadius = 0;
-        contBtn.setPadding(new Vec2(80, 30));
-        contBtn.font = "PixelSimple";
-
-        // When the cont button is clicked, go to the next scene
-        contBtn.onClick = () => {
-            this.stageUnlocked = 6;
-        }
+        
     }
 
     unloadScene(): void {

@@ -17,7 +17,7 @@ export default class CharProfiles extends Scene {
         this.initOptions = init;
     }
     loadScene(): void {
-        this.load.image("charp", "project_assets/backgrounds/CharacterProfilesbig.png");
+        this.load.image("charp", "project_assets/backgrounds/credits.png");
     }
 
     startScene(): void {
@@ -48,6 +48,7 @@ export default class CharProfiles extends Scene {
         backBtn.onClick = () => {
             this.sceneManager.changeToScene(Help, {stageUnlocked: this.stageUnlocked}, {});
         }
+        
     }
 
     unloadScene(): void {

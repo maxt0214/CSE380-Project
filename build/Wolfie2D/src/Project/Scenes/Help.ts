@@ -19,7 +19,7 @@ export default class HelpScreen extends Scene {
         this.initOptions = init;
     }
     loadScene(): void {
-        this.load.image("help", "project_assets/backgrounds/Helpbig.png");
+        this.load.image("help", "project_assets/backgrounds/Help.png");
     }
 
     startScene(): void {
@@ -65,6 +65,19 @@ export default class HelpScreen extends Scene {
             this.sceneManager.changeToScene(HomeScreen, {stageUnlocked: this.stageUnlocked}, {});
         }
 
+        // Create a cheat button
+        let cheatBtn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x - 220, size.y + 150), text: "Unlock"});
+        cheatBtn.backgroundColor = Color.TRANSPARENT;
+        cheatBtn.borderColor = Color.TRANSPARENT;
+        cheatBtn.textColor = Color.TRANSPARENT;
+        cheatBtn.borderRadius = 0;
+        cheatBtn.setPadding(new Vec2(80, 30));
+        cheatBtn.font = "PixelSimple";
+
+        // When the cheat button is clicked, go to the next scene
+        cheatBtn.onClick = () => {
+            this.stageUnlocked = 6;
+        }
         
     }
 
