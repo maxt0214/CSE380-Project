@@ -118,6 +118,7 @@ export default class GameLevel extends Scene {
         this.load.spritesheet("rock_sp", "project_assets/spritesheets/rock.json");
         this.load.spritesheet("lavadrop_sp", "project_assets/spritesheets/lavadrop.json");
         this.load.spritesheet("deadlylava_sp", "project_assets/spritesheets/lavadrop.json");
+        this.load.spritesheet("crystal_sp", "project_assets/spritesheets/crystal.json")
         
         this.load.object("fireball","project_assets/props/fireball.json");
         this.load.object("bubble","project_assets/props/bubble.json");
@@ -127,6 +128,7 @@ export default class GameLevel extends Scene {
         this.load.object("rock","project_assets/props/rock.json");
         this.load.object("lavadrop","project_assets/props/lavadrop.json");
         this.load.object("deadlylava","project_assets/props/deadlylava.json");
+        this.load.object("crystal","project_assets/props/crystal.json")
         
         this.isAI = this.initOptions.isP2AI;
 
