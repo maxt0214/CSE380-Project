@@ -113,6 +113,7 @@ export default class GameLevel extends Scene {
         //load props
         this.load.spritesheet("fireball_sp", "project_assets/spritesheets/projectile.json");
         this.load.spritesheet("bubble_sp", "project_assets/spritesheets/bubble.json");
+        this.load.spritesheet("crystal_sp", "project_assets/spritesheets/crystal.json");
         this.load.spritesheet("coconut_sp", "project_assets/spritesheets/coconut.json");
         this.load.spritesheet("swirl_sp", "project_assets/spritesheets/swirl.json");
         this.load.spritesheet("car_sp", "project_assets/spritesheets/car.json");
@@ -122,6 +123,7 @@ export default class GameLevel extends Scene {
         
         this.load.object("fireball","project_assets/props/fireball.json");
         this.load.object("bubble","project_assets/props/bubble.json");
+        this.load.object("crystal","project_assets/props/crystal.json");
         this.load.object("coconut","project_assets/props/coconut.json");
         this.load.object("swirl","project_assets/props/swirl.json");
         this.load.object("car","project_assets/props/car.json");
