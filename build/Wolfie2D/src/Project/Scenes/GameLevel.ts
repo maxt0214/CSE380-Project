@@ -352,9 +352,9 @@ export default class GameLevel extends Scene {
             
                 }
                 if(this.p2dmgInfo.get("type") === "r" && !(this.p2dmgInfo.get("name") === "BLOCK") && !(this.p1action === "grabbing")){ // p2 rock move that is not a block, p1 is not grabbing, p1 takes dmg
-                    this.incPlayerLife(Project_Color.BLUE,this.p1dmgInfo.get("dmg"));
+                    this.incPlayerLife(Project_Color.BLUE,this.p2dmgInfo.get("dmg"));
                     this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "hit", loop: false, holdReference: false});
-                    p2.changeState(this.p1dmgInfo.get("state"));
+                    p1.changeState(this.p1dmgInfo.get("state"));
                 }
             }
         }
@@ -708,17 +708,56 @@ export default class GameLevel extends Scene {
             if(!prop.visible) continue;
 
             let propAI = prop.ai as Prop;
-            if(this.player1.collisionShape.overlaps(prop.collisionShape) && p1.party != propAI.party && !(this.p1action === "blocking")) { // this assumes projectile type is s, change later
-                if(p1.hitWithProp(propAI.buff,propAI.dir.x)) {
-                    this.incPlayerLife(p1.party,propAI.dmg);
-                    prop.visible = false;
+            console.log('proj type:' + propAI.type)
+
+            if(this.player1.collisionShape.overlaps(prop.collisionShape) && p1.party != propAI.party && !(this.p1action === "blocking") && propAI.type === "s") { // s hits p1 when not blocking
+                if(!(this.p1action === "blocking")){
+                    if(p1.hitWithProp(propAI.buff,propAI.dir.x)) {
+                        this.incPlayerLife(p1.party,propAI.dmg);
+                    }
                 }
+                prop.visible = false;
             }
-            if(this.player2.collisionShape.overlaps(prop.collisionShape) && p2.party != propAI.party && !(this.p2action === "blocking")) {
-                if(p2.hitWithProp(propAI.buff,propAI.dir.x)) {
-                    this.incPlayerLife(p2.party,propAI.dmg);
-                    prop.visible = false;
+            if(this.player1.collisionShape.overlaps(prop.collisionShape) && p1.party != propAI.party && propAI.type === "r") { // r hits p1 when not grabbing
+                if(!(this.p1action === "grabbing")){
+                    if(p1.hitWithProp(propAI.buff,propAI.dir.x)) {
+                        this.incPlayerLife(p1.party,propAI.dmg);
+                    }
                 }
+                prop.visible = false;
+            }
+            if(this.player1.collisionShape.overlaps(prop.collisionShape) && p1.party != propAI.party && propAI.type === "p") { // p hits p1 when not attking
+                if(!(this.p1action === "attacking")){
+                    if(p1.hitWithProp(propAI.buff,propAI.dir.x)) {
+                        this.incPlayerLife(p1.party,propAI.dmg);
+                    }
+                }
+                prop.visible = false;
+            }
+
+            if(this.player2.collisionShape.overlaps(prop.collisionShape) && p2.party != propAI.party  && propAI.type === "s") {
+                if(!(this.p2action === "blocking")){
+                    if(p2.hitWithProp(propAI.buff,propAI.dir.x)) {
+                        this.incPlayerLife(p2.party,propAI.dmg);
+                    }
+                }
+                prop.visible = false;
+            }
+            if(this.player2.collisionShape.overlaps(prop.collisionShape) && p2.party != propAI.party && propAI.type === "r") {
+                if(!(this.p2action === "grabbing")){
+                    if(p2.hitWithProp(propAI.buff,propAI.dir.x)) {
+                        this.incPlayerLife(p2.party,propAI.dmg);
+                    }
+                }
+                prop.visible = false;
+            }
+            if(this.player2.collisionShape.overlaps(prop.collisionShape) && p2.party != propAI.party && propAI.type === "p") {
+                if(!(this.p2action === "attacking")){
+                    if(p2.hitWithProp(propAI.buff,propAI.dir.x)) {
+                        this.incPlayerLife(p2.party,propAI.dmg);
+                    }
+                }
+                prop.visible = false;
             }
 
             this.handleScreenDespawn(prop,viewPort);

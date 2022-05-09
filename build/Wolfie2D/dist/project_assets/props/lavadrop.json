@@ -8,6 +8,7 @@
         "speed": 100,
         "maxspeed": 200,
         "incspeed": 20,
-        "buff": "HURT"
+        "buff": "HURT",
+        "type": "s"
     }
 }
