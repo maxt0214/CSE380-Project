@@ -617,15 +617,6 @@ export default class GameLevel extends Scene {
             return;
         }
 
-        //TODO: show player winning UI
-        if(GameLevel.hp1 <= 0) {
-            
-        } else if(GameLevel.hp2 <= 0) {
-
-        } else {
-
-        }
-
         //reset player stat
         GameLevel.hp1 = 10;
         GameLevel.hp2 = 10;
@@ -648,7 +639,6 @@ export default class GameLevel extends Scene {
     //handl collision between props and players
     protected handleProps() {
         let viewPort = this.viewport.getCenter().clone();
-        let viewPortSize = this.viewport.getHalfSize().scaled(2);
 
         let p1 = this.player1._ai as PlayerController;
         let p2 = this.player2._ai as PlayerController;
@@ -670,7 +660,7 @@ export default class GameLevel extends Scene {
                 }
             }
 
-            this.handleScreenDespawn(prop,viewPort,viewPortSize);
+            this.handleScreenDespawn(prop,viewPort);
         }
     }
 
@@ -712,9 +702,9 @@ export default class GameLevel extends Scene {
         prop.visible = visible;
     }
     
-    protected handleScreenDespawn(node: AnimatedSprite, viewportCenter: Vec2, paddedViewportSize: Vec2): void {
-		// Your code goes here:
-		if(node.position.y > viewportCenter.y + paddedViewportSize.y/2 || node.position.y < viewportCenter.y - paddedViewportSize.y/2) {
+    protected handleScreenDespawn(node: AnimatedSprite, viewportCenter: Vec2): void {
+		if(node.position.y > viewportCenter.y + 640 || node.position.y < viewportCenter.y - 320 || node.position.x > viewportCenter.x + 480 || node.position.x < viewportCenter.x - 480) {
+            console.log(`Prop Despawned at ${JSON.stringify(node.position)}`);
             node.position = new Vec2(0,0);
             node.visible = false;
             node.isCollidable = false;

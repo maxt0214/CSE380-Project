@@ -36,7 +36,7 @@ export default class EndLevel extends GameLevel {
         levelEndLabel.font = "PixelSimple";
 
         // Create a back button
-        let backBtn = <Button>this.add.uiElement(UIElementType.BUTTON, "UI", {position: new Vec2(size.x + 320, size.y - 320), text: "Back"});
+        let backBtn = <Button>this.add.uiElement(UIElementType.BUTTON, "UI", {position: new Vec2(size.x + 360, size.y - 320), text: "Back"});
         backBtn.backgroundColor = Color.TRANSPARENT;
         backBtn.borderColor = Color.WHITE;
         backBtn.textColor = Color.WHITE;
