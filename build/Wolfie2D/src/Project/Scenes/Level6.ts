@@ -3,6 +3,7 @@ import Debug from "../../Wolfie2D/Debug/Debug";
 import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 import { Project_Color } from "../project_color";
 import GameLevel from "./GameLevel";
+import HomeScreen from "./HomeScreen";
 
 export default class Level6 extends GameLevel {
 
@@ -72,7 +73,9 @@ export default class Level6 extends GameLevel {
 
         // Do generic setup for a GameLevel
         super.startScene();
-        
+
+        this.level_is_last = true;
+
         this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "level_music", loop: true, holdReference: true});
     }
 

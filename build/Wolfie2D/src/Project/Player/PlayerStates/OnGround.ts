@@ -6,6 +6,8 @@ import { Project_Color } from "../../project_color";
 import PlayerState from "./PlayerState";
 
 export default class OnGround extends PlayerState {
+	protected inv: boolean = false;
+	
 	onEnter(options: Record<string, any>): void {}
 
 	update(deltaT: number): void {
@@ -24,9 +26,9 @@ export default class OnGround extends PlayerState {
 			if(Input.isJustPressed("jump1")) {
 				this.finished("jump");
 				this.parent.velocity.y = -500;
-				if(this.parent.velocity.x !== 0){
-					this.owner.tweens.play("flip");
-				}
+				//if(this.parent.velocity.x !== 0){
+				//	this.owner.tweens.play("flip");
+				//}
 			} else if(!this.owner.onGround){
 				this.finished("fall");
 			} else if(Input.isJustPressed("attack1")){
@@ -46,9 +48,9 @@ export default class OnGround extends PlayerState {
 			if(Input.isJustPressed("jump2")) {
 				this.finished("jump");
 				this.parent.velocity.y = -500;
-				if(this.parent.velocity.x !== 0){
-					this.owner.tweens.play("flip");
-				}
+				//if(this.parent.velocity.x !== 0){
+				//	this.owner.tweens.play("flip");
+				//}
 			} else if(!this.owner.onGround){
 				this.finished("fall");
 			} else if(Input.isJustPressed("attack2")){
@@ -67,8 +69,15 @@ export default class OnGround extends PlayerState {
 		}
 
         if(Input.isJustPressed("cheap_invincible")) {
-            this.parent.invincible = true;
-            this.parent.protectTimer = Number.MAX_VALUE;
+			this.inv = !this.inv	//swap invincibility state
+			console.log('player invincibility state swapped')
+			if(this.inv){
+				this.parent.invincible = true;
+				this.parent.protectTimer = Number.MAX_VALUE;
+			} else{
+				this.parent.invincible = false;
+				this.parent.protectTimer = 0;
+			}
         }
 	}
 
