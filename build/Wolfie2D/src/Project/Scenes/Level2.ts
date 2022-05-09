@@ -27,8 +27,8 @@ export default class Level2 extends GameLevel {
         //TODO: Change viewport
         this.viewport.setBounds(0, 0, 35*32, 20*32); 
 
-        this.player1Spawn = new Vec2(5*32, 14*32);
-        this.player2Spawn = new Vec2(12*32, 14*32);
+        this.player1Spawn = new Vec2(15*32, 14*32);
+        this.player2Spawn = new Vec2(22*32, 14*32);
 
         // Do generic setup for a GameLevel
         super.startScene();
