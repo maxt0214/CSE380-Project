@@ -52,7 +52,7 @@
         "timer": 1,
         "startup": 0.3,
         "projectile": "bubble",
-        "type": "s",
+        "type": "p",
         "priority": 10
     },
     "skill2": {

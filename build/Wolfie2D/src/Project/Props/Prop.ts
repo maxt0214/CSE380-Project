@@ -30,6 +30,7 @@ export default class Prop implements AI {
     protected incSpd: number;
     protected storedSpeed: number;
     protected paused: boolean = false;
+    type: String;
 
     dmg: number;
     buff: string;
@@ -49,6 +50,8 @@ export default class Prop implements AI {
         this.dmg = options.propInfo.dmg;
         this.speed = options.propInfo.speed;
         this.buff = options.propInfo.buff;
+
+        this.type = options.propInfo.type;
 
         this.owner.animation.play("IDLE",true);
         console.log(`Spawning Prop: ${this.name} at ${this.owner.position} Party[${this.party}] buff[${this.buff}] spd[${this.speed}]`);
