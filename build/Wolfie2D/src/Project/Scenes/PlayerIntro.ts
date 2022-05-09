@@ -17,7 +17,9 @@ export default class EndLevel extends Scene {
     descrips: string[];
 
     descripLabel: Label;
-    
+    initScene(init: Record<string, any>): void {
+        this.initOptions = init;
+    }
     loadScene(): void {
         this.load.image("fighter_bg", "project_assets/intro_scenecut/fighter.png");
         this.load.image("waterlady_bg", "project_assets/intro_scenecut/waterlady.png");
@@ -38,6 +40,7 @@ export default class EndLevel extends Scene {
         let size = this.viewport.getHalfSize();
         this.viewport.setZoomLevel(1);
         //Wining text
+	this.stageUnlocked = this.initOptions.stageUnlocked;
         this.descripLabel = <Label>this.add.uiElement(UIElementType.LABEL, "UI", {position: new Vec2(size.x, size.y), text: ""});
         this.descripLabel.size.set(600, 60);
         this.descripLabel.borderRadius = 0;
@@ -68,7 +71,7 @@ export default class EndLevel extends Scene {
     
         // When the skip button is clicked, to homescene
         backBtn.onClick = () => {
-            this.sceneManager.changeToScene(HomeScreen, {}, {});
+            this.sceneManager.changeToScene(HomeScreen, {stageUnlocked: this.stageUnlocked}, {});
         }
         this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "menu_music", loop: true, holdReference: true});
     }
