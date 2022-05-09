@@ -71,7 +71,7 @@
     },
     "skill3": {
         "name": "SKILL3",
-        "dmg": -1,
+        "dmg": -2,
         "range": {
             "x": 55,
             "y": 25
