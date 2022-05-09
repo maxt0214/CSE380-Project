@@ -6,7 +6,7 @@ import Label from "../../Wolfie2D/Nodes/UIElements/Label";
 import { UIElementType } from "../../Wolfie2D/Nodes/UIElements/UIElementTypes";
 import Color from "../../Wolfie2D/Utils/Color";
 import GameLevel from "./GameLevel";
-import HomeScreen from "./HomeScreen";
+import SplashScreen from "./SplashScreen";
 
 enum LevelName {
     MEADOW = "meadow",
@@ -35,6 +35,7 @@ export default class EndLevel extends GameLevel {
 
     unloadScene(){
         this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "level_music"});
+        this.resourceManager.keepAudio("splash_sound");
         this.resourceManager.unloadAllResources();
     }
 
@@ -76,7 +77,7 @@ export default class EndLevel extends GameLevel {
     
         // When the skip button is clicked, back to home screen
         backBtn.onClick = () => {
-            this.sceneManager.changeToScene(HomeScreen, {}, {});
+            this.sceneManager.changeToScene(SplashScreen, {}, {});
         }
 
         this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "level_music", loop: true, holdReference: true});

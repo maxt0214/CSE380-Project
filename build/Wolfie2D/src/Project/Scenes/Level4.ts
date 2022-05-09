@@ -19,6 +19,7 @@ export default class Level4 extends GameLevel {
     
     unloadScene(){
         this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "level_music"});
+        this.resourceManager.keepAudio("splash_sound");
         this.resourceManager.unloadAllResources();
     }
 
