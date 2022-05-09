@@ -5,3 +5,5 @@ Our design doc is located at: https://spar-scissors-paper-and-rock.firebaseapp.c
 Our benchmark2 is located at: https://spar-scissors-paper-and-rock.web.app/benchmark2/index.html
 
 Our benchmark3 is located at: https://spar-scissors-paper-and-rock.web.app/benchmark3/index.html
+
+Our benchmark4 is located at: https://spar-scissors-paper-and-rock.web.app/benchmark4/index.html
