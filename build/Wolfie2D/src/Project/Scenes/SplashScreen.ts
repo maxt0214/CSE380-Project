@@ -15,6 +15,7 @@ export default class SplashScreen extends Scene {
 
     loadScene(): void {
         this.load.image("splash", "project_assets/backgrounds/SplashScreenbig.png");
+        this.load.audio("splash_sound", "project_assets/music/splashclick.wav");
     }
 
     startScene(): void {
