@@ -83,11 +83,12 @@ export default class CharSelect extends Scene {
 
 
         // Create a char1 button
-        let char1Btn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x - 250, size.y - 150), text: "Fighter"});
+        let char1Btn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x - 120, size.y - 180), text: "Fighter"});
         char1Btn.backgroundColor = Color.TRANSPARENT;
-        char1Btn.borderColor = Color.WHITE;
+        char1Btn.borderColor = Color.TRANSPARENT;
+        char1Btn.textColor = Color.BLACK
         char1Btn.borderRadius = 0;
-        char1Btn.setPadding(new Vec2(80, 30));
+        char1Btn.setPadding(new Vec2(5, 10));
         char1Btn.font = "PixelSimple";
 
         // When the char1 button is clicked, handle changing char
@@ -104,11 +105,12 @@ export default class CharSelect extends Scene {
         }
 
         // Create a char2 button
-        let char2Btn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x, size.y - 150), text: "Water lady"});
+        let char2Btn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x, size.y - 180), text: "Water lady"});
         char2Btn.backgroundColor = Color.TRANSPARENT;
-        char2Btn.borderColor = Color.WHITE;
+        char2Btn.borderColor = Color.TRANSPARENT;
+        char2Btn.textColor = Color.BLUE;
         char2Btn.borderRadius = 0;
-        char2Btn.setPadding(new Vec2(80, 30));
+        char2Btn.setPadding(new Vec2(0, 10));
         char2Btn.font = "PixelSimple";
 
         // When the char2 button is clicked, handle changing char
@@ -125,11 +127,12 @@ export default class CharSelect extends Scene {
         }
 
         // Create a char3 button
-        let char3Btn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x + 250 , size.y - 150), text: "Dwarf"});
+        let char3Btn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x + 120 , size.y - 180), text: "Dwarf"});
         char3Btn.backgroundColor = Color.TRANSPARENT;
-        char3Btn.borderColor = Color.WHITE;
+        char3Btn.borderColor = Color.TRANSPARENT;
+        char3Btn.textColor = Color.YELLOW;
         char3Btn.borderRadius = 0;
-        char3Btn.setPadding(new Vec2(80, 30));
+        char3Btn.setPadding(new Vec2(10, 10));
         char3Btn.font = "PixelSimple";
 
         // When the char3 button is clicked, handle changing char

@@ -101,7 +101,7 @@ export default class EndLevel extends GameLevel {
 
     addscenecut(scene: LevelName) {
         var bg = this.add.sprite(scene, "background");
-        bg.scale.set(4, 3);
+        bg.scale.set(3.75, 2.5);
 		bg.position.copy(this.viewport.getCenter());
         bg.visible = false;
         this.scenecuts.push(bg);
