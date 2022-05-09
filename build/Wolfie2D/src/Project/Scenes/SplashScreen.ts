@@ -20,13 +20,12 @@ export default class SplashScreen extends Scene {
     }
     loadScene(): void {
         this.load.image("splash", "project_assets/backgrounds/SplashScreenbig.png");
-        this.load.audio("splash_sound", "project_assets/music/splashclick.wav");
+        this.load.audio("splash_sound", "project_assets/sounds/splashclick.wav");
     }
 
     startScene(): void {
         this.addUILayer("Main");
         this.addLayer("background", 0);
-        this.stageUnlocked =1;
 
         this.bg = this.add.sprite("splash", "background");
         this.bg.scale.set(1, 1);
