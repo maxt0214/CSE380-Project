@@ -39,7 +39,7 @@ export default class EndLevel extends GameLevel {
         this.resourceManager.unloadAllResources();
     }
 
-    startScene(): void {
+    startScene(): void { 
         this.addUILayer("UI");
         this.addLayer("background", 0);
         this.viewport.follow(null);
@@ -77,7 +77,7 @@ export default class EndLevel extends GameLevel {
     
         // When the skip button is clicked, back to home screen
         backBtn.onClick = () => {
-            this.sceneManager.changeToScene(SplashScreen, {}, {});
+            this.sceneManager.changeToScene(HomeScreen, {stageUnlocked: this.stageUnlocked}, {});
         }
 
         this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "level_music", loop: true, holdReference: true});

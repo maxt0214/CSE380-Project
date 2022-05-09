@@ -12,7 +12,11 @@ import CharSelect from "./CharSelect";
 export default class TempModes extends Scene {
     animatedSprite: AnimatedSprite;
     private bg: Sprite;
-
+    protected stageUnlocked: number;    // latest stage unlocked. starts at 1 and maxes at 6.
+    protected initOptions: Record<string, any>;
+    initScene(init: Record<string, any>): void {
+        this.initOptions = init;
+    }
     loadScene(): void {
         this.load.image("tmodes", "project_assets/backgrounds/TempMenu.png");
     }
@@ -20,6 +24,7 @@ export default class TempModes extends Scene {
     startScene(): void {
         this.addUILayer("Main");
         this.addLayer("background", 0);
+        this.stageUnlocked = this.initOptions.stageUnlocked;
 
 
         this.bg = this.add.sprite("tmodes", "background");
@@ -42,7 +47,7 @@ export default class TempModes extends Scene {
 
         // When the back button is clicked, go to the next scene
         backBtn.onClick = () => {
-            this.sceneManager.changeToScene(HomeScreen, {}, {});
+            this.sceneManager.changeToScene(HomeScreen, {stageUnlocked: this.stageUnlocked}, {});
         }
 
         // Create a vs ai button
@@ -56,7 +61,7 @@ export default class TempModes extends Scene {
 
         //button click
         aiBtn.onClick = () => {
-            this.sceneManager.changeToScene(CharSelect, {isP2AI: true}, {});
+            this.sceneManager.changeToScene(CharSelect, {isP2AI: true, stageUnlocked: this.stageUnlocked}, {});
         }
 
         // Create a vs pvp button
@@ -70,7 +75,7 @@ export default class TempModes extends Scene {
 
         //button click
         pvpBtn.onClick = () => {
-            this.sceneManager.changeToScene(CharSelect, {isP2AI: false }, {});
+            this.sceneManager.changeToScene(CharSelect, {isP2AI: false, stageUnlocked: this.stageUnlocked }, {});
         }
     }
 

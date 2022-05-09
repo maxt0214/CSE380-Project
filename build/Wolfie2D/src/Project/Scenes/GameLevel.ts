@@ -22,6 +22,7 @@ import Map from "../../Wolfie2D/DataTypes/Map"
 import Layer from "../../Wolfie2D/Scene/Layer";
 import Button from "../../Wolfie2D/Nodes/UIElements/Button";
 import HomeScreen from "./HomeScreen";
+import StageSelect from "./StageSelect";
 
 export default class GameLevel extends Scene {
     protected origin_center: Vec2;
@@ -76,6 +77,7 @@ export default class GameLevel extends Scene {
 
     // Stuff to end the level and go to the next level
     protected nextLevel: new (...args: any) => GameLevel;
+    protected nextLevelNum: number;
 
     // Screen fade in/out for level start and end
     protected levelTransitionTimer: Timer;
@@ -94,6 +96,9 @@ export default class GameLevel extends Scene {
     protected nextEnemySkillset: String;
     protected p1Lost: boolean = false;
     protected level_is_last: boolean = false;
+
+
+    protected stageUnlocked: number;    // latest stage unlocked. starts at 1 and maxes at 6.
 
     initScene(init: Record<string, any>): void {
         this.origin_center = this.viewport.getCenter().clone();
@@ -132,6 +137,7 @@ export default class GameLevel extends Scene {
         this.load.object("deadlylava","project_assets/props/deadlylava.json");
         
         this.isAI = this.initOptions.isP2AI;
+        this.stageUnlocked =this.initOptions.stageUnlocked;
 
         this.load.image("pausescreen", "project_assets/backgrounds/pausescreen.png");
         this.load.image("controls", "project_assets/backgrounds/Controlsnew.png");
@@ -173,9 +179,12 @@ export default class GameLevel extends Scene {
                         Input.enableInput();
                         this.viewport.follow(null);
                         this.viewport.setCenter(this.origin_center);
-                        this.sceneManager.changeToScene(HomeScreen, {});
+                        this.sceneManager.changeToScene(HomeScreen, {stageUnlocked: this.stageUnlocked}, {});
                         break;
                     } else{ // on level end vs AI, go to the next level. 
+                        if(this.nextLevelNum > this.stageUnlocked){
+                            this.stageUnlocked = this.nextLevelNum;
+                        }
                         let sceneOptions1 = {
                             physics: {
                                 groupNames: ["ground", "player", "props"],
@@ -193,7 +202,8 @@ export default class GameLevel extends Scene {
                             p2: this.nextEnemy,
                             p1Skillset: this.initOptions.p1Skillset,    //keep same
                             p2Skillset: this.nextEnemySkillset, 
-                            isP2AI: this.isAI       //keep same
+                            isP2AI: this.isAI,       //keep same
+                            stageUnlocked: this.stageUnlocked
                         }, sceneOptions1);
 
                     }
@@ -289,7 +299,7 @@ export default class GameLevel extends Scene {
             if(this.p1StartupTimer >= 0)
                 this.p1StartupTimer -= deltaT;
         }
-
+        
         if(this.p1MoveTimer >= 0 && this.p1StartupTimer <= 0 && !this.p1MoveHit){ 
             // the attack can only hit when the startup time is done, the move is still active, and the move has not hit yet.
             let p1 = this.player1._ai as PlayerController;
@@ -537,7 +547,7 @@ export default class GameLevel extends Scene {
                 //console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAA')
                 this.viewport.follow(null);
                 this.viewport.setCenter(this.origin_center);
-                this.sceneManager.changeToScene(HomeScreen, {}, {});
+                this.sceneManager.changeToScene(HomeScreen, {stageUnlocked: this.stageUnlocked}, {});
             }
         }
 
@@ -563,9 +573,10 @@ export default class GameLevel extends Scene {
         bg.position.copy(this.size);
 
         // Create a back button
-        let backBtn = <Button>this.add.uiElement(UIElementType.BUTTON, "controlsUI", {position: new Vec2(this.size.x, this.size.y +100), text: "Back"});
+        let backBtn = <Button>this.add.uiElement(UIElementType.BUTTON, "controlsUI", {position: new Vec2(this.size.x, this.size.y +150), text: "Back"});
         backBtn.backgroundColor = Color.TRANSPARENT;
-        backBtn.borderColor = Color.WHITE;
+        backBtn.borderColor = Color.TRANSPARENT;
+        backBtn.textColor = Color.TRANSPARENT;
         backBtn.borderRadius = 0;
         backBtn.setPadding(new Vec2(40, 15));
         backBtn.font = "PixelSimple";

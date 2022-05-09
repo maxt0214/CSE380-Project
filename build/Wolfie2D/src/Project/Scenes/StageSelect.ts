@@ -24,7 +24,7 @@ export default class StageSelect extends Scene {
     protected p1Skillset: String;
     protected p2: String;
     protected p2Skillset: String;
-    protected stageUnlocked: number = 6;    // latest stage unlocked. starts at 1 and maxes at 6.
+    protected stageUnlocked: number;    // latest stage unlocked. starts at 1 and maxes at 6.
 
     initScene(init: Record<string, any>): void {
         this.initOptions = init;
@@ -38,6 +38,9 @@ export default class StageSelect extends Scene {
         this.addUILayer("Main");
         this.addLayer("background", 0);
         
+        console.log('level unlocked: ' + this.stageUnlocked);
+        this.stageUnlocked = this.initOptions.stageUnlocked;
+
         this.isAI = this.initOptions.isP2AI
 
         this.p1 = this.initOptions.p1
@@ -68,53 +71,52 @@ export default class StageSelect extends Scene {
 
         // When the back button is clicked, go to the next scene
         backBtn.onClick = () => {
-            this.sceneManager.changeToScene(HomeScreen, {}, {});
+            this.sceneManager.changeToScene(HomeScreen, {stageUnlocked: this.stageUnlocked}, {});
         }
 
         // Create a stage1 button
-        if(this.stageUnlocked >= 1 || !this.isAI){
-            let stage1Btn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x - 200, size.y - 150), text: "Meadow"});
-            stage1Btn.backgroundColor = Color.TRANSPARENT;
-            stage1Btn.borderColor = Color.TRANSPARENT;
-            stage1Btn.textColor = new Color(0,153,0);
-            stage1Btn.borderRadius = 0;
-            stage1Btn.setPadding(new Vec2(80, 30));
-            stage1Btn.font = "PixelSimple";
+        let stage1Btn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x - 200, size.y - 150), text: "Meadow"});
+        stage1Btn.backgroundColor = Color.TRANSPARENT;
+        stage1Btn.borderColor = Color.TRANSPARENT;
+        stage1Btn.textColor = new Color(0,153,0);
+        stage1Btn.borderRadius = 0;
+        stage1Btn.setPadding(new Vec2(80, 30));
+        stage1Btn.font = "PixelSimple";
 
-            // When the stage1 button is clicked, go to the next scene
-            stage1Btn.onClick = () => {
-                let sceneOptions = {
-                    physics: {
-                        groupNames: ["ground", "player", "props"],
-                        collisions:
-                        [
-                            [0, 1, 0],
-                            [1, 0, 0],
-                            [0, 0, 0]
-                        ]
-                    }
-                }
-                if(!this.isAI){      // player v player
-                    this.sceneManager.changeToScene(Level1, { 
-                        map: "project_assets/tilemaps/meadow.json",
-                        p1: this.p1,
-                        p2: this.p2,
-                        p1Skillset: this.p1Skillset, 
-                        p2Skillset: this.p2Skillset, 
-                        isP2AI: this.isAI
-                    }, sceneOptions);
-                } else { // player v ai (predertermined opponent char based on stage)
-                    this.sceneManager.changeToScene(Level1, { 
-                        map: "project_assets/tilemaps/meadow.json",
-                        p1: this.p1,
-                        p2: "project_assets/spritesheets/fighter.json",
-                        p1Skillset: this.p1Skillset, 
-                        p2Skillset: "project_assets/skills/fighter.json", 
-                        isP2AI: this.isAI
-                    }, sceneOptions);
+        // When the stage1 button is clicked, go to the next scene
+        stage1Btn.onClick = () => {
+            let sceneOptions = {
+                physics: {
+                    groupNames: ["ground", "player", "props"],
+                    collisions:
+                    [
+                        [0, 1, 0],
+                        [1, 0, 0],
+                        [0, 0, 0]
+                    ]
                 }
             }
+            if(!this.isAI){      // player v player
+                this.sceneManager.changeToScene(Level1, { 
+                    map: "project_assets/tilemaps/meadow.json",
+                    p1: this.p1,
+                    p2: this.p2,
+                    p1Skillset: this.p1Skillset, 
+                    p2Skillset: this.p2Skillset, 
+                    isP2AI: this.isAI,stageUnlocked: this.stageUnlocked
+                }, sceneOptions);
+            } else { // player v ai (predertermined opponent char based on stage)
+                this.sceneManager.changeToScene(Level1, { 
+                    map: "project_assets/tilemaps/meadow.json",
+                    p1: this.p1,
+                    p2: "project_assets/spritesheets/fighter.json",
+                    p1Skillset: this.p1Skillset, 
+                    p2Skillset: "project_assets/skills/fighter.json", 
+                    isP2AI: this.isAI,stageUnlocked: this.stageUnlocked
+                }, sceneOptions);
+            }
         }
+        
 
         if(this.stageUnlocked >= 2 || !this.isAI){
             // Create a stage2 button
@@ -147,7 +149,7 @@ export default class StageSelect extends Scene {
                         p2: this.p2,
                         p1Skillset: this.p1Skillset, 
                         p2Skillset: this.p2Skillset, 
-                        isP2AI: this.isAI
+                        isP2AI: this.isAI,stageUnlocked: this.stageUnlocked
                     }, sceneOptions);
                 } else { // player v ai (predertermined opponent char based on stage)
                     this.sceneManager.changeToScene(Level2, { 
@@ -156,7 +158,7 @@ export default class StageSelect extends Scene {
                         p2: "project_assets/spritesheets/waterlady.json",
                         p1Skillset: this.p1Skillset, 
                         p2Skillset: "project_assets/skills/waterlady.json", 
-                        isP2AI: this.isAI
+                        isP2AI: this.isAI,stageUnlocked: this.stageUnlocked
                     }, sceneOptions);
                 }
             }
@@ -193,7 +195,7 @@ export default class StageSelect extends Scene {
                         p2: this.p2,
                         p1Skillset: this.p1Skillset, 
                         p2Skillset: this.p2Skillset, 
-                        isP2AI: this.isAI
+                        isP2AI: this.isAI,stageUnlocked: this.stageUnlocked
                     }, sceneOptions);
                 } else { // player v ai (predertermined opponent char based on stage)
                     this.sceneManager.changeToScene(Level3, {            
@@ -202,7 +204,7 @@ export default class StageSelect extends Scene {
                         p2: "project_assets/spritesheets/waterlady.json",
                         p1Skillset: this.p1Skillset, 
                         p2Skillset: "project_assets/skills/waterlady.json", 
-                        isP2AI: this.isAI
+                        isP2AI: this.isAI,stageUnlocked: this.stageUnlocked
                     }, sceneOptions);
                 }
             }
@@ -239,7 +241,7 @@ export default class StageSelect extends Scene {
                         p2: this.p2,
                         p1Skillset: this.p1Skillset, 
                         p2Skillset: this.p2Skillset, 
-                        isP2AI: this.isAI
+                        isP2AI: this.isAI,stageUnlocked: this.stageUnlocked
                     }, sceneOptions);
                 } else { // player v ai (predertermined opponent char based on stage)
                     this.sceneManager.changeToScene(Level4, {           
@@ -248,7 +250,7 @@ export default class StageSelect extends Scene {
                         p2: "project_assets/spritesheets/fighter.json",
                         p1Skillset: this.p1Skillset, 
                         p2Skillset: "project_assets/skills/fighter.json", 
-                        isP2AI: this.isAI
+                        isP2AI: this.isAI,stageUnlocked: this.stageUnlocked
                     }, sceneOptions);
                 }
             }
@@ -285,7 +287,7 @@ export default class StageSelect extends Scene {
                         p2: this.p2,
                         p1Skillset: this.p1Skillset, 
                         p2Skillset: this.p2Skillset, 
-                        isP2AI: this.isAI
+                        isP2AI: this.isAI,stageUnlocked: this.stageUnlocked
                     }, sceneOptions);
                 } else { // player v ai (predertermined opponent char based on stage)
                     this.sceneManager.changeToScene(Level5, {           
@@ -294,7 +296,7 @@ export default class StageSelect extends Scene {
                         p2: "project_assets/spritesheets/waterlady.json",
                         p1Skillset: this.p1Skillset, 
                         p2Skillset: "project_assets/skills/waterlady.json", 
-                        isP2AI: this.isAI
+                        isP2AI: this.isAI,stageUnlocked: this.stageUnlocked
                     }, sceneOptions);
                 }
             }
@@ -331,7 +333,7 @@ export default class StageSelect extends Scene {
                         p2: this.p2,
                         p1Skillset: this.p1Skillset, 
                         p2Skillset: this.p2Skillset, 
-                        isP2AI: this.isAI
+                        isP2AI: this.isAI,stageUnlocked: this.stageUnlocked
                     }, sceneOptions);
                 } else { // player v ai (predertermined opponent char based on stage)
                     this.sceneManager.changeToScene(Level6, {            //change to level6 later!
@@ -340,7 +342,7 @@ export default class StageSelect extends Scene {
                         p2: "project_assets/spritesheets/fighter.json",
                         p1Skillset: this.p1Skillset, 
                         p2Skillset: "project_assets/skills/fighter.json",
-                        isP2AI: this.isAI
+                        isP2AI: this.isAI,stageUnlocked: this.stageUnlocked
                     }, sceneOptions);
                 }
             }

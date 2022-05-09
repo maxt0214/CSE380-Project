@@ -33,6 +33,7 @@ export default class Level1 extends GameLevel {
         // Do generic setup for a GameLevel
         super.startScene();
         
+        this.nextLevelNum = 2;
         this.nextLevel = Level2;
         this.nextMap = "project_assets/tilemaps/beach.json";
         this.nextEnemy = "project_assets/spritesheets/waterlady.json";
