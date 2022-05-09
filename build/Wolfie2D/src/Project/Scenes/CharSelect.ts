@@ -125,7 +125,7 @@ export default class CharSelect extends Scene {
         }
 
         // Create a char3 button
-        let char3Btn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x + 250 , size.y - 150), text: "Char 3"});
+        let char3Btn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x + 250 , size.y - 150), text: "Dwarf"});
         char3Btn.backgroundColor = Color.TRANSPARENT;
         char3Btn.borderColor = Color.WHITE;
         char3Btn.borderRadius = 0;
@@ -135,12 +135,12 @@ export default class CharSelect extends Scene {
         // When the char3 button is clicked, handle changing char
         char3Btn.onClick = () => {
             if(this.p1 === "no char"){          //if p1 has not chosen a char, make them the char that this button assigns them to
-                this.p1 = "project_assets/spritesheets/fighter.json";
-                this.p1Skillset = "project_assets/skills/fighter.json";
+                this.p1 = "project_assets/spritesheets/dwarf.json";
+                this.p1Skillset = "project_assets/skills/dwarf.json";
                 console.log(`Player 1 chose char 3`);
             } else if(this.p2 === "no char" && !this.isAI){          // if p1 has already chosen a char AND if p2 has not chosen a char AND p2 is not an AI ...
-                this.p2 = "project_assets/spritesheets/fighter.json";
-                this.p2Skillset = "project_assets/skills/fighter.json";
+                this.p2 = "project_assets/spritesheets/dwarf.json";
+                this.p2Skillset = "project_assets/skills/dwarf.json";
                 console.log(`Player 2 chose char 3`);
             }
         }

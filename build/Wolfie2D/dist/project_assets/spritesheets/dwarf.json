@@ -1,0 +1,54 @@
+{
+    "name": "dwarf",
+    "spriteSheetImage": "dwarf.png",
+    "spriteWidth": 24,
+    "spriteHeight": 36,
+    "columns": 8,
+    "rows": 6,
+    "animations": [
+        { 
+            "name": "IDLE",
+            "frames": [ {"index": 0, "duration": 16}, {"index": 1, "duration": 16}, {"index": 2, "duration": 16}, {"index": 3, "duration": 16} ]
+        },
+        { 
+            "name": "FALL",
+            "frames": [ {"index": 0, "duration": 16}, {"index": 1, "duration": 16}, {"index": 2, "duration": 16}, {"index": 3, "duration": 16} ]
+        },
+        {
+            "name": "ATTACK",
+            "frames": [ {"index": 4, "duration": 8}, {"index": 5, "duration": 8}, {"index": 6, "duration": 8}, {"index": 7, "duration": 6}, {"index": 8, "duration": 6}, {"index": 9, "duration": 1}]
+        },
+        {
+            "name": "JUMP",
+            "frames": [ {"index": 10, "duration": 16}, {"index": 11, "duration": 16}, {"index": 12, "duration": 16}, {"index": 13, "duration": 16}, {"index": 14, "duration": 16}]
+        },
+        {
+            "name": "WALK",
+            "frames": [ {"index": 15, "duration": 16}, {"index": 16, "duration": 16}, {"index": 17, "duration": 16}, {"index": 18, "duration": 16}]
+        },
+        {
+            "name": "GRAB",
+            "frames": [ {"index": 17, "duration": 8}, {"index": 18, "duration": 8}, {"index": 19, "duration": 12}, {"index": 20, "duration": 12}, {"index": 21, "duration": 12}]
+        },
+        {
+            "name": "BLOCK",
+            "frames": [ {"index": 22, "duration": 8}, {"index": 23, "duration": 8}, {"index": 24, "duration": 10}, {"index": 25, "duration": 10}, {"index": 26, "duration": 10}]
+        },
+        {
+            "name": "HURT",
+            "frames": [ {"index": 27, "duration": 16}, {"index": 28, "duration": 16}, {"index": 29, "duration": 16}, {"index": 30, "duration": 16}, {"index": 31, "duration": 16}, {"index": 32, "duration": 16}]
+        },
+        {
+            "name": "SKILL1",
+            "frames": [ {"index": 0, "duration": 16}]
+        },
+        {
+            "name": "SKILL2",
+            "frames": [ {"index": 33, "duration": 8}, {"index": 34, "duration": 16}, {"index": 35, "duration": 16}, {"index": 36, "duration": 8}]
+        },
+        {
+            "name": "SKILL3",
+            "frames": [ {"index": 37, "duration": 8}, {"index": 38, "duration": 16}, {"index": 39, "duration": 16}, {"index": 40, "duration": 8}, {"index": 41, "duration": 8}, {"index": 41, "duration": 8}]
+        }
+    ]
+}

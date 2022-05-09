@@ -16,6 +16,7 @@ export default class Level5 extends GameLevel {
         this.loadp2Sound(this.initOptions.p2Skillset);
     }
 
+
     unloadScene(){
         this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "level_music"});
         this.resourceManager.unloadAllResources();
@@ -35,8 +36,8 @@ export default class Level5 extends GameLevel {
         
         this.nextLevel = Level6;
         this.nextMap = "project_assets/tilemaps/volcano.json";
-        this.nextEnemy = "project_assets/spritesheets/fighter.json";
-        this.nextEnemySkillset =  "project_assets/skills/fighter.json";
+        this.nextEnemy = "project_assets/spritesheets/dwarf.json";
+        this.nextEnemySkillset =  "project_assets/skills/dwarf.json";
 
         this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "level_music", loop: true, holdReference: true});
     }

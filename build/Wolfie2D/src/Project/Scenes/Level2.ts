@@ -34,8 +34,8 @@ export default class Level2 extends GameLevel {
 
         this.nextLevel = Level3;
         this.nextMap = "project_assets/tilemaps/Mountain.json";
-        this.nextEnemy = "project_assets/spritesheets/fighter.json";
-        this.nextEnemySkillset =  "project_assets/skills/fighter.json";
+        this.nextEnemy = "project_assets/spritesheets/dwarf.json";
+        this.nextEnemySkillset =  "project_assets/skills/dwarf.json";
 
         this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "level_music", loop: true, holdReference: true});
     }

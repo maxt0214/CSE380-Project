@@ -14,7 +14,7 @@ export default class Level1 extends GameLevel {
         this.loadp1Sound(this.initOptions.p1Skillset);
         this.loadp2Sound(this.initOptions.p2Skillset);
     }
-
+  
     unloadScene(){
         this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "level_music"});
         this.resourceManager.unloadAllResources();
