@@ -6,7 +6,6 @@ import Button from "../../Wolfie2D/Nodes/UIElements/Button";
 import { UIElementType } from "../../Wolfie2D/Nodes/UIElements/UIElementTypes";
 import Scene from "../../Wolfie2D/Scene/Scene";
 import Color from "../../Wolfie2D/Utils/Color";
-import HomeScreen from "./HomeScreen";
 import PlayerIntro from "./PlayerIntro";
 import StageSelect from "./StageSelect"; 
 
@@ -21,8 +20,7 @@ export default class SplashScreen extends Scene {
     }
     loadScene(): void {
         this.load.image("splash", "project_assets/backgrounds/SplashScreenbig.png");
-        //this.load.audio("splash_sound", "project_assets/music/splashclick.wav");
-
+        this.load.audio("splash_sound", "project_assets/music/splashclick.wav");
     }
 
     startScene(): void {
@@ -50,7 +48,6 @@ export default class SplashScreen extends Scene {
 
         // When the play button is clicked, go to the next scene
         playBtn.onClick = () => {
-
             this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "splash_sound", loop: false, holdReference: false});
             this.sceneManager.changeToScene(PlayerIntro, {stageUnlocked: this.stageUnlocked}, {});
         }
