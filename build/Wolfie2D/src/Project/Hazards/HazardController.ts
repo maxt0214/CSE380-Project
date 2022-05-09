@@ -108,14 +108,27 @@ export default class HazardController {
 
     update_lava() {
         let idx = RandUtils.randInt(0, this.lava_hazards.length);
-        this.emitter.fireEvent(Project_Events.FIRE_PROJECTILE, 
-        {
-            name: "lavadrop",
-            party: this.party,
-            center: this.lava_hazards[idx],
-            dir: new Vec2(0,1),
-            projectile: "lavadrop"
-        });
+        let chance = RandUtils.randInt(0, 10);
+        if(chance <= 2) {
+            this.emitter.fireEvent(Project_Events.FIRE_PROJECTILE, 
+            {
+                name: "deadlylava",
+                party: this.party,
+                center: this.lava_hazards[idx],
+                dir: new Vec2(0,1),
+                projectile: "deadlylava"
+            });
+        } else {
+            this.emitter.fireEvent(Project_Events.FIRE_PROJECTILE, 
+            {
+                name: "lavadrop",
+                party: this.party,
+                center: this.lava_hazards[idx],
+                dir: new Vec2(0,1),
+                projectile: "lavadrop"
+            });
+        }
+        
         this.timer = RandUtils.randInt(1, 6);
     }
 }
