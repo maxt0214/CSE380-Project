@@ -201,9 +201,9 @@ export default class StageSelect extends Scene {
                     this.sceneManager.changeToScene(Level3, {            
                         map: "project_assets/tilemaps/Mountain.json",
                         p1: this.p1,
-                        p2: "project_assets/spritesheets/waterlady.json",
+                        p2: "project_assets/spritesheets/dwarf.json",
                         p1Skillset: this.p1Skillset, 
-                        p2Skillset: "project_assets/skills/waterlady.json", 
+                        p2Skillset: "project_assets/skills/dwarf.json", 
                         isP2AI: this.isAI,stageUnlocked: this.stageUnlocked
                     }, sceneOptions);
                 }
@@ -339,9 +339,9 @@ export default class StageSelect extends Scene {
                     this.sceneManager.changeToScene(Level6, {            //change to level6 later!
                         map: "project_assets/tilemaps/volcano.json",
                         p1: this.p1,
-                        p2: "project_assets/spritesheets/fighter.json",
+                        p2: "project_assets/spritesheets/dwarf.json",
                         p1Skillset: this.p1Skillset, 
-                        p2Skillset: "project_assets/skills/fighter.json",
+                        p2Skillset: "project_assets/skills/dwarf.json",
                         isP2AI: this.isAI,stageUnlocked: this.stageUnlocked
                     }, sceneOptions);
                 }
