@@ -75,6 +75,14 @@ export default class GameLevel extends Scene {
 
     protected controlsUI: Layer;
 
+    protected p1rock: any;
+    protected p2rock: any;
+    protected p1scis: any;
+    protected p2scis: any;
+    protected p1paper: any;
+    protected p2paper: any;
+
+
     // Stuff to end the level and go to the next level
     protected nextLevel: new (...args: any) => GameLevel;
     protected nextLevelNum: number;
@@ -135,12 +143,20 @@ export default class GameLevel extends Scene {
         this.load.object("rock","project_assets/props/rock.json");
         this.load.object("lavadrop","project_assets/props/lavadrop.json");
         this.load.object("deadlylava","project_assets/props/deadlylava.json");
+
+        //load ui state imgs
+        this.load.image("rockui","project_assets/ui/rock.png");
+        this.load.image("paperui","project_assets/ui/paper.png");
+        this.load.image("scisui","project_assets/ui/scissors.png");
         
         this.isAI = this.initOptions.isP2AI;
         this.stageUnlocked =this.initOptions.stageUnlocked;
 
         this.load.image("pausescreen", "project_assets/backgrounds/pausescreen.png");
         this.load.image("controls", "project_assets/backgrounds/Controlsnew.png");
+
+        
+
     }
 
     startScene(): void {
@@ -212,25 +228,57 @@ export default class GameLevel extends Scene {
                     break;
                 case Project_Events.UPDATE_ACTION:
                     if(event.data.get("party") === Project_Color.RED){ //p1
-                        if(event.data.get("type") === "s")
+                        if(event.data.get("type") === "s"){
                             this.p1action = "attacking";
-                        if(event.data.get("type") === "p")
-                            this.p1action = "grabbing";    
-                        if(event.data.get("type") === "r")
-                            this.p1action = "blocking";  
-                        if(event.data.get("type") === "neutral")
-                            this.p1action = "neutral";     
+                            this.p1rock.visible = false;
+                            this.p1paper.visible = false;
+                            this.p1scis.visible = true;
+                        }
+                        if(event.data.get("type") === "p"){
+                            this.p1action = "grabbing";
+                            this.p1rock.visible = false;
+                            this.p1paper.visible = true;
+                            this.p1scis.visible = false;   
+                        } 
+                        if(event.data.get("type") === "r"){
+                            this.p1action = "blocking";
+                            this.p1rock.visible = true;
+                            this.p1paper.visible = false;
+                            this.p1scis.visible = false;  
+                        }
+                        if(event.data.get("type") === "neutral"){
+                            this.p1action = "neutral";
+                            this.p1rock.visible = false;
+                            this.p1paper.visible = false;
+                            this.p1scis.visible = false;     
+                        }
                         console.log(`Player[${event.data.get("party")} action is ${this.p1action}]`);
                     }
                     if(event.data.get("party") === Project_Color.BLUE){ //p2
-                        if(event.data.get("type") === "s")
+                        if(event.data.get("type") === "s"){
                             this.p2action = "attacking";
-                        if(event.data.get("type") === "p")
+                            this.p2rock.visible = false;
+                            this.p2paper.visible = false;
+                            this.p2scis.visible = true;
+                        }
+                        if(event.data.get("type") === "p"){
+                            this.p2rock.visible = false;
+                            this.p2paper.visible = true;
+                            this.p2scis.visible = false;
                             this.p2action = "grabbing";    
-                        if(event.data.get("type") === "r")
+                        }
+                        if(event.data.get("type") === "r"){
+                            this.p2rock.visible = true;
+                            this.p2paper.visible = false;
+                            this.p2scis.visible = false;
                             this.p2action = "blocking";
-                        if(event.data.get("type") === "neutral")
+                        }
+                        if(event.data.get("type") === "neutral"){
+                            this.p2rock.visible = false;
+                            this.p2paper.visible = false;
+                            this.p2scis.visible = false;
                             this.p2action = "neutral";        
+                        }
                         console.log(`Player[${event.data.get("party")} action is ${this.p2action}]`);
       
                     }
@@ -475,6 +523,44 @@ export default class GameLevel extends Scene {
         this.roundOverLabel.fontSize = 48;
         this.roundOverLabel.font = "PixelSimple";
 
+        // player states represented with images
+
+        this.p1rock = this.add.sprite("rockui", "UI");
+        this.p1rock.scale.set(1.00, 1.00);
+        this.p1rock.position.copy(this.size);
+        this.p1rock.position.add(new Vec2(-150, -120));
+        this.p1rock.visible = false;
+        
+        this.p2rock = this.add.sprite("rockui", "UI");
+        this.p2rock.scale.set(1.00, 1.00);
+        this.p2rock.position.copy(this.size);
+        this.p2rock.position.add(new Vec2(150, -120))
+        this.p2rock.visible = false;
+
+        this.p1scis = this.add.sprite("scisui", "UI");
+        this.p1scis.scale.set(1.00, 1.00);
+        this.p1scis.position.copy(this.size);
+        this.p1scis.position.add(new Vec2(-150, -120));
+        this.p1scis.visible = false;
+        
+        this.p2scis = this.add.sprite("scisui", "UI");
+        this.p2scis.scale.set(1.00, 1.00);
+        this.p2scis.position.copy(this.size);
+        this.p2scis.position.add(new Vec2(150, -120));
+        this.p2scis.visible = false;
+
+        this.p1paper = this.add.sprite("paperui", "UI");
+        this.p1paper.scale.set(1.00, 1.00);
+        this.p1paper.position.copy(this.size);
+        this.p1paper.position.add(new Vec2(-150, -120));
+        this.p1paper.visible = false;
+        
+        this.p2paper = this.add.sprite("paperui", "UI");
+        this.p2paper.scale.set(1.00, 1.00);
+        this.p2paper.position.copy(this.size);
+        this.p2paper.position.add(new Vec2(150, -120));
+        this.p2paper.visible = false;
+
         // Add a tween to move the label on screen
         this.roundOverLabel.tweens.add("slideIn", {
             startDelay: 0,
@@ -644,7 +730,15 @@ export default class GameLevel extends Scene {
         console.log(`Player[${party}] is hit, losing ${dmg} hps`);
         if(party === Project_Color.RED) {
             GameLevel.hp1 += dmg;
+            this.p1action = "neutral";
+            this.p1rock.visible = false;
+            this.p1paper.visible = false;
+            this.p1scis.visible = false;     
         } else {
+            this.p2action = "neutral";
+            this.p2rock.visible = false;
+            this.p2paper.visible = false;
+            this.p2scis.visible = false;   
             GameLevel.hp2 += dmg;
         }
 

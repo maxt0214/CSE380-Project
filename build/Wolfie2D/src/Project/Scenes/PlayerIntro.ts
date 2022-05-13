@@ -53,9 +53,9 @@ export default class EndLevel extends Scene {
         //init scenecuts
         this.scenecuts = [];
         this.descrips = [
-            "Fighter is good at Judo. He has never lost in close combat, and everyone predicted him to be another champion this year!",
-            "Waterlady is a mysterious lady. She is a natural when manipulating water. Feel the power of water as she said.",
-            "Dwarf is a master of crystal power. I am sure you will fear his sharp crsytal blade pierce your heart!"
+            "Fighter is good at Judo. He has never lost in close combat, and everyone predicts that he will be the champion this year!",
+            "Waterlady is a mysterious lady. She is a natural when manipulating water. Feel the power of water!",
+            "The dwarf miner is a master of crystal power. I am sure you will fear his sharp crystal blade!"
         ];
         this.addscenecut("fighter_bg");
         this.addscenecut("waterlady_bg");
