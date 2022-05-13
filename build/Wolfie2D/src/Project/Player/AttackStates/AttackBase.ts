@@ -85,6 +85,11 @@ export default class AttackBase extends PlayerState {
 
 	long_range():void {
 		//deal with projectile
+		this.emitter.fireEvent(Project_Events.UPDATE_ACTION,
+			{
+				party: this.parent.party, 
+				type: this.type
+			});
 		let offset = new Vec2(this.owner.invertX ? -1 : 1, 0);
 		this.emitter.fireEvent(Project_Events.FIRE_PROJECTILE, 
 		{

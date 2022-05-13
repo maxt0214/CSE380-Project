@@ -20,13 +20,19 @@ export default class CharSelect extends Scene {
     protected p2: String = "no char";
     protected p2Skillset: String;
     protected stageUnlocked: number;    // latest stage unlocked. starts at 1 and maxes at 6.
+    protected p1char: any;
+    protected p2char: any;
 
     initScene(init: Record<string, any>): void {
         this.initOptions = init;
     }
 
     loadScene(): void {
-        this.load.image("charsel", "project_assets/backgrounds/CharacterSelectbig.png");
+        this.load.image("charsel", "project_assets/backgrounds/charactersel.png");
+        this.load.image("fighter", "project_assets/ui/fighter.png");
+        this.load.image("waterlady", "project_assets/ui/waterlady.png");
+        this.load.image("dwarf", "project_assets/ui/dwarf.png");
+
     }
 
     startScene(): void {
@@ -86,12 +92,12 @@ export default class CharSelect extends Scene {
 
 
         // Create a char1 button
-        let char1Btn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x - 120, size.y - 180), text: "Fighter"});
+        let char1Btn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x, size.y - 180), text: "Fighteraaaaaaaaaaaaaaaaaaaa"});
         char1Btn.backgroundColor = Color.TRANSPARENT;
         char1Btn.borderColor = Color.TRANSPARENT;
-        char1Btn.textColor = Color.BLACK
+        char1Btn.textColor = Color.TRANSPARENT;
         char1Btn.borderRadius = 0;
-        char1Btn.setPadding(new Vec2(5, 10));
+        char1Btn.setPadding(new Vec2(5, 30));
         char1Btn.font = "PixelSimple";
 
         // When the char1 button is clicked, handle changing char
@@ -101,20 +107,28 @@ export default class CharSelect extends Scene {
                 this.p1 = "project_assets/spritesheets/fighter.json";
                 this.p1Skillset = "project_assets/skills/fighter.json";
                 console.log(`Player 1 chose char 1`);
+                this.p1char = this.add.sprite("fighter", "Main");
+                this.p1char.position.copy(size);
+                this.p1char.position.add(new Vec2(-400, 50));
+                this.p1char.scale.set(10,10);
             } else if(this.p2 === "no char" && !this.isAI){          // if p1 has already chosen a char AND if p2 has not chosen a char AND p2 is not an AI ...
                 this.p2 = "project_assets/spritesheets/fighter.json";
                 this.p2Skillset = "project_assets/skills/fighter.json";
                 console.log(`Player 2 chose char 1`);
+                this.p2char = this.add.sprite("fighter", "Main");
+                this.p2char.position.copy(size);
+                this.p2char.position.add(new Vec2(400, 50));
+                this.p2char.scale.set(10,10);
             }
         }
 
         // Create a char2 button
-        let char2Btn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x, size.y - 180), text: "Water lady"});
+        let char2Btn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x, size.y-80), text: "Water ladyaaaaaaaaaaaaaaaaaaaaaa"});
         char2Btn.backgroundColor = Color.TRANSPARENT;
         char2Btn.borderColor = Color.TRANSPARENT;
-        char2Btn.textColor = Color.BLUE;
+        char2Btn.textColor = Color.TRANSPARENT;
         char2Btn.borderRadius = 0;
-        char2Btn.setPadding(new Vec2(0, 10));
+        char2Btn.setPadding(new Vec2(0, 30));
         char2Btn.font = "PixelSimple";
 
         // When the char2 button is clicked, handle changing char
@@ -124,20 +138,28 @@ export default class CharSelect extends Scene {
                 this.p1 = "project_assets/spritesheets/waterlady.json";
                 this.p1Skillset = "project_assets/skills/waterlady.json";
                 console.log(`Player 1 chose char 2`);
+                this.p1char = this.add.sprite("waterlady", "Main");
+                this.p1char.position.copy(size);
+                this.p1char.position.add(new Vec2(-400, 50));
+                this.p1char.scale.set(10,10);
             } else if(this.p2 === "no char" && !this.isAI){          // if p1 has already chosen a char AND if p2 has not chosen a char AND p2 is not an AI ...
                 this.p2 = "project_assets/spritesheets/waterlady.json";
                 this.p2Skillset = "project_assets/skills/waterlady.json";
                 console.log(`Player 2 chose char 2`);
+                this.p2char = this.add.sprite("waterlady", "Main");
+                this.p2char.position.copy(size);
+                this.p2char.position.add(new Vec2(400, 50));
+                this.p2char.scale.set(10,10);
             }
         }
 
         // Create a char3 button
-        let char3Btn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x + 120 , size.y - 180), text: "Dwarf"});
+        let char3Btn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x , size.y +30), text: "Dwarfaaaaaaaaaaaaaaaaaaaaaaaaaa"});
         char3Btn.backgroundColor = Color.TRANSPARENT;
         char3Btn.borderColor = Color.TRANSPARENT;
-        char3Btn.textColor = Color.YELLOW;
+        char3Btn.textColor = Color.TRANSPARENT;
         char3Btn.borderRadius = 0;
-        char3Btn.setPadding(new Vec2(10, 10));
+        char3Btn.setPadding(new Vec2(10, 30));
         char3Btn.font = "PixelSimple";
 
         // When the char3 button is clicked, handle changing char
@@ -147,10 +169,18 @@ export default class CharSelect extends Scene {
                 this.p1 = "project_assets/spritesheets/dwarf.json";
                 this.p1Skillset = "project_assets/skills/dwarf.json";
                 console.log(`Player 1 chose char 3`);
+                this.p1char = this.add.sprite("dwarf", "Main");
+                this.p1char.position.copy(size);
+                this.p1char.position.add(new Vec2(-400, 50));
+                this.p1char.scale.set(10,10);
             } else if(this.p2 === "no char" && !this.isAI){          // if p1 has already chosen a char AND if p2 has not chosen a char AND p2 is not an AI ...
                 this.p2 = "project_assets/spritesheets/dwarf.json";
                 this.p2Skillset = "project_assets/skills/dwarf.json";
                 console.log(`Player 2 chose char 3`);
+                this.p2char = this.add.sprite("dwarf", "Main");
+                this.p2char.position.copy(size);
+                this.p2char.position.add(new Vec2(400, 50));
+                this.p2char.scale.set(10,10);
             }
         }
 

@@ -31,7 +31,8 @@ export default class StageSelect extends Scene {
     }
 
     loadScene(): void {
-        this.load.image("stgsel", "project_assets/backgrounds/StageSelectbig.png");
+        this.load.image("stgsel", "project_assets/backgrounds/stgsel.png");
+        this.load.image("lock", "project_assets/ui/lock.png");
     }
 
     startScene(): void {
@@ -66,7 +67,7 @@ export default class StageSelect extends Scene {
         backBtn.borderColor = Color.TRANSPARENT;
         backBtn.textColor = Color.TRANSPARENT;
         backBtn.borderRadius = 0;
-        backBtn.setPadding(new Vec2(80, 30));
+        backBtn.setPadding(new Vec2(90, 30));
         backBtn.font = "PixelSimple";
 
         // When the back button is clicked, go to the next scene
@@ -78,9 +79,9 @@ export default class StageSelect extends Scene {
         let stage1Btn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x - 200, size.y - 150), text: "Meadow"});
         stage1Btn.backgroundColor = Color.TRANSPARENT;
         stage1Btn.borderColor = Color.TRANSPARENT;
-        stage1Btn.textColor = new Color(0,153,0);
+        stage1Btn.textColor = Color.BLACK;
         stage1Btn.borderRadius = 0;
-        stage1Btn.setPadding(new Vec2(80, 30));
+        stage1Btn.setPadding(new Vec2(60, 30));
         stage1Btn.font = "PixelSimple";
 
         // When the stage1 button is clicked, go to the next scene
@@ -125,7 +126,7 @@ export default class StageSelect extends Scene {
             stage2Btn.borderColor = Color.TRANSPARENT;
             stage2Btn.textColor = Color.CYAN;
             stage2Btn.borderRadius = 0;
-            stage2Btn.setPadding(new Vec2(80, 30));
+            stage2Btn.setPadding(new Vec2(60, 30));
             stage2Btn.font = "PixelSimple";
 
             // When the stage2 button is clicked, go to the next scene
@@ -162,6 +163,12 @@ export default class StageSelect extends Scene {
                     }, sceneOptions);
                 }
             }
+        } else {
+            console.log('sadasdasdas')
+            let lock = this.add.sprite("lock", "background");
+            lock.scale.set(1, 1);
+            lock.position.copy(size);
+            lock.position.add(new Vec2(0, -150));
         }
 
         if(this.stageUnlocked >= 3 || !this.isAI){
@@ -171,7 +178,7 @@ export default class StageSelect extends Scene {
             stage3Btn.borderColor = Color.TRANSPARENT;
             stage3Btn.textColor = new Color(128,128,128);
             stage3Btn.borderRadius = 0;
-            stage3Btn.setPadding(new Vec2(80, 30));
+            stage3Btn.setPadding(new Vec2(60, 30));
             stage3Btn.font = "PixelSimple";
 
             // When the stage3 button is clicked, go to the next scene
@@ -208,6 +215,11 @@ export default class StageSelect extends Scene {
                     }, sceneOptions);
                 }
             }
+        }else {
+            let lock = this.add.sprite("lock", "background");
+            lock.scale.set(1, 1);
+            lock.position.copy(size);
+            lock.position.add(new Vec2(200, -150));
         }
 
         if(this.stageUnlocked >= 4 || !this.isAI){
@@ -215,9 +227,9 @@ export default class StageSelect extends Scene {
             let stage4Btn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x - 200, size.y+70), text: "City"});
             stage4Btn.backgroundColor = Color.TRANSPARENT;
             stage4Btn.borderColor = Color.TRANSPARENT;
-            stage4Btn.textColor = Color.BLACK;
+            stage4Btn.textColor = Color.WHITE;
             stage4Btn.borderRadius = 0;
-            stage4Btn.setPadding(new Vec2(80, 30));
+            stage4Btn.setPadding(new Vec2(60, 30));
             stage4Btn.font = "PixelSimple";
 
             // When the stage4 button is clicked, go to the next scene
@@ -254,6 +266,11 @@ export default class StageSelect extends Scene {
                     }, sceneOptions);
                 }
             }
+        }else {
+            let lock = this.add.sprite("lock", "background");
+            lock.scale.set(1, 1);
+            lock.position.copy(size);
+            lock.position.add(new Vec2(-200, 70));
         }
 
         if(this.stageUnlocked >= 5 || !this.isAI){
@@ -261,9 +278,9 @@ export default class StageSelect extends Scene {
             let stage5Btn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x, size.y+70), text: "UnderSea"});
             stage5Btn.backgroundColor = Color.TRANSPARENT;
             stage5Btn.borderColor = Color.TRANSPARENT;
-            stage5Btn.textColor = Color.BLUE;
+            stage5Btn.textColor = Color.BLACK;
             stage5Btn.borderRadius = 0;
-            stage5Btn.setPadding(new Vec2(80, 30));
+            stage5Btn.setPadding(new Vec2(60, 30));
             stage5Btn.font = "PixelSimple";
 
             // When the stage5 button is clicked, go to the next scene
@@ -300,6 +317,11 @@ export default class StageSelect extends Scene {
                     }, sceneOptions);
                 }
             }
+        }else {
+            let lock = this.add.sprite("lock", "background");
+            lock.scale.set(1, 1);
+            lock.position.copy(size);
+            lock.position.add(new Vec2(0, 70));
         }
 
         if(this.stageUnlocked >= 6 || !this.isAI){
@@ -309,7 +331,7 @@ export default class StageSelect extends Scene {
             stage6Btn.borderColor = Color.TRANSPARENT;
             stage6Btn.textColor = Color.RED;
             stage6Btn.borderRadius = 0;
-            stage6Btn.setPadding(new Vec2(80, 30));
+            stage6Btn.setPadding(new Vec2(60, 30));
             stage6Btn.font = "PixelSimple";
 
             // When the stage6 button is clicked, go to the next scene
@@ -346,6 +368,11 @@ export default class StageSelect extends Scene {
                     }, sceneOptions);
                 }
             }
+        }else {
+            let lock = this.add.sprite("lock", "background");
+            lock.scale.set(1, 1);
+            lock.position.copy(size);
+            lock.position.add(new Vec2(200, 70));
         }
 
         
