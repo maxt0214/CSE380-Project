@@ -287,7 +287,6 @@ export default class GameLevel extends Scene {
                     let dmgInfo = event.data;
                     let p1 = this.player1._ai as PlayerController;
                     let p2 = this.player2._ai as PlayerController;
-                    console.log(`Player[${dmgInfo.get("party")}] attacks center[${dmgInfo.get("center")}] Range[${dmgInfo.get("range")}]`);
                     if(dmgInfo.get("party") === Project_Color.RED) {    //p1 attacking
                         // play p1 attack sounds
                         if(dmgInfo.get("name") === "ATTACK")
@@ -368,7 +367,6 @@ export default class GameLevel extends Scene {
                     this.incPlayerLife(Project_Color.BLUE,this.p1dmgInfo.get("dmg"));
                     this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "hit", loop: false, holdReference: false});
                     p2.changeState(this.p1dmgInfo.get("state"));
-            
                 }
                 if(this.p1dmgInfo.get("type") === "r" && !(this.p1dmgInfo.get("name") === "BLOCK") && !(this.p2action === "grabbing")){ // p1 rock move that is not a block, p2 is not grabbing, p2 takes dmg
                     this.incPlayerLife(Project_Color.BLUE,this.p1dmgInfo.get("dmg"));
@@ -394,12 +392,12 @@ export default class GameLevel extends Scene {
             if(p1.inRange(this.p2dmgInfo.get("center"),this.p2dmgInfo.get("range"),this.p2dmgInfo.get("state"),this.p2dmgInfo.get("dir"))){ //if p1 is in range of attack, 
                 this.p2MoveHit = true;
                 if(this.p2dmgInfo.get("type") === "s" && !(this.p1action === "blocking")){ // p1 not blocking (p1 attacked)
-                    this.incPlayerLife(Project_Color.BLUE,this.p2dmgInfo.get("dmg"));
+                    this.incPlayerLife(Project_Color.RED,this.p2dmgInfo.get("dmg"));
                     this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "hit", loop: false, holdReference: false});
                     p1.changeState(this.p2dmgInfo.get("state"));
                 }
                 if(this.p2dmgInfo.get("type") === "s" && this.p1action === "blocking"){ // p1 blocking (p2 attacked)
-                    this.incPlayerLife(Project_Color.RED,this.p2dmgInfo.get("dmg"));
+                    this.incPlayerLife(Project_Color.BLUE,this.p2dmgInfo.get("dmg"));
                     this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "hit", loop: false, holdReference: false});
                     p2.changeState(this.p2dmgInfo.get("state"));
                 }

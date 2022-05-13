@@ -165,8 +165,8 @@ export default class StageSelect extends Scene {
             }
         } else {
             console.log('sadasdasdas')
-            let lock = this.add.sprite("lock", "background");
-            lock.scale.set(1, 1);
+            let lock = this.add.sprite("lock", "Main");
+            lock.scale.set(2, 2);
             lock.position.copy(size);
             lock.position.add(new Vec2(0, -150));
         }
@@ -216,8 +216,8 @@ export default class StageSelect extends Scene {
                 }
             }
         }else {
-            let lock = this.add.sprite("lock", "background");
-            lock.scale.set(1, 1);
+            let lock = this.add.sprite("lock", "Main");
+            lock.scale.set(2, 2);
             lock.position.copy(size);
             lock.position.add(new Vec2(200, -150));
         }
@@ -267,8 +267,8 @@ export default class StageSelect extends Scene {
                 }
             }
         }else {
-            let lock = this.add.sprite("lock", "background");
-            lock.scale.set(1, 1);
+            let lock = this.add.sprite("lock", "Main");
+            lock.scale.set(2, 2);
             lock.position.copy(size);
             lock.position.add(new Vec2(-200, 70));
         }
@@ -318,8 +318,8 @@ export default class StageSelect extends Scene {
                 }
             }
         }else {
-            let lock = this.add.sprite("lock", "background");
-            lock.scale.set(1, 1);
+            let lock = this.add.sprite("lock", "Main");
+            lock.scale.set(2, 2);
             lock.position.copy(size);
             lock.position.add(new Vec2(0, 70));
         }
@@ -369,8 +369,8 @@ export default class StageSelect extends Scene {
                 }
             }
         }else {
-            let lock = this.add.sprite("lock", "background");
-            lock.scale.set(1, 1);
+            let lock = this.add.sprite("lock", "Main");
+            lock.scale.set(2, 2);
             lock.position.copy(size);
             lock.position.add(new Vec2(200, 70));
         }

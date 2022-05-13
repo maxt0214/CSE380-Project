@@ -179,11 +179,6 @@ export default class PlayerController extends StateMachineAI {
 
     update(deltaT: number): void {
 		super.update(deltaT);
-        if(this.currentState instanceof Attack) {
-            //console.log(`${this.party} is attacking!`);
-        } else if(this.currentState instanceof HURT) {
-            //console.log(`${this.party} is being hurt!`);
-        }
         this.updateInvincible(deltaT);
 	}
 
