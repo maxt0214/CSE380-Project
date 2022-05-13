@@ -57,27 +57,27 @@
     },
     "skill2": {
         "name": "SKILL2",
-        "dmg": -1,
+        "dmg": -2,
         "range": {
             "x": 25,
             "y": 45
         },
-        "state": "HURT",
+        "state": "STUN",
         "timer": 0.75,
-        "startup": 0.4,
+        "startup": 0.3,
         "projectile": "",
         "type": "r",
         "priority": 11
     },
     "skill3": {
         "name": "SKILL3",
-        "dmg": -2,
+        "dmg": -3,
         "range": {
             "x": 55,
             "y": 25
         },
         "state": "HURT",
-        "timer": 0.75,
+        "timer": 1,
         "startup": 0.4,
         "projectile": "",
         "type": "s",
